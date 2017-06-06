@@ -1,0 +1,36 @@
+{
+    "compilerOptions": {
+      "target": "es5",
+      "module": "es2015",
+      "allowSyntheticDefaultImports": true,
+      "forceConsistentCasingInFileNames": true,
+      "emitDecoratorMetadata": true,
+      "experimentalDecorators": true,
+      "moduleResolution": "node",
+      "sourceMap": true,
+      "noEmitHelpers": true,
+      "importHelpers": true,
+      "removeComments": false,
+      "alwaysStrict": true,
+      "noImplicitAny": true,
+      "noImplicitReturns": true,
+      "noImplicitThis": true,
+      "strictNullChecks": true,
+      "strict": true,
+      "suppressImplicitAnyIndexErrors": true,
+      "noUnusedParameters": true,
+      "noUnusedLocals": true,
+      "typeRoots": [
+        "node_modules/@types"
+      ],
+      "lib": [
+        "DOM",
+        "ES5",
+        "ScriptHost",
+        "ES2015.Promise"
+      ]
+    },
+    "exclude": [
+        "node_modules", "dist"
+    ]
+}
