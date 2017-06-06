@@ -1,6 +1,4 @@
 // For scss imports.
-import {AsyncComponent, Component} from "vue";
-
 declare module "*.scss" {
   let __scss__: string;
   export default __scss__;
@@ -12,8 +10,8 @@ declare module "*.svg" {
 }
 
 declare module "*.vue" {
-  let __vue__: Component | AsyncComponent;
-  export default __vue__;
+  import Vue from "vue";
+  export default typeof Vue
 }
 
 // To avoid having to use @types/node, we'll define the required process.env.NODE_ENV here.
