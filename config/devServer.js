@@ -1,8 +1,12 @@
 "use strict";
 
-const paths = require("./paths");
 
-module.exports = function () {
+const paths               = require("./paths");
+const selectPublicAddress = require("./selectPublicAddress");
+
+module.exports = function (selectedHost, port) {
+  const selectedPublicAddress = selectPublicAddress(selectedHost);
+
   return {
     historyApiFallback: true,
     clientLogLevel: "none",
@@ -14,5 +18,6 @@ module.exports = function () {
     watchOptions: {
       ignored: /node_modules/,
     },
+    public: `${selectedPublicAddress}:${port}`
   };
 };
