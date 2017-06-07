@@ -1,6 +1,9 @@
 # Intellij stuff
 .idea
 
+# Build directory.
+build
+
 # Logs
 logs
 *.log

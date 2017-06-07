@@ -25,6 +25,8 @@ module.exports = function () {
     bail: true,
     entry: paths.appIndex,
 
+    // TODO: Handle https://vue-loader.vuejs.org/en/configurations/extract-css.html !
+
     output: {
       path: paths.appBuild,
       filename: "static/js/[name].[chunkhash:8].js",

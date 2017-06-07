@@ -77,13 +77,23 @@ module.exports = function (isDev) {
         },
         {
           test: /\.ts$/,
-          use: {
-            loader: "ts-loader",
-            options: {
-              appendTsSuffixTo: [/\.vue$/],
-              // transpileOnly: true
+          use: [
+            {
+              loader: "string-replace-loader", // For being able to use webpack's import() function without causing conflicts with the TS parser.
+              query: {
+                search: "_import_",
+                replace: "import",
+                flags: "g"
+              }
+            },
+            {
+              loader: "ts-loader",
+              options: {
+                appendTsSuffixTo: [/\.vue$/],
+                // transpileOnly: true
+              }
             }
-          }
+          ]
         }
       ]
     },

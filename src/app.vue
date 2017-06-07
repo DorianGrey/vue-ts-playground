@@ -1,13 +1,21 @@
 <template>
   <div id="app">
-    <h1 @click="hello">
-      {{name}} is the best girl!
-    </h1>
+    <h1>Demo App</h1>
     <h2>Essential Links</h2>
-    <ul>
-      <li><a href="https://vuejs.org" target="_blank">Core Docs</a></li>
-      <li><a href="https://github.com/HerringtonDarkholme/av-ts" target="_blank">av-ts docs</a></li>
-    </ul>
+    <nav>
+      <ul>
+        <li>
+          <router-link to="/testRoute1/42">TestRoute 1</router-link>
+        </li>
+        <li>
+          <router-link to="/testRoute2">TestRoute 2</router-link>
+        </li>
+        <li>
+          <router-link to="/asyncTest">Async Test</router-link>
+        </li>
+      </ul>
+    </nav>
+    <router-view></router-view>
   </div>
 </template>
 
@@ -16,11 +24,6 @@
 
   @Component
   class App extends Vue {
-    name = "Rem";
-
-    hello() {
-      alert(this.name + " is the best girl!");
-    }
   }
 
   export default App;

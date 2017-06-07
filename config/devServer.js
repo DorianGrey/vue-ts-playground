@@ -14,6 +14,7 @@ module.exports = function (selectedHost, port) {
     contentBase: paths.appPublic,
     watchContentBase: true,
     hot: true,
+    inline: true,
     stats: "minimal",
     watchOptions: {
       ignored: /node_modules/,

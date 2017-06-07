@@ -15,7 +15,11 @@ const publicUrl  = "";
 module.exports = function () {
   return merge.smart(commonConfig(true), {
     // TODO: This should be an array, also containing webpack's dev client.
-    entry: paths.appIndex,
+    entry: [
+      require.resolve("webpack-dev-server/client") + "?/",
+      require.resolve("webpack/hot/dev-server"),
+      paths.appIndex
+    ],
     output: {
       path: paths.appBuild,
       filename: "static/js/bundle.js",
