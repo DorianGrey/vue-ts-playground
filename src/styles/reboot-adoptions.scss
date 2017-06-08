@@ -1,0 +1,12 @@
+// This file contains several adoptions from Bootstrap's reboot configuration:
+// https://github.com/twbs/bootstrap/blob/2179cfb45f45cf9653713178c222a7ac63ede2aa/scss/_reboot.scss
+// Maybe we'll include all of it later on!
+
+// Remove top margins from headings
+//
+// By default, `<h1>`-`<h6>` all receive top and bottom margins. We nuke the top
+// margin for easier control within type scales as it avoids margin collapsing.
+h1, h2, h3, h4, h5, h6 {
+  margin-top: 0;
+  margin-bottom: .5rem;
+}

@@ -13,7 +13,7 @@ const publicUrl  = "";
 
 
 module.exports = function () {
-  return merge.smart(commonConfig(true), {
+  return merge.smart(commonConfig(true, {}), {
     // TODO: This should be an array, also containing webpack's dev client.
     entry: [
       require.resolve("webpack-dev-server/client") + "?/",

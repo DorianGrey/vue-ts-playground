@@ -8,20 +8,34 @@ const {
 const CommonsChunkPlugin                   = require("webpack/lib/optimize/CommonsChunkPlugin");
 const HashedModuleIdsPlugin                = require("webpack/lib/HashedModuleIdsPlugin");
 const UglifyJsPlugin                       = require("webpack/lib/optimize/UglifyJsPlugin");
+const ExtractTextPlugin                    = require("extract-text-webpack-plugin");
 const InlineChunkManifestHtmlWebpackPlugin = require("inline-chunk-manifest-html-webpack-plugin");
 
 const paths        = require("./paths");
 const commonConfig = require("./common");
 
-const publicPath = "/";
-const publicUrl  = "";
+const publicPath                  = "/";
+const shouldUseRelativeAssetPaths = publicPath === "./";
+const publicUrl                   = publicPath.slice(0, -1);
 
 if (process.env.NODE_ENV !== "production") {
   throw new Error("Production builds must have NODE_ENV=production.");
 }
 
+// Note: defined here because it will be used more than once.
+const cssFilename = "static/css/[name].[contenthash:8].css";
+
+// ExtractTextPlugin expects the build output to be flat.
+// (See https://github.com/webpack-contrib/extract-text-webpack-plugin/issues/27)
+// However, our output is structured with css, js and media folders.
+// To have this structure working with relative paths, we have to use custom options.
+const extractTextPluginOptions = shouldUseRelativeAssetPaths
+  ? // Making sure that the publicPath goes back to to build folder.
+  {publicPath: Array(cssFilename.split("/").length).join("../")}
+  : {};
+
 module.exports = function () {
-  return merge.smart(commonConfig(false), {
+  return merge.smart(commonConfig(false, extractTextPluginOptions), {
     bail: true,
     entry: paths.appIndex,
 
@@ -30,7 +44,7 @@ module.exports = function () {
     output: {
       path: paths.appBuild,
       filename: "static/js/[name].[chunkhash:8].js",
-      chunkFilename: 'static/js/[name].[chunkhash:8].chunk.js',
+      chunkFilename: "static/js/[name].[chunkhash:8].chunk.js",
       publicPath: publicPath,
       devtoolModuleFilenameTemplate: info =>
         path.relative(paths.appSrc, info.absoluteResourcePath),
@@ -55,7 +69,7 @@ module.exports = function () {
       // the original file.
       new InlineChunkManifestHtmlWebpackPlugin({
         filename: "asset-manifest.json",
-        dropAsset: false
+        dropAsset: true
       }),
       new UglifyJsPlugin({
         compress: {
@@ -69,7 +83,10 @@ module.exports = function () {
           comments: false,
         },
         sourceMap: true,
-      })
+      }),
+      new ExtractTextPlugin({
+        filename: cssFilename,
+      }),
 
     ]
   });

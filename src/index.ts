@@ -1,3 +1,5 @@
+import "./styles/index.scss";
+
 import Vue, {CreateElement} from "vue";
 import VueRouter from "vue-router";
 
