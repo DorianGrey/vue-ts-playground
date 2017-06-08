@@ -1,14 +1,13 @@
 <template>
   <div id="app">
     <h1>Demo App</h1>
-    <h2>Essential Links</h2>
     <nav>
       <ul>
         <li>
-          <router-link to="/testRoute1/42">TestRoute 1</router-link>
+          <router-link to="/testRoute1">TestRoute 1</router-link>
         </li>
         <li>
-          <router-link to="/testRoute2">TestRoute 2</router-link>
+          <router-link to="/testRoute2/42">TestRoute 2</router-link>
         </li>
         <li>
           <router-link to="/asyncTest">Async Test</router-link>
@@ -30,29 +29,45 @@
 </script>
 
 <style lang="scss" scoped>
+  @import "./styles/colors";
+
   #app {
-    font-family: 'Avenir', Helvetica, Arial, sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     text-align: center;
-    color: #2c3e51;
-    margin-top: 60px;
+    color: $color-blacksmoke;
+    margin-top: .5rem
   }
 
-  h1, h2 {
-    font-weight: normal;
-  }
-
-  ul {
-    list-style-type: none;
-    padding: 0;
-    li {
-      display: inline-block;
-      margin: 0 10px;
+  nav {
+    width: 100%;
+    ul {
+      padding: 0;
+      display: flex;
+      li {
+        flex-basis: 33%;
+        margin: 0 10px;
+      }
     }
   }
 
   a {
-    color: #42b983;
+    color: $color-white;
+    display: block;
+    background-color: $color-light-grey;
+    border-radius: 3px;
+    line-height: 40px;
+    font-weight: 600;
+
+    &:hover {
+      background-color: darken($color-light-grey, 15%);
+    }
+
+    &.router-link-active {
+      background-color: $color-red;
+      &:hover {
+        background-color: darken($color-red, 15%);
+      }
+    }
   }
 </style>

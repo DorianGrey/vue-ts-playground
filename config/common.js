@@ -174,6 +174,7 @@ module.exports = function (isDev, extractTextPluginOptions) {
               loader: require.resolve("ts-loader"),
               options: {
                 appendTsSuffixTo: [/\.vue$/],
+                silent: true
                 // transpileOnly: true
               }
             }

@@ -1,4 +1,3 @@
-"use strict";
 /*
  Note: To avoid security problems, we have to explicitly set our public IP.
  Thus, we have to determine it from the available network interfaces.
@@ -30,7 +29,7 @@ function determinePublicAddress() {
   return publicAddress;
 }
 
-module.exports = function (defaultHost) {
+function selectPublicAddress(defaultHost) {
   switch (defaultHost) {
     case "0.0.0.0":
     case "127.0.0.1":
@@ -41,4 +40,16 @@ module.exports = function (defaultHost) {
       console.log(`Selected default host=${defaultHost} is neither local nor wildcard, skipping host determination...`);
       return defaultHost;
   }
+}
+
+
+const DEFAULT_PORT = parseInt(process.env.PORT, 10) || 3000;
+const HOST         = process.env.HOST || "0.0.0.0";
+
+const PUBLIC_ADDRESS = selectPublicAddress(HOST);
+
+module.exports = {
+  DEFAULT_PORT,
+  HOST,
+  PUBLIC_ADDRESS,
 };

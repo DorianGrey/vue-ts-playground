@@ -43,8 +43,37 @@ html {
   box-sizing: inherit;
 }
 
+*,
+*::before,
+*::after {
+  color: $color-whitesmoke;
+}
+
 body {
   font-family: $font-family-sans-serif;
-  background: $color-white;
+  background-color: $color-blacksmoke;
   margin: 0;
 }
+
+a {
+  text-decoration: none;
+}
+
+a, button, li {
+  transition: color .25s ease,
+  background-color .25s ease;
+}
+
+button, select, textarea {
+  border: none;
+}
+
+
+input, textarea {
+  padding: 5px 8px;
+  border: 1px solid $color-light-grey;
+  border-radius: 3px;
+  background-color: $color-whitesmoke;
+  color: $color-blacksmoke;
+}
+

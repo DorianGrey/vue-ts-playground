@@ -4,7 +4,7 @@ import Vue, {CreateElement} from "vue";
 import VueRouter from "vue-router";
 
 import App from "./app.vue";
-import TestRoute1 from "./testRoute1/testRoute1.vue";
+import InputTest from "./inputTest/inputTest.vue";
 import TestRoute2 from "./testRoute2/testRoute2.vue";
 import NotFound from "./404/404.vue";
 
@@ -26,16 +26,16 @@ function lazyLoadHelper<T>(promise: Promise<T>) {
 const routes = [
   {
     path:     "/",
-    redirect: "/testRoute1/42"
+    redirect: "/testRoute1"
   },
   {
-    path:      "/testRoute1/:id",
-    component: TestRoute1,
+    path:      "/testRoute1",
+    component: InputTest
+  },
+  {
+    path:      "/testRoute2/:id",
+    component: TestRoute2,
     props:     true // The value of :id is set as a prop on the component itself.
-  },
-  {
-    path:      "/testRoute2",
-    component: TestRoute2
   },
   {
     path:      "/asyncTest",

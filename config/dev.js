@@ -1,12 +1,15 @@
 "use strict";
 
-const path                       = require("path");
-const HotModuleReplacementPlugin = require("webpack/lib/HotModuleReplacementPlugin");
-const NamedModulesPlugin         = require("webpack/lib/NamedModulesPlugin");
-const merge                      = require("webpack-merge");
+const path                        = require("path");
+const chalk                       = require("chalk");
+const HotModuleReplacementPlugin  = require("webpack/lib/HotModuleReplacementPlugin");
+const NamedModulesPlugin          = require("webpack/lib/NamedModulesPlugin");
+const merge                       = require("webpack-merge");
+const FriendlyErrorsWebpackPlugin = require("friendly-errors-webpack-plugin");
 
-const paths        = require("./paths");
-const commonConfig = require("./common");
+const paths                = require("./paths");
+const commonConfig         = require("./common");
+const {DEFAULT_PORT, HOST, PUBLIC_ADDRESS} = require("../config/hostInfo");
 
 const publicPath = "/";
 const publicUrl  = "";
@@ -14,7 +17,6 @@ const publicUrl  = "";
 
 module.exports = function () {
   return merge.smart(commonConfig(true, {}), {
-    // TODO: This should be an array, also containing webpack's dev client.
     entry: [
       require.resolve("webpack-dev-server/client") + "?/",
       require.resolve("webpack/hot/dev-server"),
@@ -33,7 +35,12 @@ module.exports = function () {
 
     plugins: [
       new NamedModulesPlugin(),
-      new HotModuleReplacementPlugin()
+      new HotModuleReplacementPlugin(),
+      new FriendlyErrorsWebpackPlugin({
+        compilationSuccessInfo: {
+          messages: [`Development server is available at ${chalk.cyan(`${HOST}:${DEFAULT_PORT}`)} (public at ${chalk.cyan(`${PUBLIC_ADDRESS}:${DEFAULT_PORT}`)})...`]
+        }
+      })
     ]
   });
 };

@@ -1,13 +1,11 @@
 "use strict";
 
-
 const paths               = require("./paths");
-const selectPublicAddress = require("./selectPublicAddress");
 
-module.exports = function (selectedHost, port) {
-  const selectedPublicAddress = selectPublicAddress(selectedHost);
-
+module.exports = function (selectedHost, publicHost, port) {
   return {
+    quiet: true, // Performed by FriendlyErrorsWebpackPlugin
+
     historyApiFallback: true,
     clientLogLevel: "none",
     compress: true,
@@ -19,6 +17,6 @@ module.exports = function (selectedHost, port) {
     watchOptions: {
       ignored: /node_modules/,
     },
-    public: `${selectedPublicAddress}:${port}`
+    public: `${publicHost}:${port}`
   };
 };
