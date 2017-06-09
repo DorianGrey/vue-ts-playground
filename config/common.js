@@ -6,6 +6,7 @@ const ExtractTextPlugin        = require("extract-text-webpack-plugin");
 const CaseSensitivePathsPlugin = require("case-sensitive-paths-webpack-plugin");
 
 const paths = require("./paths");
+const loadingAnimation = require("../src/generated/loading.scss.json");
 
 const nodeOptions = {
   fs: "empty",
@@ -19,7 +20,7 @@ const nodeOptions = {
   setImmediate: false
 };
 
-const PLUGIN_HTML = function (isDev) {
+const PLUGIN_HTML = function (isDev, publicUrl) {
   const minify = isDev ? false : {
     removeComments: true,
     collapseWhitespace: true,
@@ -42,7 +43,8 @@ const PLUGIN_HTML = function (isDev) {
     title: "Demo App",
     devMode: isDev,
     baseHref: "/",
-    // loadingCss: loadingAnimation.css
+    publicUrl,
+    loadingCss: loadingAnimation.css
   });
 };
 
@@ -139,7 +141,7 @@ const RULE_SCSS = function (isDev, extractTextPluginOptions) {
   return result;
 };
 
-module.exports = function (isDev, extractTextPluginOptions) {
+module.exports = function (isDev, extractTextPluginOptions, publicUrl) {
   return {
     // resolve TypeScript and Vue file
     module: {
@@ -199,7 +201,7 @@ module.exports = function (isDev, extractTextPluginOptions) {
     stats: "minimal",
 
     plugins: [
-      PLUGIN_HTML(isDev),
+      PLUGIN_HTML(isDev, publicUrl),
       new CaseSensitivePathsPlugin(),
       new DefinePlugin({
         "process.env": {

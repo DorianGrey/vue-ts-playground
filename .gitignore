@@ -4,6 +4,9 @@
 # Build directory.
 build
 
+# Directory containing generated code
+src/generated
+
 # Logs
 logs
 *.log

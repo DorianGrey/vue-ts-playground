@@ -9,5 +9,6 @@ module.exports = {
   appBuild: resolveApp("build"),
   appSrc: resolveApp("src"),
   appIndex: resolveApp("src/index.ts"),
-  appHtml: resolveApp("public/index.html")
+  appHtml: resolveApp("public/index.html"),
+  appGenerated: resolveApp("src/generated")
 };

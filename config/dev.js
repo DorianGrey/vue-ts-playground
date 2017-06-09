@@ -16,7 +16,7 @@ const publicUrl  = "";
 
 
 module.exports = function () {
-  return merge.smart(commonConfig(true, {}), {
+  return merge.smart(commonConfig(true, {}, publicUrl), {
     entry: [
       require.resolve("webpack-dev-server/client") + "?/",
       require.resolve("webpack/hot/dev-server"),

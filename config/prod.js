@@ -35,7 +35,7 @@ const extractTextPluginOptions = shouldUseRelativeAssetPaths
   : {};
 
 module.exports = function () {
-  return merge.smart(commonConfig(false, extractTextPluginOptions), {
+  return merge.smart(commonConfig(false, extractTextPluginOptions, publicUrl), {
     bail: true,
     entry: paths.appIndex,
 
