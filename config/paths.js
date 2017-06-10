@@ -2,9 +2,10 @@ const path = require("path");
 const fs = require("fs");
 
 const appDirectory = fs.realpathSync(process.cwd());
-const resolveApp   = relativePath => path.resolve(appDirectory, relativePath);
+const resolveApp   = (...relativePath) => path.resolve(appDirectory, ...relativePath);
 
 module.exports = {
+  resolveApp: resolveApp,
   appPublic: resolveApp("public"),
   appBuild: resolveApp("build"),
   appSrc: resolveApp("src"),

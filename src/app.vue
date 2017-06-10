@@ -41,9 +41,11 @@
 
   nav {
     width: 100%;
+
     ul {
       padding: 0;
       display: flex;
+
       li {
         flex-basis: 33%;
         margin: 0 10px;
@@ -65,6 +67,7 @@
 
     &.router-link-active {
       background-color: $color-red;
+
       &:hover {
         background-color: darken($color-red, 15%);
       }

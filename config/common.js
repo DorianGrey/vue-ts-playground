@@ -4,8 +4,9 @@ const {DefinePlugin}           = require("webpack");
 const HtmlWebpackPlugin        = require("html-webpack-plugin");
 const ExtractTextPlugin        = require("extract-text-webpack-plugin");
 const CaseSensitivePathsPlugin = require("case-sensitive-paths-webpack-plugin");
+const StyleLintPlugin          = require("stylelint-webpack-plugin");
 
-const paths = require("./paths");
+const paths            = require("./paths");
 const loadingAnimation = require("../src/generated/loading.scss.json");
 
 const nodeOptions = {
@@ -207,6 +208,14 @@ module.exports = function (isDev, extractTextPluginOptions, publicUrl) {
         "process.env": {
           NODE_ENV: JSON.stringify(isDev ? "development" : "production")
         }
+      }),
+      // First plugin instance:
+      new StyleLintPlugin({
+        // quiet: false,
+        failOnError: !isDev,
+        configFile: paths.resolveApp("stylelint.json"),
+        files: ["src/**/*.vue", "src/**/*.scss"],
+        syntax: "scss"
       })
     ]
   }

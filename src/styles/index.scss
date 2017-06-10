@@ -7,25 +7,25 @@
 // To avoid some crazy hacks to suppress this loading behavior, we'll put it somewhere lower so that it's only used on Android.
 $font-family-sans-serif: // Safari for OS X and iOS (San Francisco)
   -apple-system,
-    // Chrome >= 56 for OS X (San Francisco), Windows, Linux and Android
+  // Chrome >= 56 for OS X (San Francisco), Windows, Linux and Android
   system-ui,
-    // Chrome < 56 for OS X (San Francisco)
+  // Chrome < 56 for OS X (San Francisco)
   BlinkMacSystemFont,
-    // Windows
+  // Windows
   "Segoe UI",
-    // KDE
+  // KDE
   "Oxygen",
-    // Ubuntu
+  // Ubuntu
   "Ubuntu",
-    // Gnome
+  // Gnome
   "Cantarell",
-    // FF OS
+  // FF OS
   "Fira Sans",
-    // Android
+  // Android
   "Roboto",
-    // Older android versions
+  // Older android versions
   "Droid Sans",
-    // Basic web fallback
+  // Basic web fallback
   "Helvetica Neue",
   Arial, sans-serif !default;
 
@@ -60,8 +60,9 @@ a {
 }
 
 a, button, li {
-  transition: color .25s ease,
-  background-color .25s ease;
+  transition:
+    color .25s ease,
+    background-color .25s ease;
 }
 
 button, select, textarea {

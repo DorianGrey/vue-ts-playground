@@ -2,9 +2,7 @@
 
 const path                                 = require("path");
 const merge                                = require("webpack-merge");
-const {
-        NoEmitOnErrorsPlugin
-      }                                    = require("webpack");
+const {NoEmitOnErrorsPlugin}               = require("webpack");
 const CommonsChunkPlugin                   = require("webpack/lib/optimize/CommonsChunkPlugin");
 const HashedModuleIdsPlugin                = require("webpack/lib/HashedModuleIdsPlugin");
 const UglifyJsPlugin                       = require("webpack/lib/optimize/UglifyJsPlugin");
