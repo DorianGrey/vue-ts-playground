@@ -2,13 +2,15 @@ import "./styles/index.scss";
 
 import Vue, {CreateElement} from "vue";
 import VueRouter from "vue-router";
+import Vuex from "vuex";
 
 import App from "./app.vue";
 import InputTest from "./inputTest/inputTest.vue";
-import TestRoute2 from "./testRoute2/testRoute2.vue";
+import TodoList from "./todoList/todoList.vue";
 import NotFound from "./404/404.vue";
 
 import {bootloader} from "./bootloader";
+import {initialTodoState, TodoModel} from "./todoList/todo.state";
 
 /**
  * Helper function to reduce boilerplate for importing other components.
@@ -23,19 +25,20 @@ function lazyLoadHelper<T>(promise: Promise<T>) {
 
 function main() {
   Vue.use(VueRouter);
+  Vue.use(Vuex);
   // Router configuration.
   const routes = [
     {
       path:     "/",
-      redirect: "/testRoute1"
+      redirect: "/input-test"
     },
     {
-      path:      "/testRoute1",
+      path:      "/input-test",
       component: InputTest
     },
     {
-      path:      "/testRoute2/:id",
-      component: TestRoute2,
+      path:      "/todo-list/:id",
+      component: TodoList,
       props:     true // The value of :id is set as a prop on the component itself.
     },
     {
@@ -55,11 +58,39 @@ function main() {
     }
   });
 
+  interface AppState {
+    todoList: TodoModel[];
+  }
+
+  const store = new Vuex.Store({
+    state:     {
+      todoList: initialTodoState
+    },
+    mutations: {
+      add(state: AppState, newTodo: TodoModel) {
+        state.todoList.push(newTodo);
+      }
+    },
+    getters:   {
+      allTodos:     state => state.todoList,
+      expiredTodos: state => state.todoList.filter(t => t.deadline < new Date())
+    }
+  });
+
+  store.commit("add", {
+    id:          2,
+    headline:    "Tester todo",
+    description: "Even more stuff to be done!",
+    deadline:    new Date(Date.now() + 3600000),
+    created:     new Date()
+  });
+
   new Vue({
     el:         "#app",
     components: {App},
     render:     (h: CreateElement) => h("app"),
-    router
+    router,
+    store
   });
 }
 

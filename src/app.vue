@@ -4,10 +4,10 @@
     <nav>
       <ul>
         <li>
-          <router-link to="/testRoute1">TestRoute 1</router-link>
+          <router-link to="/input-test">Input Test</router-link>
         </li>
         <li>
-          <router-link to="/testRoute2/42">TestRoute 2</router-link>
+          <router-link to="/todo-list/42">Todo list 2</router-link>
         </li>
         <li>
           <router-link to="/asyncTest">Async Test</router-link>

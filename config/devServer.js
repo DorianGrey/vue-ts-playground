@@ -17,6 +17,10 @@ module.exports = function (selectedHost, publicHost, port) {
     watchOptions: {
       ignored: /node_modules/,
     },
-    public: `${publicHost}:${port}`
+    public: `${publicHost}:${port}`,
+    overlay: {
+      errors: true,
+      warnings: false
+    }
   };
 };

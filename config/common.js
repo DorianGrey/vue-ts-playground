@@ -142,6 +142,26 @@ const RULE_SCSS = function (isDev, extractTextPluginOptions) {
   return result;
 };
 
+const RULE_WEBFONTS = function () {
+  const webFontRule = {
+    test: /\.(ttf|eot|svg|woff|woff2)(\?[a-z0-9]+)?$/,
+    use: {
+      loader: require.resolve("url-loader"),
+      query: {
+        limit: 2 * 1024, // i.e. if the content has a size of > 2KB, it will be copied via file-loader.
+        name: "static/media/[name].[hash:8].[ext]"
+      }
+    },
+    include: [
+      /node_modules/
+    ]
+  };
+
+  // TODO: We might need conditional updates to webFontRule.use.query.publicPath here.
+
+  return webFontRule;
+};
+
 module.exports = function (isDev, extractTextPluginOptions, publicUrl) {
   return {
     // resolve TypeScript and Vue file
@@ -183,7 +203,8 @@ module.exports = function (isDev, extractTextPluginOptions, publicUrl) {
             }
           ]
         },
-        RULE_SCSS(isDev, extractTextPluginOptions)
+        RULE_SCSS(isDev, extractTextPluginOptions),
+        RULE_WEBFONTS()
       ]
     },
 

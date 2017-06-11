@@ -1,4 +1,5 @@
 @import "../../node_modules/sanitize.css/sanitize";
+@import "../../node_modules/font-awesome/scss/font-awesome";
 @import "./reboot-adoptions";
 @import "./colors";
 
@@ -55,6 +56,16 @@ body {
   margin: 0;
 }
 
+.inverse-colored {
+  background-color: $color-whitesmoke;
+  color: $color-blacksmoke;
+
+  *, *::before, *::after {
+    background-color: $color-whitesmoke;
+    color: $color-blacksmoke;
+  }
+}
+
 a {
   text-decoration: none;
 }
@@ -78,3 +89,12 @@ input, textarea {
   color: $color-blacksmoke;
 }
 
+.column {
+  display: flex;
+  flex-direction: column;
+}
+
+.row {
+  display: flex;
+  flex-direction: row;
+}
