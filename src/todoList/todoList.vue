@@ -4,7 +4,7 @@
     <todoEntry v-for="todo in todoList" :key="todo.id" :todo="todo" class="inverse-colored"></todoEntry>
 
     <h2>Expired todos</h2>
-    <todoEntry v-for="todo in todoList" :key="todo.id" :todo="todo" class="inverse-colored"></todoEntry>
+    <todoEntry v-for="todo in expiredTodos" :key="todo.id" :todo="todo" class="inverse-colored"></todoEntry>
   </section>
 </template>
 
