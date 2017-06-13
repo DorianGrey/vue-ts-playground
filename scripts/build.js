@@ -20,6 +20,7 @@ renderLoadingAnimation()
     const compiler      = webpack(prodConfig());
     const outputOptions = presetToOptions("minimal");
     fs.emptyDirSync(paths.appBuild);
+    fs.emptyDirSync(paths.appBuildStats);
     fs.copySync(paths.appPublic, paths.appBuild, {
       dereference: true,
       filter: file => file !== paths.appHtml,
@@ -34,7 +35,8 @@ renderLoadingAnimation()
       }
       process.stdout.write(stats.toString(outputOptions) + "\n");
 
-      console.log(`Use ${chalk.cyan("yarn serve")} or ${chalk.cyan("npm run serve")} to preview your production build.`);
+      process.stdout.write(`Use ${chalk.cyan("yarn serve")} or ${chalk.cyan("npm run serve")} to preview your production build.\n\n`);
+      process.stdout.write(`Both a HTML and a JSON report about the generated bundles were generated to ${chalk.cyan(paths.appBuildStats + "/")}. These are useful to analyze your bundles' sizes.\n\n`)
     });
   })
   .catch(err => {

@@ -8,6 +8,7 @@ const HashedModuleIdsPlugin                = require("webpack/lib/HashedModuleId
 const UglifyJsPlugin                       = require("webpack/lib/optimize/UglifyJsPlugin");
 const ExtractTextPlugin                    = require("extract-text-webpack-plugin");
 const InlineChunkManifestHtmlWebpackPlugin = require("inline-chunk-manifest-html-webpack-plugin");
+const BundleAnalyzerPlugin                 = require("webpack-bundle-analyzer").BundleAnalyzerPlugin;
 
 const paths        = require("./paths");
 const commonConfig = require("./common");
@@ -85,7 +86,15 @@ module.exports = function () {
       new ExtractTextPlugin({
         filename: cssFilename,
       }),
-
+      // Generate some information about the generated bundle size
+      new BundleAnalyzerPlugin({
+        analyzerMode: "static",
+        reportFilename: path.join(paths.appBuildStats, "bundle-size-report.html"),
+        openAnalyzer: false,
+        generateStatsFile: true,
+        statsFilename: path.join(paths.appBuildStats, "bundle-size-report.json"),
+        logLevel: "silent"
+      })
     ]
   });
 };

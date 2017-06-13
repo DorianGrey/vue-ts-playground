@@ -3,6 +3,7 @@
 
 # Build directory.
 build
+buildStats
 
 # Directory containing generated code
 src/generated
