@@ -38,6 +38,7 @@
     "node-sass": "^4.5.3",
     "postcss-flexbugs-fixes": "^3.0.0",
     "postcss-loader": "^2.0.5",
+    "progress-bar-webpack-plugin": "^1.9.3",
     "resolve-url-loader": "^2.0.2",
     "sass-loader": "^6.0.5",
     "string-replace-loader": "^1.2.0",

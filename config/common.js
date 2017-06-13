@@ -1,12 +1,15 @@
 "use strict";
 
 const {DefinePlugin}           = require("webpack");
+const chalk                    = require("chalk");
 const HtmlWebpackPlugin        = require("html-webpack-plugin");
 const ExtractTextPlugin        = require("extract-text-webpack-plugin");
 const CaseSensitivePathsPlugin = require("case-sensitive-paths-webpack-plugin");
 const StyleLintPlugin          = require("stylelint-webpack-plugin");
+const ProgressBarPlugin        = require("progress-bar-webpack-plugin");
 
 const paths            = require("./paths");
+const formatUtil       = require("./formatUtil");
 const loadingAnimation = require("../src/generated/loading.scss.json");
 
 const nodeOptions = {
@@ -230,13 +233,20 @@ module.exports = function (isDev, extractTextPluginOptions, publicUrl) {
           NODE_ENV: JSON.stringify(isDev ? "development" : "production")
         }
       }),
-      // First plugin instance:
+
       new StyleLintPlugin({
         // quiet: false,
         failOnError: !isDev,
         configFile: paths.resolveApp("stylelint.json"),
         files: ["src/**/*.vue", "src/**/*.scss"],
         syntax: "scss"
+      }),
+
+      new ProgressBarPlugin({
+        complete: ".",
+        format: `${formatUtil.formatIndicator(">")}${chalk.cyan(":bar")} ${chalk.cyan(":percent")} (:elapsed seconds)`,
+        summary: false,
+        width: 50
       })
     ]
   }
