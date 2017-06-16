@@ -12,5 +12,6 @@ module.exports = {
   appSrc: resolveApp("src"),
   appIndex: resolveApp("src/index.ts"),
   appHtml: resolveApp("public/index.html"),
-  appGenerated: resolveApp("src/generated")
+  appGenerated: resolveApp("src/generated"),
+  yarnLockFile: resolveApp("yarn.lock")
 };

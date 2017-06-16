@@ -4,7 +4,7 @@ process.env.NODE_ENV = "development";
 
 const chalk                  = require("chalk");
 const renderLoadingAnimation = require("./util/renderLoading");
-const formatUtil             = require("../config/formatUtil");
+const formatUtil             = require("./util/formatUtil");
 
 formatUtil.cls();
 process.stdout.write(formatUtil.formatInfo("Starting development environment...\n"));

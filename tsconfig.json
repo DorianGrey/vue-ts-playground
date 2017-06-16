@@ -20,6 +20,7 @@
     "suppressImplicitAnyIndexErrors": true,
     "noUnusedParameters": true,
     "noUnusedLocals": true,
+    "pretty": true,
     "typeRoots": [
       "node_modules/@types"
     ],

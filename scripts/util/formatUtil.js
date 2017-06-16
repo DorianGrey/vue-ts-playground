@@ -1,28 +1,25 @@
+"use strict";
+
 const chalk    = require("chalk");
 const readline = require("readline");
 
 exports.formatIndicator = function (indicator) {
-  "use strict";
   return `${chalk.bgCyan.white.bold("", indicator, "")}  `;
 };
 
 exports.formatNote = function (text) {
-  "use strict";
-  return `${chalk.bgRed.white("", "N", "")} ${text}`;
+  return `${chalk.bgWhite.black("", "N", "")} ${text}`;
 };
 
 exports.formatInfo = function (text) {
-  "use strict";
   return `${chalk.bgBlue.black("", "I", "")} ${text}`;
 };
 
 exports.formatWarning = function (text) {
-  "use strict";
   return `${chalk.bgYellow.black("", "WARNING", "")} ${text}`;
 };
 
 exports.formatError = function (text) {
-  "use strict";
   return `${chalk.bgRed.black("", "ERROR", "")} ${text}`;
 };
 
@@ -35,4 +32,8 @@ exports.cls = function () {
     readline.cursorTo(process.stdout, 0, 0);
     readline.clearScreenDown(process.stdout);
   }
+};
+
+exports.formatFirstLineMessage = function(text) {
+  return chalk.bgWhite.black(text);
 };

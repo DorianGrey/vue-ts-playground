@@ -9,7 +9,7 @@ const StyleLintPlugin          = require("stylelint-webpack-plugin");
 const ProgressBarPlugin        = require("progress-bar-webpack-plugin");
 
 const paths            = require("./paths");
-const formatUtil       = require("./formatUtil");
+const formatUtil       = require("../scripts/util/formatUtil");
 const loadingAnimation = require("../src/generated/loading.scss.json");
 
 const nodeOptions = {
@@ -235,11 +235,13 @@ module.exports = function (isDev, extractTextPluginOptions, publicUrl) {
       }),
 
       new StyleLintPlugin({
-        // quiet: false,
+        quiet: false,
+        emitErrors: true,
         failOnError: !isDev,
         configFile: paths.resolveApp("stylelint.json"),
         files: ["src/**/*.vue", "src/**/*.scss"],
-        syntax: "scss"
+        syntax: "scss",
+        formatter: require("stylelint-formatter-pretty")
       }),
 
       new ProgressBarPlugin({

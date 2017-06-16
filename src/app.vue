@@ -23,6 +23,7 @@
 
   @Component
   class App extends Vue {
+//    a: string = 5;
   }
 
   export default App;
