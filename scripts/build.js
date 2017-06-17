@@ -27,7 +27,7 @@ renderLoadingAnimation()
     const fs              = require("fs-extra");
 
     const paths      = require("../config/paths");
-    const prodConfig = require("../config/prod");
+    const prodConfig = require("../config/webpack/prod");
 
     const hasYarn = fs.existsSync(paths.yarnLockFile);
 

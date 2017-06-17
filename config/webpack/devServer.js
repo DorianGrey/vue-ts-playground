@@ -1,6 +1,6 @@
 "use strict";
 
-const paths               = require("./paths");
+const paths               = require("../paths");
 
 module.exports = function (selectedHost, publicHost, port) {
   return {

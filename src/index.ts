@@ -4,10 +4,10 @@ import Vue, {CreateElement} from "vue";
 import VueRouter from "vue-router";
 import Vuex from "vuex";
 
-import App from "./app.vue";
+import NotFound from "./404/404.vue";
+import App from "./app/app.vue";
 import InputTest from "./inputTest/inputTest.vue";
 import TodoList from "./todoList/todoList.vue";
-import NotFound from "./404/404.vue";
 
 import {bootloader} from "./bootloader";
 import {initialTodoState, TodoModel} from "./todoList/todo.state";
@@ -22,6 +22,8 @@ import {initialTodoState, TodoModel} from "./todoList/todo.state";
 function lazyLoadHelper<T>(promise: Promise<T>) {
   return (resolve: (mod: any) => any) => promise.then((res: any) => resolve(res.default));
 }
+
+let app: any;
 
 function main() {
   Vue.use(VueRouter);
@@ -63,7 +65,7 @@ function main() {
   }
 
   const store = new Vuex.Store({
-    strict: process.env.NODE_ENV !== "production",
+    strict:    process.env.NODE_ENV !== "production",
     state:     {
       todoList: initialTodoState
     },
@@ -86,7 +88,7 @@ function main() {
     created:     new Date()
   });
 
-  new Vue({
+  app = new Vue({
     el:         "#app",
     components: {App},
     render:     (h: CreateElement) => h("app"),

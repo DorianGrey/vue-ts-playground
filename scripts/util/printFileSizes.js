@@ -49,7 +49,7 @@ function printFileSizesOnAssetCategory(assetsStats) {
     const originalFileSize = fs.statSync(filePath).size;
     const gzipSize         = gzipsize(fileContents);
     return {
-      folder: path.join(path.basename(buildFolder), path.dirname(asset.name)),
+      folder: path.join(path.dirname(asset.name)),
       name: path.basename(asset.name),
       size: gzipSize,
       sizeLabel: {
@@ -106,7 +106,7 @@ function printFileSizes(webpackStats/*, previousSizeMap*/) {
   const jsonStats   = webpackStats.toJson();
   const assetsStats = jsonStats.assets;
 
-  process.stdout.write(formatUtils.formatNote("Emitted assets:") + "\n");
+  process.stdout.write(formatUtils.formatNote(`Emitted assets in ${chalk.cyan(path.resolve(paths.appBuild))}:`) + "\n");
 
   let relevantAssets = assetsStats;
   for (let c in assetCategories) {

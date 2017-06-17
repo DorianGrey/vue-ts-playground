@@ -1,16 +1,17 @@
 "use strict";
 
-const {DefinePlugin}           = require("webpack");
-const chalk                    = require("chalk");
-const HtmlWebpackPlugin        = require("html-webpack-plugin");
-const ExtractTextPlugin        = require("extract-text-webpack-plugin");
-const CaseSensitivePathsPlugin = require("case-sensitive-paths-webpack-plugin");
-const StyleLintPlugin          = require("stylelint-webpack-plugin");
-const ProgressBarPlugin        = require("progress-bar-webpack-plugin");
+const {DefinePlugin}             = require("webpack");
+const chalk                      = require("chalk");
+const HtmlWebpackPlugin          = require("html-webpack-plugin");
+const ExtractTextPlugin          = require("extract-text-webpack-plugin");
+const CaseSensitivePathsPlugin   = require("case-sensitive-paths-webpack-plugin");
+const StyleLintPlugin            = require("stylelint-webpack-plugin");
+const ProgressBarPlugin          = require("progress-bar-webpack-plugin");
+const ForkTsCheckerWebpackPlugin = require("fork-ts-checker-webpack-plugin");
 
-const paths            = require("./paths");
-const formatUtil       = require("../scripts/util/formatUtil");
-const loadingAnimation = require("../src/generated/loading.scss.json");
+const paths            = require("../paths");
+const formatUtil       = require("../../scripts/util/formatUtil");
+const loadingAnimation = require("../../src/generated/loading.scss.json");
 
 const nodeOptions = {
   fs: "empty",
@@ -200,8 +201,8 @@ module.exports = function (isDev, extractTextPluginOptions, publicUrl) {
               loader: require.resolve("ts-loader"),
               options: {
                 appendTsSuffixTo: [/\.vue$/],
-                silent: true
-                // transpileOnly: true
+                silent: true,
+                transpileOnly: true
               }
             }
           ]
@@ -232,6 +233,12 @@ module.exports = function (isDev, extractTextPluginOptions, publicUrl) {
         "process.env": {
           NODE_ENV: JSON.stringify(isDev ? "development" : "production")
         }
+      }),
+
+      new ForkTsCheckerWebpackPlugin({
+        watch: "./src",
+        tsconfig: "./tsconfig.json",
+        tslint: "./tslint.json"
       }),
 
       new StyleLintPlugin({

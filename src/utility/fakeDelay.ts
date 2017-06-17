@@ -6,7 +6,7 @@
  * @returns {Promise<void>} Promise which gets fulfilled after the configured delay.
  */
 export default function fakeDelay(delay: number): Promise<void> {
-  return new Promise<void>((resolve) => {
+  return new Promise<void>(resolve => {
     setTimeout(() => resolve(), delay);
   });
-};
+}

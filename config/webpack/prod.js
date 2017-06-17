@@ -10,7 +10,7 @@ const ExtractTextPlugin                    = require("extract-text-webpack-plugi
 const InlineChunkManifestHtmlWebpackPlugin = require("inline-chunk-manifest-html-webpack-plugin");
 const BundleAnalyzerPlugin                 = require("webpack-bundle-analyzer").BundleAnalyzerPlugin;
 
-const paths        = require("./paths");
+const paths        = require("../paths");
 const commonConfig = require("./common");
 
 const publicPath                  = "/";

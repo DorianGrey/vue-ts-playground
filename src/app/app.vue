@@ -18,19 +18,10 @@
   </div>
 </template>
 
-<script>
-  import {Vue, Component} from "av-ts";
-
-  @Component
-  class App extends Vue {
-//    a: string = 5;
-  }
-
-  export default App;
-</script>
+<script lang="ts" src="./app.ts"></script>
 
 <style lang="scss" scoped>
-  @import "./styles/colors";
+  @import "../styles/colors";
 
   #app {
     -webkit-font-smoothing: antialiased;

@@ -2,16 +2,16 @@
 
 const path                        = require("path");
 const chalk                       = require("chalk");
-const {NoEmitOnErrorsPlugin}               = require("webpack");
+const {NoEmitOnErrorsPlugin}      = require("webpack");
 const HotModuleReplacementPlugin  = require("webpack/lib/HotModuleReplacementPlugin");
 const NamedModulesPlugin          = require("webpack/lib/NamedModulesPlugin");
 const merge                       = require("webpack-merge");
 const FriendlyErrorsWebpackPlugin = require("friendly-errors-webpack-plugin");
 
-const paths                                = require("./paths");
+const paths                                = require("../paths");
 const commonConfig                         = require("./common");
-const {DEFAULT_PORT, HOST, PUBLIC_ADDRESS} = require("../config/hostInfo");
-const {transform, format}                  = require("../config/pluginUtils/friendlyErrors");
+const {DEFAULT_PORT, HOST, PUBLIC_ADDRESS} = require("../hostInfo");
+const {transform, format}                  = require("./pluginUtils/friendlyErrors");
 
 const publicPath = "/";
 const publicUrl  = "";

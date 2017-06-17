@@ -17,8 +17,8 @@ renderLoadingAnimation()
     const WebpackDevServer = require("webpack-dev-server");
     const webpack          = require("webpack");
 
-    const devConfig                            = require("../config/dev");
-    const devServerConfigFactory               = require("../config/devServer");
+    const devConfig                            = require("../config/webpack/dev");
+    const devServerConfigFactory               = require("../config/webpack/devServer");
     const {DEFAULT_PORT, HOST, PUBLIC_ADDRESS} = require("../config/hostInfo");
 
     const compiler        = webpack(devConfig());

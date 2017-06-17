@@ -17,18 +17,7 @@
   </div>
 </template>
 
-<script>
-  import {Vue, Component, p, Prop} from "av-ts";
-  import {TodoModel} from "./todo.state";
-
-  @Component
-  export default class TodoEntry extends Vue {
-    @Prop todo = p({
-        type: Object,
-        required: true
-      }) as TodoModel;
-  }
-</script>
+<script lang="ts" src="./todoEntry.ts"></script>
 
 <style lang="scss">
   @import "../styles/typography";

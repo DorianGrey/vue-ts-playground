@@ -4,7 +4,7 @@
 export function bootloader(main: () => void): void {
   switch (document.readyState) {
     case "loading":
-      const domReadyHandler = function () {
+      const domReadyHandler = () => {
         document.removeEventListener("DOMContentLoaded", domReadyHandler, false);
         main();
       };

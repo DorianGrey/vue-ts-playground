@@ -7,13 +7,4 @@
   </article>
 </template>
 
-<script lang="ts">
-  import {Vue, Component} from "av-ts";
-
-  @Component
-  class InputTest extends Vue {
-    inputText: string = "bass";
-  }
-
-  export default InputTest;
-</script>
+<script lang="ts" src="./inputTest.ts"></script>
