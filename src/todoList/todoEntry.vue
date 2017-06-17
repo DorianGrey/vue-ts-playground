@@ -10,8 +10,8 @@
     <div class="row content">
       <div>{{todo.description}}</div>
       <div class="column">
-        <div>{{todo.created}}</div>
-        <div>{{todo.deadline}}</div>
+        <div>{{$d(todo.created, 'long')}}</div>
+        <div>{{$d(todo.deadline, 'long')}}</div>
       </div>
     </div>
   </div>

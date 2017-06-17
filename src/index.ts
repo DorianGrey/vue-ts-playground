@@ -1,6 +1,7 @@
 import "./styles/index.scss";
 
 import Vue, {CreateElement} from "vue";
+import VueI18n from "vue-i18n";
 import VueRouter from "vue-router";
 import Vuex from "vuex";
 
@@ -11,6 +12,9 @@ import TodoList from "./todoList/todoList.vue";
 
 import {bootloader} from "./bootloader";
 import {TODO_MODULE_NAME, TodoStateModule} from "./todoList/state/todo.state";
+
+import {BROWSER_LANGUAGE} from "./i18n/browserLanguage";
+import {DATE_TIME_FORMATS} from "./i18n/dateTimeFormats";
 
 /**
  * Helper function to reduce boilerplate for importing other components.
@@ -28,6 +32,8 @@ let app: any;
 function main() {
   Vue.use(VueRouter);
   Vue.use(Vuex);
+  Vue.use(VueI18n);
+
   // Router configuration.
   const routes = [
     {
@@ -75,10 +81,16 @@ function main() {
     created:     new Date()
   });
 
+  const i18n = new VueI18n({
+    locale: BROWSER_LANGUAGE, // set locale
+    dateTimeFormats: DATE_TIME_FORMATS
+  });
+
   app = new Vue({
     el:         "#app",
     components: {App},
     render:     (h: CreateElement) => h("app"),
+    i18n,
     router,
     store
   });
