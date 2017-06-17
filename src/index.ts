@@ -10,7 +10,7 @@ import InputTest from "./inputTest/inputTest.vue";
 import TodoList from "./todoList/todoList.vue";
 
 import {bootloader} from "./bootloader";
-import {initialTodoState, TodoModel} from "./todoList/todo.state";
+import {TODO_MODULE_NAME, TodoStateModule} from "./todoList/state/todo.state";
 
 /**
  * Helper function to reduce boilerplate for importing other components.
@@ -60,27 +60,14 @@ function main() {
     }
   });
 
-  interface AppState {
-    todoList: TodoModel[];
-  }
-
   const store = new Vuex.Store({
-    strict:    process.env.NODE_ENV !== "production",
-    state:     {
-      todoList: initialTodoState
-    },
-    mutations: {
-      add(state: AppState, newTodo: TodoModel) {
-        state.todoList.push(newTodo);
-      }
-    },
-    getters:   {
-      allTodos:     state => state.todoList,
-      expiredTodos: state => state.todoList.filter(t => t.deadline < new Date())
+    strict:  process.env.NODE_ENV !== "production",
+    modules: {
+      [TODO_MODULE_NAME]: new TodoStateModule()
     }
   });
 
-  store.commit("add", {
+  store.commit("todos/ADD", {
     id:          2,
     headline:    "Tester todo",
     description: "Even more stuff to be done!",

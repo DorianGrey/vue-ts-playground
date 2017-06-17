@@ -1,5 +1,6 @@
 import {Component, p, Prop, Vue} from "av-ts";
-import {TodoModel} from "./todo.state";
+
+import {TodoModel} from "./state/interfaces";
 
 @Component
 export default class TodoEntry extends Vue {

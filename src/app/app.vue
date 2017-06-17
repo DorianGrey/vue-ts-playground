@@ -7,7 +7,7 @@
           <router-link to="/input-test">Input Test</router-link>
         </li>
         <li>
-          <router-link to="/todo-list/42">Todo list 2</router-link>
+          <router-link to="/todo-list/42">Todo list</router-link>
         </li>
         <li>
           <router-link to="/asyncTest">Async Test</router-link>

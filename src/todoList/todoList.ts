@@ -1,5 +1,7 @@
 import {Component, p, Prop, Vue} from "av-ts";
-import {TodoModel} from "./todo.state";
+
+import {TodoModel} from "./state/interfaces";
+import {TODO_MODULE_NAME} from "./state/todo.state";
 import TodoEntry from "./todoEntry.vue";
 
 @Component({
@@ -14,10 +16,10 @@ export default class TodoList extends Vue {
   }) as string;
 
   get todoList(): TodoModel[] {
-    return this.$store.getters.allTodos;
+    return this.$store.getters[`${TODO_MODULE_NAME}/allTodos`];
   }
 
   get expiredTodos(): TodoModel[] {
-    return this.$store.getters.expiredTodos;
+    return this.$store.getters[`${TODO_MODULE_NAME}/expiredTodos`];
   }
 }
