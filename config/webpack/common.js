@@ -10,6 +10,7 @@ const ProgressBarPlugin          = require("progress-bar-webpack-plugin");
 const ForkTsCheckerWebpackPlugin = require("fork-ts-checker-webpack-plugin");
 
 const paths            = require("../paths");
+const {getLogger}      = require("../webpack/pluginUtils/tsCheckerLogger");
 const formatUtil       = require("../../scripts/util/formatUtil");
 const loadingAnimation = require("../../src/generated/loading.scss.json");
 
@@ -238,7 +239,8 @@ module.exports = function (isDev, extractTextPluginOptions, publicUrl) {
       new ForkTsCheckerWebpackPlugin({
         watch: "./src",
         tsconfig: "./tsconfig.json",
-        tslint: "./tslint.json"
+        tslint: "./tslint.json",
+        logger: isDev ? getLogger(): undefined
       }),
 
       new StyleLintPlugin({

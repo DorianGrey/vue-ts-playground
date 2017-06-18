@@ -15,6 +15,10 @@ export default class TodoList extends Vue {
     required: true
   }) as string;
 
+  showNewTodoBlock(): void {
+    console.info("showNewTodoBlock clicked!");
+  }
+
   get todoList(): TodoModel[] {
     return this.$store.getters[`${TODO_MODULE_NAME}/allTodos`];
   }
