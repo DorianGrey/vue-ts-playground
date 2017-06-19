@@ -16,7 +16,7 @@ export default class TodoList extends Vue {
   }) as string;
 
   showNewTodoBlock(): void {
-    console.info("showNewTodoBlock clicked!");
+    console.warn("showNewTodoBlock clicked!");
   }
 
   get todoList(): TodoModel[] {

@@ -9,6 +9,7 @@ const UglifyJsPlugin                       = require("webpack/lib/optimize/Uglif
 const ExtractTextPlugin                    = require("extract-text-webpack-plugin");
 const InlineChunkManifestHtmlWebpackPlugin = require("inline-chunk-manifest-html-webpack-plugin");
 const BundleAnalyzerPlugin                 = require("webpack-bundle-analyzer").BundleAnalyzerPlugin;
+const OptimizeCssAssetsPlugin              = require('optimize-css-assets-webpack-plugin');
 
 const paths        = require("../paths");
 const commonConfig = require("./common");
@@ -85,6 +86,11 @@ module.exports = function () {
       }),
       new ExtractTextPlugin({
         filename: cssFilename,
+      }),
+      new OptimizeCssAssetsPlugin({
+        cssProcessor: require("cssnano"),
+        cssProcessorOptions: { discardComments: {removeAll: true } },
+        canPrint: true
       }),
       // Generate some information about the generated bundle size
       new BundleAnalyzerPlugin({
