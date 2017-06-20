@@ -167,6 +167,26 @@ const RULE_WEBFONTS = function () {
   return webFontRule;
 };
 
+const RULE_IMAGES = function(isDev) {
+  return {
+    test: /\.(gif|png|jpe?g)$/i,
+    use: [
+      {
+        loader: require.resolve("file-loader"),
+        query: {
+          name: "static/media/[name].[hash:8].[ext]"
+        }
+      },
+      {
+        loader: require.resolve("image-webpack-loader"),
+        query: {
+          bypassOnDebug: isDev
+        }
+      }
+    ]
+  }
+};
+
 module.exports = function (isDev, extractTextPluginOptions, publicUrl) {
   return {
     // resolve TypeScript and Vue file
@@ -209,7 +229,8 @@ module.exports = function (isDev, extractTextPluginOptions, publicUrl) {
           ]
         },
         RULE_SCSS(isDev, extractTextPluginOptions),
-        RULE_WEBFONTS()
+        RULE_WEBFONTS(),
+        RULE_IMAGES(isDev)
       ]
     },
 

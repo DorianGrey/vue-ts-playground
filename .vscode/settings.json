@@ -1,0 +1,9 @@
+// Platzieren Sie Ihre Einstellungen in dieser Datei, um Standard- und Benutzereinstellungen zu überschreiben.
+{
+    "editor.wordWrap": "wordWrapColumn",
+    "editor.wordWrapColumn": 150,
+    "editor.fontSize": 12,
+    "editor.lineHeight": 18,
+    "editor.fontFamily": "'Source Code Pro'",
+    "editor.tabSize": 2
+}
