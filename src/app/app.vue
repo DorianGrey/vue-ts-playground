@@ -20,7 +20,7 @@
 
 <script lang="ts" src="./app.ts"></script>
 
-<style lang="scss" scoped>
+<style lang="scss">
   @import "../styles/colors";
 
   #app {
@@ -28,41 +28,42 @@
     -moz-osx-font-smoothing: grayscale;
     text-align: center;
     color: $color-blacksmoke;
-    margin-top: .5rem
-  }
+    margin-top: .5rem;
 
-  nav {
-    width: 100%;
+    nav {
+      width: 100%;
 
-    ul {
-      padding: 0;
-      display: flex;
+      ul {
+        padding: 0;
+        display: flex;
 
-      li {
-        flex-basis: 33%;
-        margin: 0 10px;
+        li {
+          flex-basis: 33%;
+          margin: 0 10px;
+        }
       }
     }
-  }
 
-  a {
-    color: $color-white;
-    display: block;
-    background-color: $color-light-grey;
-    border-radius: 3px;
-    line-height: 40px;
-    font-weight: 600;
-
-    &:hover {
-      background-color: darken($color-light-grey, 15%);
-    }
-
-    &.router-link-active {
-      background-color: $color-red;
+    a {
+      color: $color-white;
+      display: block;
+      background-color: $color-light-grey;
+      border-radius: 3px;
+      line-height: 40px;
+      font-weight: 600;
 
       &:hover {
-        background-color: darken($color-red, 15%);
+        background-color: darken($color-light-grey, 15%);
+      }
+
+      &.router-link-active {
+        background-color: $color-red;
+
+        &:hover {
+          background-color: darken($color-red, 15%);
+        }
       }
     }
   }
+  
 </style>
