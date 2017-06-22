@@ -9,29 +9,30 @@ const printFileSizes          = require("./util/printFileSizes");
 const printHostingInformation = require("./util/printHostingInformation");
 const formatWebpackMessages   = require("./util/formatWebpackMessages");
 
-process.on("unhandledRejection", err => {
-  throw err;
-});
-
 formatUtil.cls();
 const writer = process.stdout.write.bind(process.stdout);
+
+process.on("unhandledRejection", err => {
+  writer(formatUtil.formatError(`${err}\n`));
+  throw err;
+});
 
 writer(formatUtil.formatInfo("Creating an optimized production build...\n"));
 writer(formatUtil.formatInfo("Rendering loading animation...\n"));
 
 renderLoadingAnimation()
   .then(() => {
-    writer(formatUtil.formatInfo("Loading animation rendered, processing build...\n"));
-
     const webpack         = require("webpack");
     const fs              = require("fs-extra");
 
     const paths      = require("../config/paths");
-    const prodConfig = require("../config/webpack/prod");
+    const prodConfig = require("../config/webpack/prod")
 
-    const hasYarn = fs.existsSync(paths.yarnLockFile);
+    const hasYarn  = fs.existsSync(paths.yarnLockFile);
+    const compiler = webpack(prodConfig());
 
-    const compiler      = webpack(prodConfig());
+    writer(formatUtil.formatInfo("Clearing target directories...\n"));
+
     // const outputOptions = presetToOptions("none");
     fs.emptyDirSync(paths.appBuild);
     fs.emptyDirSync(paths.appBuildStats);
@@ -39,6 +40,8 @@ renderLoadingAnimation()
       dereference: true,
       filter: file => file !== paths.appHtml,
     });
+
+    writer(formatUtil.formatInfo("Loading animation rendered, processing build...\n"));
 
     return new Promise((resolve, reject) => {
       compiler.run((err, stats) => {

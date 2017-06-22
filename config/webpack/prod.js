@@ -9,7 +9,9 @@ const UglifyJsPlugin                       = require("webpack/lib/optimize/Uglif
 const ExtractTextPlugin                    = require("extract-text-webpack-plugin");
 const InlineChunkManifestHtmlWebpackPlugin = require("inline-chunk-manifest-html-webpack-plugin");
 const BundleAnalyzerPlugin                 = require("webpack-bundle-analyzer").BundleAnalyzerPlugin;
-const OptimizeCssAssetsPlugin              = require('optimize-css-assets-webpack-plugin');
+const OptimizeCssAssetsPlugin              = require("optimize-css-assets-webpack-plugin");
+const PurifyCSSPlugin                      = require("purifycss-webpack");
+const glob                                 = require("glob-all");
 
 const paths        = require("../paths");
 const commonConfig = require("./common");
@@ -84,8 +86,15 @@ module.exports = function () {
         },
         sourceMap: true,
       }),
+      // Extract CSS, purify, dedupe and optimize it.
       new ExtractTextPlugin({
         filename: cssFilename,
+      }), 
+      new PurifyCSSPlugin({
+        paths: glob.sync([
+          paths.resolveApp("src/index.html"),
+          paths.resolveApp("src/**/*.vue")
+        ]),
       }),
       new OptimizeCssAssetsPlugin({
         cssProcessor: require("cssnano"),
