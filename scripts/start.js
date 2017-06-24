@@ -5,7 +5,6 @@ process.env.NODE_ENV = "development";
 const chalk                  = require("chalk");
 const renderLoadingAnimation = require("./util/renderLoading");
 const formatUtil             = require("./util/formatUtil");
-const {setCompiling}         = require("../config/webpack/pluginUtils/tsCheckerLogger");
 
 formatUtil.cls();
 process.stdout.write(formatUtil.formatInfo("Starting development environment...\n"));
@@ -23,13 +22,6 @@ renderLoadingAnimation()
     const {DEFAULT_PORT, HOST, PUBLIC_ADDRESS} = require("../config/hostInfo");
 
     const compiler = webpack(devConfig());
-
-    compiler.plugin("invalid", function () {
-      setCompiling(true);
-    });
-    compiler.plugin("done", function () {
-      setCompiling(false);
-    });
 
     const devServerConfig = devServerConfigFactory(HOST, PUBLIC_ADDRESS, DEFAULT_PORT);
     const devServer       = new WebpackDevServer(compiler, devServerConfig);

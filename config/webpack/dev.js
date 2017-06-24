@@ -18,7 +18,10 @@ const publicUrl  = "";
 
 
 module.exports = function () {
-  return merge.smart(commonConfig(true, {}, publicUrl), {
+  // Note: We're using the "prepend" strategy here to ensure
+  // that "FriendlyErrorsWebpackPlugin" is registered before the
+  // logger that handles deferred messages.
+  return merge.smartStrategy({plugins: "prepend"})(commonConfig(true, {}, publicUrl), {
     entry: [
       require.resolve("webpack-dev-server/client") + "?/",
       require.resolve("webpack/hot/dev-server"),
