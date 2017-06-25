@@ -10,7 +10,7 @@
           <router-link to="/todo-list/42">Todo list</router-link>
         </li>
         <li>
-          <router-link to="/asyncTest">Async Test</router-link>
+          <router-link to="/gallery">Gallery</router-link>
         </li>
       </ul>
     </nav>
@@ -65,5 +65,5 @@
       }
     }
   }
-  
+
 </style>

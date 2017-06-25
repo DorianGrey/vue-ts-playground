@@ -19,8 +19,8 @@ class ForkPluginDeferLogger {
   }
 
   apply(compiler) {
+    const self = this;
     if (this.isDev) {
-      const self = this;
       compiler.plugin("invalid", function () {
         self.setCompiling(true);
       });

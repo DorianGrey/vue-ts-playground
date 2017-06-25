@@ -22,14 +22,20 @@ writer(formatUtil.formatInfo("Rendering loading animation...\n"));
 
 renderLoadingAnimation()
   .then(() => {
-    const webpack         = require("webpack");
-    const fs              = require("fs-extra");
+    const webpack = require("webpack");
+    const fs      = require("fs-extra");
 
     const paths      = require("../config/paths");
     const prodConfig = require("../config/webpack/prod");
 
-    const hasYarn  = fs.existsSync(paths.yarnLockFile);
-    const compiler = webpack(prodConfig());
+    const hasYarn = fs.existsSync(paths.yarnLockFile);
+    let compiler;
+    try {
+      compiler = webpack(prodConfig());
+    } catch (e) {
+      process.stdout.write(formatUtil.formatError(e));
+      process.exit(1);
+    }
 
     writer(formatUtil.formatInfo("Clearing target directories...\n"));
 

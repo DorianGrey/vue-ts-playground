@@ -5,6 +5,9 @@ import VueI18n from "vue-i18n";
 import VueRouter from "vue-router";
 import Vuex from "vuex";
 
+// More "fancyness" stuff.
+import VueCarousel3d from "vue-carousel-3d";
+
 import NotFound from "./404/404.vue";
 import App from "./app/app.vue";
 import InputTest from "./inputTest/inputTest.vue";
@@ -33,6 +36,7 @@ function main() {
   Vue.use(VueRouter);
   Vue.use(Vuex);
   Vue.use(VueI18n);
+  Vue.use(VueCarousel3d);
 
   // Router configuration.
   const routes = [
@@ -50,8 +54,8 @@ function main() {
       props:     true // The value of :id is set as a prop on the component itself.
     },
     {
-      path:      "/asyncTest",
-      component: lazyLoadHelper(_import_(/* webpackChunkName: "asyncTest" */"./asyncTest/asyncTest.vue"))
+      path:      "/gallery",
+      component: lazyLoadHelper(_import_(/* webpackChunkName: "gallery" */"./gallery/gallery.vue"))
     },
     {
       path:      "*",
