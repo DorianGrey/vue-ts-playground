@@ -1,6 +1,8 @@
 <template>
   <div id="app">
-    <h1>Demo App</h1>
+    <header>
+      <h2>Demo App</h2>
+    </header>
     <nav>
       <ul>
         <li>
@@ -22,13 +24,14 @@
 
 <style lang="scss">
   @import "../styles/colors";
+  @import "../styles/typography";
 
   #app {
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     text-align: center;
     color: $color-blacksmoke;
-    margin-top: .5rem;
+    margin-top: calc(#{$header-height} + .5rem);
 
     nav {
       width: 100%;
@@ -64,6 +67,23 @@
         }
       }
     }
+  }
+
+  header {
+    background-color: $color-black;
+    color: $color-white;
+    position: fixed;
+    height: $header-height;
+    line-height: $header-height;
+    width: 100%;
+    top: 0;
+    left: 0;
+    border-bottom: 1px solid $color-lightblack;
+
+    text-align: center;
+
+    display: flex;
+    justify-content: space-around;
   }
 
 </style>

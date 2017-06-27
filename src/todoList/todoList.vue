@@ -2,15 +2,16 @@
   <section>
     <div class="todos">
       <h2>All todos</h2>
-      <todo-entry v-for="todo in todoList" :key="todo.id" :todo="todo" class="inverse-colored"></todo-entry>
+      <todo-entry v-for="todo in todoList" :key="todo.id" :todo="todo"></todo-entry>
 
       <h2>Expired todos</h2>
-      <todo-entry v-for="todo in expiredTodos" :key="todo.id" :todo="todo" class="inverse-colored"></todo-entry>
+      <todo-entry v-for="todo in expiredTodos" :key="todo.id" :todo="todo"></todo-entry>
 
     </div>
-    <div class="new-todo inverse-colored" @click="showNewTodoBlock">
+    <div class="new-todo inverse-colored" @click="showNewTodoBlock" v-if="!newTodoEditable">
       <i class="fa fa-plus-circle"></i>
     </div>
+    <todo-entry :initialEditable="true" v-if="newTodoEditable"></todo-entry>
   </section>
 </template>
 
@@ -51,20 +52,5 @@
     margin: auto;
     border: 1px dotted $color-medium-grey;
     position: relative;
-
-    form {
-      width: 100%;
-
-      input, select, textarea {
-        width: 100%;
-        min-width: 100%;
-        margin-bottom: .5rem;
-      }
-
-      .todo-creation-controls {
-        width: 100%;
-        justify-content: space-around;
-      }
-    }
   }
 </style>

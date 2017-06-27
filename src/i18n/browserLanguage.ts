@@ -1,1 +1,1 @@
-export const BROWSER_LANGUAGE = navigator.language.slice(0, 2);
+export const BROWSER_LANGUAGE: string = navigator.language.slice(0, 2);

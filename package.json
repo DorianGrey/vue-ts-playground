@@ -15,6 +15,7 @@
     "font-awesome": "^4.7.0",
     "sanitize.css": "^5.0.0",
     "tslib": "^1.7.1",
+    "vee-validate": "^2.0.0-rc.6",
     "vue": "^2.3.4",
     "vue-carousel-3d": "^0.1.15",
     "vue-i18n": "^7.0.3",

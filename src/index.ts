@@ -1,5 +1,6 @@
 import "./styles/index.scss";
 
+import VeeValidate from "vee-validate";
 import Vue, {CreateElement} from "vue";
 import VueI18n from "vue-i18n";
 import VueRouter from "vue-router";
@@ -36,6 +37,7 @@ function main() {
   Vue.use(VueRouter);
   Vue.use(Vuex);
   Vue.use(VueI18n);
+  Vue.use(VeeValidate); // TODO: Attempt more strict typing.
   Vue.use(VueCarousel3d);
 
   // Router configuration.
