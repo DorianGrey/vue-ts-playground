@@ -273,7 +273,7 @@ module.exports = function(isDev, extractTextPluginOptions, publicUrl) {
         emitErrors: true,
         failOnError: !isDev,
         configFile: paths.resolveApp("stylelint.json"),
-        files: ["src/**/*.vue", "src/**/*.scss"],
+        files: ["src/**/*.vue", "src/!(bootstrap-cyborg)/*.scss"],
         syntax: "scss",
         formatter: require("stylelint-formatter-pretty")
       }),

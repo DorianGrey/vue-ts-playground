@@ -6,5 +6,5 @@
     "editor.lineHeight": 18,
     "editor.fontFamily": "'Source Code Pro'",
     "editor.tabSize": 2,
-    "editor.formatOnSave": true
+    "editor.formatOnSave": false
 }

@@ -1,43 +1,18 @@
-@import "../../node_modules/sanitize.css/sanitize";
+@import "./bootstrap-cyborg/bootstrap-custom.scss";
 @import "../../node_modules/font-awesome/scss/font-awesome";
-@import "./reboot-adoptions";
 @import "./colors";
 
-// Native font stack, see https://www.smashingmagazine.com/2015/11/using-system-ui-fonts-practical-guide/ .
-// Note: "Roboto" was put a little bit lower on that list to not conflict with Google Maps, which loads the Roboto font.
-// To avoid some crazy hacks to suppress this loading behavior, we'll put it somewhere lower so that it's only used on Android.
-$font-family-sans-serif: // Safari for OS X and iOS (San Francisco)
-  -apple-system,
-  // Chrome >= 56 for OS X (San Francisco), Windows, Linux and Android
-  system-ui,
-  // Chrome < 56 for OS X (San Francisco)
-  BlinkMacSystemFont,
-  // Windows
-  "Segoe UI",
-  // KDE
-  "Oxygen",
-  // Ubuntu
-  "Ubuntu",
-  // Gnome
-  "Cantarell",
-  // FF OS
-  "Fira Sans",
-  // Android
-  "Roboto",
-  // Older android versions
-  "Droid Sans",
-  // Basic web fallback
-  "Helvetica Neue",
-  Arial, sans-serif !default;
-
 // From bootstrap v4's reboot config:
+/*
 html {
   font-family: sans-serif;
   line-height: 1.15;
   -ms-overflow-style: scrollbar;
   -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
 }
+*/
 
+/*
 *,
 *::before,
 *::after {
@@ -49,18 +24,22 @@ html {
 *::after {
   color: $color-whitesmoke;
 }
+*/
 
 body {
   font-family: $font-family-sans-serif;
-  background-color: $color-black;
+  // background-color: $color-black;
   margin: 0;
 }
 
+/*
 .inverse-colored {
   background-color: $color-whitesmoke;
   color: $color-blacksmoke;
 
-  *, *::before, *::after {
+  *,
+  *::before,
+  *::after {
     background-color: $color-whitesmoke;
     color: $color-blacksmoke;
   }
@@ -70,18 +49,20 @@ a {
   text-decoration: none;
 }
 
-a, button, li {
-  transition:
-    color .25s ease,
-    background-color .25s ease;
+a,
+button,
+li {
+  transition: color .25s ease, background-color .25s ease;
 }
 
-button, select, textarea {
+button,
+select,
+textarea {
   border: none;
 }
 
-
-input, textarea {
+input,
+textarea {
   padding: 5px 8px;
   border: 1px solid $color-light-grey;
   border-radius: 3px;
@@ -99,11 +80,14 @@ input, textarea {
   flex-direction: row;
 }
 
+*/
+
 img {
   max-width: 100%;
 }
 
 // TODO: Possible more symbols to come.
-.fa-edit, .fa-close {
+.fa-edit,
+.fa-close {
   cursor: pointer;
 }
