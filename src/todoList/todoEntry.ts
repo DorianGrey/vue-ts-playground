@@ -1,24 +1,28 @@
-import {Component, p, Prop, Vue} from "av-ts";
+import { Component, p, Prop, Vue } from "av-ts";
 
-import {TodoModel} from "./state/interfaces";
+import { TodoModel } from "./state/interfaces";
 
 @Component
 export default class TodoEntry extends Vue {
-  @Prop todo = p({
-    type:     Object,
+  @Prop
+  todo = p({
+    type: Object,
     required: false
   }) as TodoModel;
 
-  @Prop initialEditable = p({
-    type:     Boolean,
+  @Prop
+  initialEditable = p({
+    type: Boolean,
     required: false
   }) as boolean;
 
-  editable              = this.initialEditable || false;
-  targetTodo: TodoModel = this.todo ? {...this.todo} : {
-    headline:    "",
-    description: ""
-  } as TodoModel;
+  editable = this.initialEditable || false;
+  targetTodo: TodoModel = this.todo
+    ? { ...this.todo }
+    : {
+        headline: "",
+        description: ""
+      } as TodoModel;
 
   setEditable(newValue: boolean): void {
     this.editable = newValue;

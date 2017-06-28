@@ -11,7 +11,7 @@ declare module "*.svg" {
 
 declare module "*.vue" {
   import Vue from "vue";
-  export default typeof Vue
+  export default typeof Vue;
 }
 
 // To avoid having to use @types/node, we'll define the required process.env.NODE_ENV here.
@@ -28,5 +28,4 @@ declare const process: Process;
 // See the reference description (https://github.com/tc39/proposal-dynamic-import).
 // Note: Naming the created chunk is possible since webpack 2.4.0 (see https://github.com/webpack/webpack/releases/tag/v2.4.0) using a special comment notation:
 // import(/* webpackChunkName: "my-chunk-name" */ "module")
-declare function _import_<T>(path: string): Promise<T>;
-
+declare function _import_<T>(path: string): Promise<T>

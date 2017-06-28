@@ -1,7 +1,7 @@
-import {Component, p, Prop, Vue} from "av-ts";
+import { Component, p, Prop, Vue } from "av-ts";
 
-import {TodoModel} from "./state/interfaces";
-import {TODO_MODULE_NAME} from "./state/todo.state";
+import { TodoModel } from "./state/interfaces";
+import { TODO_MODULE_NAME } from "./state/todo.state";
 import TodoEntry from "./todoEntry.vue";
 
 @Component({
@@ -10,8 +10,9 @@ import TodoEntry from "./todoEntry.vue";
   }
 })
 export default class TodoList extends Vue {
-  @Prop id = p({
-    type:     String,
+  @Prop
+  id = p({
+    type: String,
     required: true
   }) as string;
 

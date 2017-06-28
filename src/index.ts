@@ -1,7 +1,7 @@
 import "./styles/index.scss";
 
 import VeeValidate from "vee-validate";
-import Vue, {CreateElement} from "vue";
+import Vue, { CreateElement } from "vue";
 import VueI18n from "vue-i18n";
 import VueRouter from "vue-router";
 import Vuex from "vuex";
@@ -14,11 +14,11 @@ import App from "./app/app.vue";
 import InputTest from "./inputTest/inputTest.vue";
 import TodoList from "./todoList/todoList.vue";
 
-import {bootloader} from "./bootloader";
-import {TODO_MODULE_NAME, TodoStateModule} from "./todoList/state/todo.state";
+import { bootloader } from "./bootloader";
+import { TODO_MODULE_NAME, TodoStateModule } from "./todoList/state/todo.state";
 
-import {BROWSER_LANGUAGE} from "./i18n/browserLanguage";
-import {DATE_TIME_FORMATS} from "./i18n/dateTimeFormats";
+import { BROWSER_LANGUAGE } from "./i18n/browserLanguage";
+import { DATE_TIME_FORMATS } from "./i18n/dateTimeFormats";
 
 /**
  * Helper function to reduce boilerplate for importing other components.
@@ -28,7 +28,8 @@ import {DATE_TIME_FORMATS} from "./i18n/dateTimeFormats";
  * @returns {(resolve:(mod:any)=>any)=>Promise<TResult2|TResult1>}
  */
 function lazyLoadHelper<T>(promise: Promise<T>) {
-  return (resolve: (mod: any) => any) => promise.then((res: any) => resolve(res.default));
+  return (resolve: (mod: any) => any) =>
+    promise.then((res: any) => resolve(res.default));
 }
 
 let app: any;
@@ -43,48 +44,54 @@ function main() {
   // Router configuration.
   const routes = [
     {
-      path:     "/",
+      path: "/",
       redirect: "/input-test"
     },
     {
-      path:      "/input-test",
+      path: "/input-test",
       component: InputTest
     },
     {
-      path:      "/todo-list/:id",
+      path: "/todo-list/:id",
       component: TodoList,
-      props:     true // The value of :id is set as a prop on the component itself.
+      props: true // The value of :id is set as a prop on the component itself.
     },
     {
-      path:      "/gallery",
-      component: lazyLoadHelper(_import_(/* webpackChunkName: "gallery" */"./gallery/gallery.vue"))
+      path: "/gallery",
+      component: lazyLoadHelper(
+        _import_(/* webpackChunkName: "gallery" */ "./gallery/gallery.vue")
+      )
     },
     {
-      path:      "*",
+      path: "*",
       component: NotFound
     }
   ];
   const router = new VueRouter({
-    mode:           window.history.pushState ? "history" : "hash",
+    mode: window.history.pushState ? "history" : "hash",
     routes,
-    scrollBehavior: (_to: any, _from: any, savedPosition: { x: number, y: number }) => {
+    scrollBehavior: (
+      _to: any,
+      _from: any,
+      savedPosition: { x: number; y: number }
+    ) => {
       return savedPosition;
     }
   });
 
   const store = new Vuex.Store({
-    strict:  process.env.NODE_ENV !== "production",
+    strict: process.env.NODE_ENV !== "production",
     modules: {
       [TODO_MODULE_NAME]: new TodoStateModule()
     }
   });
 
   store.commit("todos/ADD", {
-    id:          2,
-    headline:    "Tester todo",
+    id: 2,
+    headline: "Tester todo",
     description: "Even more stuff to be done!",
-    deadline:    new Date(Date.now() + 3600000),
-    created:     new Date()
+    deadline: new Date(Date.now() + 3600000),
+    created: new Date()
   });
 
   const i18n = new VueI18n({
@@ -93,9 +100,9 @@ function main() {
   });
 
   app = new Vue({
-    el:         "#app",
-    components: {App},
-    render:     (h: CreateElement) => h("app"),
+    el: "#app",
+    components: { App },
+    render: (h: CreateElement) => h("app"),
     i18n,
     router,
     store

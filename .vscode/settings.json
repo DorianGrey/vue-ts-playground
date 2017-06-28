@@ -5,5 +5,7 @@
     "editor.fontSize": 12,
     "editor.lineHeight": 18,
     "editor.fontFamily": "'Source Code Pro'",
-    "editor.tabSize": 2
+    "editor.tabSize": 2,
+    "editor.formatOnSave": true,
+    "prettier.parser": "typescript"
 }

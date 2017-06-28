@@ -10,5 +10,3 @@ declare module "vue-carousel-3d" {
   const def: Vue.PluginFunction<never>;
   export default def;
 }
-
-
