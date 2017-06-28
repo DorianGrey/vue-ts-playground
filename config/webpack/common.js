@@ -1,18 +1,18 @@
 "use strict";
 
-const {DefinePlugin}             = require("webpack");
-const chalk                      = require("chalk");
-const HtmlWebpackPlugin          = require("html-webpack-plugin");
-const ExtractTextPlugin          = require("extract-text-webpack-plugin");
-const CaseSensitivePathsPlugin   = require("case-sensitive-paths-webpack-plugin");
-const StyleLintPlugin            = require("stylelint-webpack-plugin");
-const ProgressBarPlugin          = require("progress-bar-webpack-plugin");
+const { DefinePlugin } = require("webpack");
+const chalk = require("chalk");
+const HtmlWebpackPlugin = require("html-webpack-plugin");
+const ExtractTextPlugin = require("extract-text-webpack-plugin");
+const CaseSensitivePathsPlugin = require("case-sensitive-paths-webpack-plugin");
+const StyleLintPlugin = require("stylelint-webpack-plugin");
+const ProgressBarPlugin = require("progress-bar-webpack-plugin");
 const ForkTsCheckerWebpackPlugin = require("fork-ts-checker-webpack-plugin");
 
 const ForkPluginDeferLogger = require("../webpack/plugins/ForkPluginDeferLogger");
-const paths                 = require("../paths");
-const formatUtil            = require("../../scripts/util/formatUtil");
-const loadingAnimation      = require("../../src/generated/loading.scss.json");
+const paths = require("../paths");
+const formatUtil = require("../../scripts/util/formatUtil");
+const loadingAnimation = require("../../src/generated/loading.scss.json");
 
 const nodeOptions = {
   fs: "empty",
@@ -26,19 +26,21 @@ const nodeOptions = {
   setImmediate: false
 };
 
-const PLUGIN_HTML = function (isDev, publicUrl) {
-  const minify = isDev ? false : {
-    removeComments: true,
-    collapseWhitespace: true,
-    removeRedundantAttributes: true,
-    useShortDoctype: true,
-    removeEmptyAttributes: true,
-    removeStyleLinkTypeAttributes: true,
-    keepClosingSlash: true,
-    minifyJS: true,
-    minifyCSS: true,
-    minifyURLs: true,
-  };
+const PLUGIN_HTML = function(isDev, publicUrl) {
+  const minify = isDev
+    ? false
+    : {
+        removeComments: true,
+        collapseWhitespace: true,
+        removeRedundantAttributes: true,
+        useShortDoctype: true,
+        removeEmptyAttributes: true,
+        removeStyleLinkTypeAttributes: true,
+        keepClosingSlash: true,
+        minifyJS: true,
+        minifyCSS: true,
+        minifyURLs: true
+      };
 
   return new HtmlWebpackPlugin({
     filename: "index.html", // Keep in mind that the output path gets prepended to this name automatically.
@@ -61,14 +63,13 @@ const POSTCSS_PLUGINS = () => [
       ">1%",
       "last 4 versions",
       "Firefox ESR",
-      "not ie < 9", // Vuejs doesn't support IE8 anyway
+      "not ie < 9" // Vuejs doesn't support IE8 anyway
     ],
-    flexbox: "no-2009",
-  }),
+    flexbox: "no-2009"
+  })
 ];
 
-const RULE_SCSS = function (isDev, extractTextPluginOptions) {
-
+const RULE_SCSS = function(isDev, extractTextPluginOptions) {
   // Development mode docs:
   // "postcss" loader applies autoprefixer to our CSS.
   // "css" loader resolves paths in CSS and adds assets as dependencies.
@@ -101,16 +102,16 @@ const RULE_SCSS = function (isDev, extractTextPluginOptions) {
       options: {
         importLoaders: 1,
         minimize: !isDev,
-        sourceMap: isDev,
-      },
+        sourceMap: isDev
+      }
     },
     {
       loader: require.resolve("postcss-loader"),
       options: {
         sourceMap: isDev,
         ident: "postcss", // https://webpack.js.org/guides/migrating/#complex-options
-        plugins: POSTCSS_PLUGINS,
-      },
+        plugins: POSTCSS_PLUGINS
+      }
     },
     {
       loader: require.resolve("resolve-url-loader"),
@@ -127,7 +128,7 @@ const RULE_SCSS = function (isDev, extractTextPluginOptions) {
     }
   ];
 
-  const result      = {test: /\.scss$/};
+  const result = { test: /\.scss$/ };
   const styleLoader = require.resolve("style-loader");
 
   if (isDev) {
@@ -137,17 +138,17 @@ const RULE_SCSS = function (isDev, extractTextPluginOptions) {
       Object.assign(
         {
           fallback: styleLoader,
-          use: scssLoaderChain,
+          use: scssLoaderChain
         },
         extractTextPluginOptions
       )
-    )
+    );
   }
 
   return result;
 };
 
-const RULE_WEBFONTS = function () {
+const RULE_WEBFONTS = function() {
   const webFontRule = {
     test: /\.(ttf|eot|svg|woff|woff2)(\?[a-z0-9]+)?$/,
     use: {
@@ -157,9 +158,7 @@ const RULE_WEBFONTS = function () {
         name: "static/media/[name].[hash:8].[ext]"
       }
     },
-    include: [
-      /node_modules/
-    ]
+    include: [/node_modules/]
   };
 
   // TODO: We might need conditional updates to webFontRule.use.query.publicPath here.
@@ -167,7 +166,7 @@ const RULE_WEBFONTS = function () {
   return webFontRule;
 };
 
-const RULE_IMAGES = function (isDev) {
+const RULE_IMAGES = function(isDev) {
   return {
     test: /\.(gif|png|jpe?g)$/i,
     use: [
@@ -184,10 +183,10 @@ const RULE_IMAGES = function (isDev) {
         }
       }
     ]
-  }
+  };
 };
 
-module.exports = function (isDev, extractTextPluginOptions, publicUrl) {
+module.exports = function(isDev, extractTextPluginOptions, publicUrl) {
   // This one is both a logger and a plugin.
   const forkTaskLogger = new ForkPluginDeferLogger(isDev);
 
@@ -281,10 +280,12 @@ module.exports = function (isDev, extractTextPluginOptions, publicUrl) {
 
       new ProgressBarPlugin({
         complete: ".",
-        format: `${formatUtil.formatIndicator(">")}${chalk.cyan(":bar")} ${chalk.cyan(":percent")} (:elapsed seconds)`,
+        format: `${formatUtil.formatIndicator(">")}${chalk.cyan(
+          ":bar"
+        )} ${chalk.cyan(":percent")} (:elapsed seconds)`,
         summary: false,
         width: 50
       })
     ]
-  }
+  };
 };

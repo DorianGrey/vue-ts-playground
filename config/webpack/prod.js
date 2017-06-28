@@ -1,24 +1,25 @@
 "use strict";
 
-const path                                 = require("path");
-const merge                                = require("webpack-merge");
-const {NoEmitOnErrorsPlugin}               = require("webpack");
-const CommonsChunkPlugin                   = require("webpack/lib/optimize/CommonsChunkPlugin");
-const HashedModuleIdsPlugin                = require("webpack/lib/HashedModuleIdsPlugin");
-const UglifyJsPlugin                       = require("webpack/lib/optimize/UglifyJsPlugin");
-const ExtractTextPlugin                    = require("extract-text-webpack-plugin");
+const path = require("path");
+const merge = require("webpack-merge");
+const { NoEmitOnErrorsPlugin } = require("webpack");
+const CommonsChunkPlugin = require("webpack/lib/optimize/CommonsChunkPlugin");
+const HashedModuleIdsPlugin = require("webpack/lib/HashedModuleIdsPlugin");
+const UglifyJsPlugin = require("webpack/lib/optimize/UglifyJsPlugin");
+const ExtractTextPlugin = require("extract-text-webpack-plugin");
 const InlineChunkManifestHtmlWebpackPlugin = require("inline-chunk-manifest-html-webpack-plugin");
-const BundleAnalyzerPlugin                 = require("webpack-bundle-analyzer").BundleAnalyzerPlugin;
-const OptimizeCssAssetsPlugin              = require("optimize-css-assets-webpack-plugin");
-const PurifyCSSPlugin                      = require("purifycss-webpack");
-const glob                                 = require("glob-all");
+const BundleAnalyzerPlugin = require("webpack-bundle-analyzer")
+  .BundleAnalyzerPlugin;
+const OptimizeCssAssetsPlugin = require("optimize-css-assets-webpack-plugin");
+const PurifyCSSPlugin = require("purifycss-webpack");
+const glob = require("glob-all");
 
-const paths        = require("../paths");
+const paths = require("../paths");
 const commonConfig = require("./common");
 
-const publicPath                  = "/";
+const publicPath = "/";
 const shouldUseRelativeAssetPaths = publicPath === "./";
-const publicUrl                   = publicPath.slice(0, -1);
+const publicUrl = publicPath.slice(0, -1);
 
 if (process.env.NODE_ENV !== "production") {
   throw new Error("Production builds must have NODE_ENV=production.");
@@ -33,10 +34,10 @@ const cssFilename = "static/css/[name].[contenthash:8].css";
 // To have this structure working with relative paths, we have to use custom options.
 const extractTextPluginOptions = shouldUseRelativeAssetPaths
   ? // Making sure that the publicPath goes back to to build folder.
-  {publicPath: Array(cssFilename.split("/").length).join("../")}
+    { publicPath: Array(cssFilename.split("/").length).join("../") }
   : {};
 
-module.exports = function () {
+module.exports = function() {
   return merge.smart(commonConfig(false, extractTextPluginOptions, publicUrl), {
     bail: true,
     entry: paths.appIndex,
@@ -49,7 +50,7 @@ module.exports = function () {
       chunkFilename: "static/js/[name].[chunkhash:8].chunk.js",
       publicPath: publicPath,
       devtoolModuleFilenameTemplate: info =>
-        path.relative(paths.appSrc, info.absoluteResourcePath),
+        path.relative(paths.appSrc, info.absoluteResourcePath)
     },
 
     plugins: [
@@ -60,7 +61,7 @@ module.exports = function () {
       // Creates a dynamic vendor chunk by including all entries from the `node_modules` directory.
       new CommonsChunkPlugin({
         name: "vendor",
-        minChunks: ({resource}) => /node_modules/.test(resource)
+        minChunks: ({ resource }) => /node_modules/.test(resource)
       }),
       // Externalizes the application manifest.
       new CommonsChunkPlugin("manifest"),
@@ -79,35 +80,41 @@ module.exports = function () {
           // This feature has been reported as buggy a few times, such as:
           // https://github.com/mishoo/UglifyJS2/issues/1964
           // We'll wait with enabling it by default until it is more solid.
-          reduce_vars: false,
+          reduce_vars: false
         },
         output: {
-          comments: false,
+          comments: false
         },
-        sourceMap: true,
+        sourceMap: true
       }),
       // Extract CSS, purify, dedupe and optimize it.
       new ExtractTextPlugin({
-        filename: cssFilename,
-      }), 
+        filename: cssFilename
+      }),
       new PurifyCSSPlugin({
         paths: glob.sync([
           paths.resolveApp("src/index.html"),
           paths.resolveApp("src/**/*.vue")
-        ]),
+        ])
       }),
       new OptimizeCssAssetsPlugin({
         cssProcessor: require("cssnano"),
-        cssProcessorOptions: { discardComments: {removeAll: true } },
+        cssProcessorOptions: { discardComments: { removeAll: true } },
         canPrint: true
       }),
       // Generate some information about the generated bundle size
       new BundleAnalyzerPlugin({
         analyzerMode: "static",
-        reportFilename: path.join(paths.appBuildStats, "bundle-size-report.html"),
+        reportFilename: path.join(
+          paths.appBuildStats,
+          "bundle-size-report.html"
+        ),
         openAnalyzer: false,
         generateStatsFile: true,
-        statsFilename: path.join(paths.appBuildStats, "bundle-size-report.json"),
+        statsFilename: path.join(
+          paths.appBuildStats,
+          "bundle-size-report.json"
+        ),
         logLevel: "silent"
       })
     ]
