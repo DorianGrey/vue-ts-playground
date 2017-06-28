@@ -1,8 +1,8 @@
 "use strict";
 
-const paths               = require("../paths");
+const paths = require("../paths");
 
-module.exports = function (selectedHost, publicHost, port) {
+module.exports = function(selectedHost, publicHost, port) {
   return {
     quiet: true, // Performed by FriendlyErrorsWebpackPlugin
 
@@ -15,7 +15,7 @@ module.exports = function (selectedHost, publicHost, port) {
     inline: true,
     stats: "minimal",
     watchOptions: {
-      ignored: /node_modules/,
+      ignored: /node_modules/
     },
     public: `${publicHost}:${port}`,
     overlay: {

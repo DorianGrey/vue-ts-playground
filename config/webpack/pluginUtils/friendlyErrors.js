@@ -9,7 +9,11 @@ const _ = require("lodash");
 
 // Transform functionality
 function isWebpackError(e) {
-  return (!Array.isArray(e.originalStack) || !e.originalStack.length) && (e.file == null) && e.hasOwnProperty("webpackError");
+  return (
+    (!Array.isArray(e.originalStack) || !e.originalStack.length) &&
+    e.file == null &&
+    e.hasOwnProperty("webpackError")
+  );
 }
 
 function transform(error) {
@@ -25,7 +29,7 @@ function transform(error) {
 
 // Format functionality.
 function concat() {
-  const args      = Array.from(arguments).filter(e => e !== null);
+  const args = Array.from(arguments).filter(e => e !== null);
   const baseArray = Array.isArray(args[0]) ? args[0] : [args[0]];
   return Array.prototype.concat.apply(baseArray, args.slice(1));
 }
@@ -41,14 +45,13 @@ function format(errors) {
     // console.warn("Found linter errors:",lintErrors);
     const flatten = (accum, curr) => accum.concat(curr);
     return concat(
-      lintErrors
-        .map(error => displayError(error))
-        .reduce(flatten, [])
+      lintErrors.map(error => displayError(error)).reduce(flatten, [])
     );
   }
   return [];
 }
 
 module.exports = {
-  transform, format
+  transform,
+  format
 };

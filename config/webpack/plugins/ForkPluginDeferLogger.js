@@ -6,25 +6,27 @@ const logLevels = ["info", "warn", "error"];
 
 class ForkPluginDeferLogger {
   constructor(isDev, logLevel, writer) {
-    this.isDev    = !!isDev;
+    this.isDev = !!isDev;
     this.logLevel = logLevels.indexOf(logLevel) < 0 ? "warn" : logLevel;
-    this.writer   = writer ? writer : (message) => process.stdout.write(message + "\n");
+    this.writer = writer
+      ? writer
+      : message => process.stdout.write(message + "\n");
 
-    this.isCompiling     = true;
+    this.isCompiling = true;
     this.stashedMessages = [];
 
     this.error = this.error.bind(this);
-    this.warn  = this.warn.bind(this);
-    this.info  = this.info.bind(this);
+    this.warn = this.warn.bind(this);
+    this.info = this.info.bind(this);
   }
 
   apply(compiler) {
     const self = this;
     if (this.isDev) {
-      compiler.plugin("invalid", function () {
+      compiler.plugin("invalid", function() {
         self.setCompiling(true);
       });
-      compiler.plugin("done", function () {
+      compiler.plugin("done", function() {
         self.setCompiling(false);
       });
     } else {
@@ -59,17 +61,23 @@ class ForkPluginDeferLogger {
   }
 
   error() {
-    const message = formatUtil.formatError(Array.prototype.slice.call(arguments).join(","));
+    const message = formatUtil.formatError(
+      Array.prototype.slice.call(arguments).join(",")
+    );
     this.checkAndHandle(message, "error");
   }
 
   warn() {
-    const message = formatUtil.formatWarning(Array.prototype.slice.call(arguments).join(","));
+    const message = formatUtil.formatWarning(
+      Array.prototype.slice.call(arguments).join(",")
+    );
     this.checkAndHandle(message, "warn");
   }
 
   info() {
-    const message = formatUtil.formatInfo(Array.prototype.slice.call(arguments).join(","));
+    const message = formatUtil.formatInfo(
+      Array.prototype.slice.call(arguments).join(",")
+    );
     this.checkAndHandle(message, "info");
   }
 }
