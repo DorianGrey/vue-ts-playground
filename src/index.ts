@@ -1,4 +1,4 @@
-import "bootstrap.native";
+import "bootstrap.native/dist/bootstrap-native-v4.js";
 import "./styles/index.scss";
 
 import VeeValidate from "vee-validate";
@@ -20,18 +20,6 @@ import { TODO_MODULE_NAME, TodoStateModule } from "./todoList/state/todo.state";
 
 import { BROWSER_LANGUAGE } from "./i18n/browserLanguage";
 import { DATE_TIME_FORMATS } from "./i18n/dateTimeFormats";
-
-/**
- * Helper function to reduce boilerplate for importing other components.
- *
- * @param promise Promise to use in the resulting factory function. Regularly, it's sufficient to use the result of
- *                `import("whatEverModule")` here.
- * @returns {(resolve:(mod:any)=>any)=>Promise<TResult2|TResult1>}
- */
-function lazyLoadHelper<T>(promise: Promise<T>) {
-  return (resolve: (mod: any) => any) =>
-    promise.then((res: any) => resolve(res.default));
-}
 
 let app: any;
 
@@ -59,9 +47,8 @@ function main() {
     },
     {
       path: "/gallery",
-      component: lazyLoadHelper(
+      component: () =>
         _import_(/* webpackChunkName: "gallery" */ "./gallery/gallery.vue")
-      )
     },
     {
       path: "*",

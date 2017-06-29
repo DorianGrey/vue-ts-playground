@@ -9,11 +9,10 @@
       </button>
       <!--<a class="navbar-brand" href="#" data-vivaldi-spatnav-clickable="1">Navbar</a>-->
 
+      <div class="navbar-brand app-info">Demo App</div>
+
       <div class="collapse navbar-collapse" id="navbarColor01">
         <ul class="navbar-nav mr-auto">
-          <li>
-            <div class="app-info">Demo App</div>
-          </li>
           <li class="nav-item">
             <router-link class="nav-link" to="/input-test">Input Test</router-link>
           </li>
@@ -55,7 +54,7 @@
     }
 
     a {
-      color: $color-light-grey;
+      color: $color-dark-grey;
       display: block;
       font-weight: 600;
 
