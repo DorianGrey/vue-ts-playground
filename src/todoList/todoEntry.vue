@@ -32,11 +32,11 @@
           v-model="targetTodo.description"
           :class="{invalid: errors.has('description')}"
         ></textarea>
-        <div class="row todo-creation-controls">
-          <button type="submit" class="btn btn-primary" :disabled="errors.any()">
+        <div class="todo-creation-controls">
+          <button type="submit" class="button is-primary" :disabled="errors.any()">
             {{targetTodo.id ? 'Create' : 'Submit'}}
           </button>
-          <button type="button" class="btn btn-secondary" @click="setEditable(false)">
+          <button type="button" class="button is-secondary" @click="setEditable(false)">
             Cancel
           </button>
         </div>

@@ -1,34 +1,21 @@
 <template>
 
   <div id="app">
-    <nav class="navbar navbar-toggleable-md navbar-inverse bg-primary navbar-fixed-top">
-      <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse"
-              data-target="#navbarColor01" aria-controls="navbarColor01" aria-expanded="false"
-              aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-      <!--<a class="navbar-brand" href="#" data-vivaldi-spatnav-clickable="1">Navbar</a>-->
+    <nav class="nav">
 
-      <div class="navbar-brand app-info">Demo App</div>
+      <div class="nav-left app-info">Demo App</div>
 
-      <div class="collapse navbar-collapse" id="navbarColor01">
-        <ul class="navbar-nav mr-auto">
-          <li class="nav-item">
-            <router-link class="nav-link" to="/input-test">Input Test</router-link>
-          </li>
-          <li class="nav-item">
-            <router-link class="nav-link" to="/todo-list/42">Todo list</router-link>
-          </li>
-          <li class="nav-item">
-            <router-link class="nav-link" to="/gallery">Gallery</router-link>
-          </li>
-        </ul>
-        <!--
-        <form class="form-inline">
-          <input class="form-control mr-sm-2" type="text" placeholder="Search">
-          <button class="btn btn-secondary my-2 my-sm-0" type="submit">Search</button>
-        </form>
-        -->
+      <!-- Dropdown menu for mobile (i.e. < 768px width). -->
+      <span class="nav-toggle" :class="{'is-active': isMenuOpen}" @click="openMenu()">
+        <span></span>
+        <span></span>
+        <span></span>
+      </span>
+
+      <div class="nav-right nav-menu" :class="{'is-active': isMenuOpen}">
+        <router-link class="nav-item" to="/input-test">Input Test</router-link>
+        <router-link class="nav-item" to="/todo-list/42">Todo list</router-link>
+        <router-link class="nav-item" to="/gallery">Gallery</router-link>
       </div>
     </nav>
 
@@ -54,8 +41,8 @@
     }
 
     a {
+      background-color: $color-black;
       color: $color-dark-grey;
-      display: block;
       font-weight: 600;
 
       &:hover, &.router-link-active {

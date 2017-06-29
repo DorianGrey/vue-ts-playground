@@ -1,4 +1,3 @@
-import "bootstrap.native/dist/bootstrap-native-v4.js";
 import "./styles/index.scss";
 
 import VeeValidate from "vee-validate";

@@ -10,12 +10,18 @@
     "build": "node scripts/build.js",
     "serve": "node scripts/serve.js",
     "format": "prettier --write \"{src,scripts,config}/**/*.{js,ts}\"",
-    "precommit": "npm run format"
+    "precommit": "lint-staged"
+  },
+  "lint-staged": {
+    "{src,scripts,config}/**/*.{js,ts}": [
+      "npm run format",
+      "git add"
+    ]
   },
   "dependencies": {
     "av-ts": "^0.7.0",
-    "bootstrap": "4.0.0-alpha.6",
-    "bootstrap.native": "^2.0.11",
+    "bulma": "^0.4.2",
+    "bulmaswatch": "^0.4.1",
     "font-awesome": "^4.7.0",
     "sanitize.css": "^5.0.0",
     "tslib": "^1.7.1",
@@ -48,6 +54,7 @@
     "image-webpack-loader": "^3.3.1",
     "imports-loader": "^0.7.1",
     "inline-chunk-manifest-html-webpack-plugin": "^1.1.1",
+    "lint-staged": "^4.0.0",
     "lodash": "^4.17.4",
     "node-sass": "^4.5.3",
     "optimize-css-assets-webpack-plugin": "^2.0.0",
