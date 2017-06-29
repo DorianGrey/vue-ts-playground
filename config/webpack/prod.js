@@ -3,9 +3,12 @@
 const path = require("path");
 const merge = require("webpack-merge");
 const { NoEmitOnErrorsPlugin } = require("webpack");
+
 const CommonsChunkPlugin = require("webpack/lib/optimize/CommonsChunkPlugin");
 const HashedModuleIdsPlugin = require("webpack/lib/HashedModuleIdsPlugin");
 const UglifyJsPlugin = require("webpack/lib/optimize/UglifyJsPlugin");
+const ModuleConcatenationPlugin = require("webpack/lib/optimize/ModuleConcatenationPlugin");
+
 const ExtractTextPlugin = require("extract-text-webpack-plugin");
 const InlineChunkManifestHtmlWebpackPlugin = require("inline-chunk-manifest-html-webpack-plugin");
 const BundleAnalyzerPlugin = require("webpack-bundle-analyzer")
@@ -116,7 +119,9 @@ module.exports = function() {
           "bundle-size-report.json"
         ),
         logLevel: "silent"
-      })
+      }),
+
+      new ModuleConcatenationPlugin()
     ]
   });
 };
