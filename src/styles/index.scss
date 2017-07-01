@@ -27,8 +27,9 @@ $font-family-sans-serif: // Safari for OS X and iOS (San Francisco)
   Arial, sans-serif !default;
 $family-sans-serif: $font-family-sans-serif;
 
-@import "bulma-cyborg/bulma-custom";
+@import "../../node_modules/sanitize.css/sanitize";
 @import "../../node_modules/font-awesome/scss/font-awesome";
+@import "bulma-cyborg/bulma-custom";
 @import "./colors";
 
 // From bootstrap v4's reboot config:

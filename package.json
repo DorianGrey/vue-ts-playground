@@ -1,6 +1,6 @@
 {
-  "name": "tsqu",
-  "description": "AV-ts project",
+  "name": "vue-ts-playground",
+  "description": "Playground project using Vue.js and typescript",
   "author": {
     "name": "Christian Linne",
     "email": "ShadowVampire@web.de"

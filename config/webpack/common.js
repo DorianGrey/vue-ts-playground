@@ -63,7 +63,7 @@ const POSTCSS_PLUGINS = () => [
       ">1%",
       "last 4 versions",
       "Firefox ESR",
-      "not ie < 9" // Vuejs doesn't support IE8 anyway
+      "not ie < 11" // supporting IE < 11 should not be required anymore, due to the lack of usage statistics.
     ],
     flexbox: "no-2009"
   })

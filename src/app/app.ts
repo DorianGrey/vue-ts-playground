@@ -1,20 +1,17 @@
 import { Component, Vue } from "av-ts";
+import onceEventHelper from "../utility/onceEvent";
 
 @Component
 export default class App extends Vue {
   // a: string = 6;
   isMenuOpen = false;
 
-  // TODO: Need to figure out why this does not work properly.
-  // readonly onceClickHandler = () => {
-  //   this.isMenuOpen = false;
-  //   document.removeEventListener("click", this.onceClickHandler);
-  // };
-
-  openMenu(): void {
+  openMenu($event: Event): void {
     if (!this.isMenuOpen) {
+      $event.preventDefault();
+      $event.stopPropagation();
       this.isMenuOpen = true;
-      // setTimeout(() => document.addEventListener("click", this.onceClickHandler));
+      onceEventHelper(document, "click", () => (this.isMenuOpen = false));
     }
   }
 }
