@@ -46,33 +46,34 @@
     -moz-osx-font-smoothing: grayscale;
     text-align: center;
 
-    .app-info {
-      line-height: 28px;
+    nav {
+      .app-info {
+        line-height: 28px;
 
-      i {
-        margin-right: 10px;
-        vertical-align: sub;
+        i {
+          margin-right: 10px;
+          vertical-align: sub;
+        }
+
+        span {
+          font-style: italic;
+        }
       }
 
-      span {
-        font-style: italic;
+      a {
+        background-color: $color-black;
+        color: $color-dark-grey;
+        font-weight: 600;
+
+        &:hover, &.router-link-active {
+          color: $color-white;
+        }
+
+        i {
+          margin-right: 5px;
+        }
       }
     }
-
-    a {
-      background-color: $color-black;
-      color: $color-dark-grey;
-      font-weight: 600;
-
-      &:hover, &.router-link-active {
-        color: $color-white;
-      }
-
-      i {
-        margin-right: 5px;
-      }
-    }
-
   }
 
 </style>

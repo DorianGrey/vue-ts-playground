@@ -17,6 +17,10 @@ export const initialTodoState: TodoModel[] = [
 
 export const TODO_MODULE_NAME = "todos";
 
+export const TODO_MODULE_ACTIONS = {
+  ADD: `${TODO_MODULE_NAME}/ADD`
+};
+
 export class TodoStateModule implements Module<TodoState, any> {
   namespaced: boolean = true;
 

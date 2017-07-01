@@ -73,14 +73,6 @@ function main() {
     }
   });
 
-  store.commit("todos/ADD", {
-    id: 2,
-    headline: "Tester todo",
-    description: "Even more stuff to be done!",
-    deadline: new Date(Date.now() + 3600000),
-    created: new Date()
-  });
-
   const i18n = new VueI18n({
     locale: BROWSER_LANGUAGE, // set locale
     dateTimeFormats: DATE_TIME_FORMATS

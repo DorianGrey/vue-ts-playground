@@ -1,17 +1,33 @@
 <template>
   <section>
-    <div class="todos">
-      <h2>All todos</h2>
+    <div class="tabs is-centered is-medium is-toggle is-fullwidth">
+      <ul>
+        <li :class="{'is-active': activeTab === 'active'}" @click="setActiveTab('active')">
+          <a>Active todos</a>
+        </li>
+        <li :class="{'is-active': activeTab === 'expired'}" @click="setActiveTab('expired')">
+          <a>Expired todos</a>
+        </li>
+      </ul>
+    </div>
+
+    <!-- The 'active' tab - new todos can only be added here. -->
+    <div v-if="activeTab === 'active'">
       <todo-entry v-for="todo in todoList" :key="todo.id" :todo="todo"></todo-entry>
 
-      <h2>Expired todos</h2>
-      <todo-entry v-for="todo in expiredTodos" :key="todo.id" :todo="todo"></todo-entry>
+      <button class="button is-secondary new-todo" @click="showNewTodoBlock" v-if="!newTodoEditable">
+        <i class="fa fa-plus-circle"></i>
+      </button>
+
+      <todo-entry :initialEditable="true" :afterSubmit="hideNewTodoBlock" v-if="newTodoEditable"></todo-entry>
 
     </div>
-    <div class="new-todo inverse-colored" @click="showNewTodoBlock" v-if="!newTodoEditable">
-      <i class="fa fa-plus-circle"></i>
+
+    <!-- The 'expired' tab -->
+    <div v-if="activeTab === 'expired'">
+      <todo-entry v-for="todo in expiredTodos" :key="todo.id" :todo="todo"></todo-entry>
     </div>
-    <todo-entry :initialEditable="true" v-if="newTodoEditable"></todo-entry>
+
   </section>
 </template>
 
@@ -26,31 +42,14 @@
 
   .new-todo {
     width: 50%;
+    min-width: $min-page-width;
     margin: auto;
     font-size: 3em;
     text-align: center;
-    border: 1px dotted $color-medium-grey;
-    color: $color-medium-grey;
-    cursor: pointer;
 
-    transition:
-      background-color .25s ease,
-      color .25s ease;
-
-    &:hover {
-      background-color: $color-light-grey;
-      color: $color-black;
-    }
-
-    i, i::before {
-      background-color: transparent;
+    i {
+      font-size: 1.5em;
     }
   }
 
-  .new-todo-block {
-    width: 50%;
-    margin: auto;
-    border: 1px dotted $color-medium-grey;
-    position: relative;
-  }
 </style>

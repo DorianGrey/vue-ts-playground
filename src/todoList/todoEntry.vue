@@ -1,45 +1,57 @@
 <template>
-  <div class="inverse-colored todo-view">
-    <div class="todo-entry" v-if="!editable">
-      <div class="row headline">
-        <div class="h3">{{todo.headline}}</div>
-        <div class="todo-controls">
-          <i class="fa fa-edit" @click="setEditable(true)"></i>
-          <i class="fa fa-close"></i>
+  <div class="card todo-view">
+
+    <!-- Block visible in case of an existing todo. -->
+    <div class="card-content" v-if="!editable">
+
+      <div class="card-header">
+        <p class="card-header-title">{{todo.headline}}</p>
+        <div class="card-header-icon">
+          <span class="icon"><i class="fa fa-edit" @click="setEditable(true)"></i></span>
+          <span class="icon"><i class="fa fa-close"></i></span>
         </div>
       </div>
-      <div class="row content">
+
+      <div class="card-content">
         <div>{{todo.description}}</div>
-        <div class="column">
-          <div>{{$d(todo.created, 'long')}}</div>
-          <div>{{$d(todo.deadline, 'long')}}</div>
-        </div>
       </div>
+
+      <footer class="card-footer">
+        <div class="card-footer-item">Created: {{$d(todo.created, 'long')}}</div>
+        <div class="card-footer-item">Deadline: {{$d(todo.deadline, 'long')}}</div>
+      </footer>
+
     </div>
-    <div class="new-todo-block column" v-if="editable">
+
+    <!-- Block visible in case of a new todo. -->
+
+    <div class="new-todo-block" v-if="editable">
       <form v-on:submit.prevent="onSubmit" novalidate>
         <input placeholder="Title"
                v-validate.initial="'required'"
                type="text"
                name="title"
                v-model="targetTodo.headline"
-               :class="{invalid: errors.has('title')}"
+               class="input"
+               :class="{'is-danger': errors.has('title')}"
         >
         <textarea
           placeholder="Description"
           v-validate.initial="'required'"
           name="description"
           v-model="targetTodo.description"
-          :class="{invalid: errors.has('description')}"
+          class="textarea"
+          :class="{'is-danger': errors.has('description')}"
         ></textarea>
-        <div class="todo-creation-controls">
-          <button type="submit" class="button is-primary" :disabled="errors.any()">
+
+        <footer class="card-footer todo-creation-controls">
+          <button type="submit" class="button is-primary card-footer-item" :disabled="errors.any()">
             {{targetTodo.id ? 'Create' : 'Submit'}}
           </button>
-          <button type="button" class="button is-secondary" @click="setEditable(false)">
+          <button type="button" class="button is-secondary card-footer-item" @click="setEditable(false)">
             Cancel
           </button>
-        </div>
+        </footer>
       </form>
     </div>
   </div>
@@ -52,22 +64,8 @@
 
   .todo-view {
     min-width: $min-page-width;
+    width: 75%;
     margin: .25rem auto;
-    width: 50%;
-    padding: 1em;
-
-    border: 1px solid $color-medium-grey;
-  }
-
-  .todo-entry {
-    .headline {
-      justify-content: space-between;
-      padding-bottom: .5rem;
-    }
-
-    .content {
-      justify-content: space-between;
-    }
   }
 
   .new-todo-block {
@@ -86,11 +84,6 @@
         &.invalid {
           box-shadow: 0 0 6px $color-red;
         }
-      }
-
-      .todo-creation-controls {
-        width: 100%;
-        justify-content: space-around;
       }
     }
   }
