@@ -3,7 +3,7 @@ import "./styles/index.scss";
 import VeeValidate from "vee-validate";
 import Vue, { CreateElement } from "vue";
 import VueI18n from "vue-i18n";
-import VueRouter from "vue-router";
+import VueRouter, { RouteConfig } from "vue-router";
 import Vuex from "vuex";
 
 // More "fancyness" stuff.
@@ -30,7 +30,7 @@ function main() {
   Vue.use(VueCarousel3d);
 
   // Router configuration.
-  const routes = [
+  const routes: RouteConfig[] = [
     {
       path: "/",
       redirect: "/input-test"
@@ -46,8 +46,11 @@ function main() {
     },
     {
       path: "/gallery",
+      // Note: Naming the created chunk is possible since webpack 2.4.0
+      // (see https://github.com/webpack/webpack/releases/tag/v2.4.0) using a special comment notation:
+      // import(/* webpackChunkName: "my-chunk-name" */ "module")
       component: () =>
-        _import_(/* webpackChunkName: "gallery" */ "./gallery/gallery.vue")
+        import(/* webpackChunkName: "gallery" */ "./gallery/gallery.vue")
     },
     {
       path: "*",
