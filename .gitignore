@@ -51,3 +51,6 @@ typings
 
 # /dist folder
 dist
+
+# Test results - coverage / junit
+test-results
