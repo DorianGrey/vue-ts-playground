@@ -11,7 +11,7 @@ describe("inputTest", () => {
     const element = vm.$el.getElementsByTagName("input")[0];
 
     // element should exist
-    expect(element).to.not.be.undefined;
+    expect(element).to.not.be.an("undefined");
     expect((element as HTMLInputElement).value).to.equal("bass");
   });
 });

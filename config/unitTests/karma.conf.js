@@ -13,7 +13,7 @@ module.exports = function(config) {
     browsers: ["PhantomJS"],
     frameworks: ["mocha", "sinon-chai", "phantomjs-shim"],
     reporters: ["mocha", "junit", "coverage"],
-    files: ["./index.ts"],
+    files: [{ pattern: "./index.ts", watch: false }],
     preprocessors: {
       // TODO: The "coverage" preprocessor is required here, but we have to figure out where exactly...
       "./index.ts": ["webpack", "sourcemap"]
@@ -38,6 +38,7 @@ module.exports = function(config) {
         { type: "text-summary", subdir: "coverage" }
       ]
     },
+
     port: 9876,
     colors: true,
     // Reduce output noise to a minimum in dev mode, so that the results are easier to keep an eye on.

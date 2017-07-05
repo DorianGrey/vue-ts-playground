@@ -14,15 +14,9 @@ function requireAll(requireContext: any) {
 // require all test files (files that ends with .spec.js)
 const testsContext = require.context("../../src", true, /\.spec\.ts$/);
 // Require all src files except type definitions for coverage.
-
-/*
-TODO: We need a regex here that matches only the first of these:
- index.ts
- index.spec.ts
- index.d.ts
-
- */
-
-// const srcContext = require.context("../../src", true, /(?!(spec|d))\.ts/);
 requireAll(testsContext);
-// requireAll(srcContext);
+
+const srcContext = require.context("../../src", true, /.(vue|ts)$/);
+const filtered = srcContext.keys().filter(k => !/\.(spec|d)\.ts$/.test(k));
+
+filtered.map(srcContext);
