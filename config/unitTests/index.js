@@ -7,7 +7,7 @@ Vue.config.productionTip = false;
  * that will require the file and load it up here. Context will
  * loop and require those spec files here
  */
-function requireAll(requireContext: any) {
+function requireAll(requireContext) {
   return requireContext.keys().map(requireContext);
 }
 
@@ -17,6 +17,8 @@ const testsContext = require.context("../../src", true, /\.spec\.ts$/);
 requireAll(testsContext);
 
 const srcContext = require.context("../../src", true, /.(vue|ts)$/);
-const filtered = srcContext.keys().filter(k => !/\.(spec|d)\.ts$/.test(k));
+const filtered = srcContext
+  .keys()
+  .filter(k => !/\.(spec|d)\.ts$/.test(k) && !/index\.ts$/.test(k));
 
 filtered.map(srcContext);
