@@ -313,9 +313,9 @@ autoprefixer@^7.1.2:
     postcss "^6.0.6"
     postcss-value-parser "^3.2.3"
 
-av-ts@^0.8.2:
-  version "0.8.2"
-  resolved "https://registry.yarnpkg.com/av-ts/-/av-ts-0.8.2.tgz#027b64fa65a2a0905b94dfb6129b143828c18eb6"
+av-ts@0.7.2:
+  version "0.7.2"
+  resolved "https://registry.yarnpkg.com/av-ts/-/av-ts-0.7.2.tgz#3e4f07c7c32aa67340ffe166ff158e55ab0f1445"
 
 aws-sign2@~0.6.0:
   version "0.6.0"

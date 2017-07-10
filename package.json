@@ -21,7 +21,7 @@
     ]
   },
   "dependencies": {
-    "av-ts": "^0.8.2",
+    "av-ts": "0.7.2",
     "bulma": "^0.4.3",
     "bulmaswatch": "^0.4.2",
     "font-awesome": "^4.7.0",
