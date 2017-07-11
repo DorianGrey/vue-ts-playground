@@ -1,6 +1,7 @@
 import Vue from "vue";
 
 Vue.config.productionTip = false;
+Vue.config.devtools = false;
 
 /*
  * get all the files, for each file, call the context function
