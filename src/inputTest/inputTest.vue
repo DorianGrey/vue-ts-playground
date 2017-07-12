@@ -2,7 +2,7 @@
   <article>
     <section>
       <div>You entered: {{inputText}}</div>
-      <input v-model="inputText">
+      <input type="text" v-model="inputText">
     </section>
   </article>
 </template>

@@ -21,13 +21,6 @@
     "noUnusedParameters": true,
     "noUnusedLocals": true,
     "pretty": true,
-    "types": [
-      "chai",
-      "mocha",
-      "sinon",
-      "sinon-chai",
-      "webpack-env"
-    ],
     "typeRoots": [
       "node_modules/@types"
     ],
@@ -43,5 +36,6 @@
     "node_modules",
     "build",
     "buildStats"
-  ]
+  ],
+  "skipBabel": true
 }

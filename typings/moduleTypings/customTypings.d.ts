@@ -11,7 +11,7 @@ declare module "*.svg" {
 
 declare module "*.vue" {
   import Vue from "vue";
-  let __vue__: typeof Vue;
+  let __vue__: Vue.ComponentOptions<Vue>;
   export default __vue__;
 }
 
