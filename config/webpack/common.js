@@ -9,7 +9,6 @@ const StyleLintPlugin = require("stylelint-webpack-plugin");
 const ProgressBarPlugin = require("progress-bar-webpack-plugin");
 const ForkTsCheckerWebpackPlugin = require("fork-ts-checker-webpack-plugin");
 
-const ForkPluginDeferLogger = require("../webpack/plugins/ForkPluginDeferLogger");
 const paths = require("../paths");
 const formatUtil = require("../../scripts/util/formatUtil");
 const loadingAnimation = require("../../src/generated/loading.scss.json");
@@ -187,9 +186,6 @@ const RULE_IMAGES = function(isDev) {
 };
 
 module.exports = function(isDev, extractTextPluginOptions, publicUrl) {
-  // This one is both a logger and a plugin.
-  const forkTaskLogger = new ForkPluginDeferLogger(isDev);
-
   return {
     // resolve TypeScript and Vue file
     module: {
@@ -251,13 +247,12 @@ module.exports = function(isDev, extractTextPluginOptions, publicUrl) {
         }
       }),
 
-      forkTaskLogger,
-
       new ForkTsCheckerWebpackPlugin({
         watch: "./src",
         tsconfig: "./tsconfig.json",
         tslint: "./tslint.json",
-        logger: forkTaskLogger
+        async: false,
+        formatter: "codeframe"
       }),
 
       new StyleLintPlugin({
