@@ -12,6 +12,7 @@
     "test": "node scripts/test.js",
     "test:ci": "node scripts/test.js --no-cache --coverage",
     "test:debug": "node --inspect --debug-brk scripts/test.js",
+    "test:ci:debug": "node --inspect --debug-brk scripts/test.js --no-cache --coverage",
     "format": "prettier --write \"{src,scripts,config}/**/*.{js,ts}\"",
     "precommit": "lint-staged"
   },
@@ -59,7 +60,6 @@
     "imports-loader": "^0.7.1",
     "inline-chunk-manifest-html-webpack-plugin": "^1.1.1",
     "jest": "^20.0.4",
-    "jest-vue-preprocessor": "^1.0.1",
     "lint-staged": "^4.0.1",
     "lodash": "^4.17.4",
     "node-sass": "^4.5.3",
@@ -104,6 +104,12 @@
       "lcov"
     ],
     "coverageDirectory": "./test-results/coverage",
+    "globals": {
+      "ts-jest": {
+        "tsConfigFile": "tsconfig.test.json"
+      }
+    },
+    "mapCoverage": true,
     "moduleFileExtensions": [
       "js",
       "ts",
@@ -123,11 +129,10 @@
       "^.+\\.(svg|gif|png|jpe?g)$": "<rootDir>/config/jest/fileTransform.js",
       "^.+\\.s?css$": "<rootDir>/config/jest/cssTransform.js",
       "^.+\\.ts$": "<rootDir>/node_modules/ts-jest/preprocessor.js",
-      ".*\\.(vue)$": "<rootDir>/node_modules/jest-vue-preprocessor"
+      ".*\\.(vue)$": "<rootDir>/config/jest/vueTransform.js"
     },
     "transformIgnorePatterns": [
       "[/\\\\]node_modules[/\\\\].+\\.(js|ts)$"
-    ],
-    "mapCoverage": true
+    ]
   }
 }
