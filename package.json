@@ -95,7 +95,7 @@
   },
   "jest": {
     "collectCoverageFrom": [
-      "src/**/*.{js,ts}",
+      "src/**/*.{js,ts,vue}",
       "!src/**/*.spec.{js,ts}",
       "!src/{index,bootloader}.ts"
     ],

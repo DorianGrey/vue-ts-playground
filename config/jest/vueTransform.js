@@ -48,6 +48,10 @@ module.exports = {
   // TODO: We need to handle "getCacheKey".
   // TODO: We need to work around the av-ts stuff with static attributes - they are added via setting
   // .arguments and .caller, but these are not allowed to be modified in strict mode.
+  // TODO: Since jest does not know about externally referenced files, we need a way to figure out
+  // if the "instrument" transform option should be set or not.
+  // The current way to force jest to collect coverage from .vue files causes the instrumentation to trigger,
+  // but the results might be a bit confusing...
 
   process(src, filePath, jestConfig, transformOptions) {
     // heavily based on vueify (Copyright (c) 2014-2016 Evan You)
@@ -58,33 +62,29 @@ module.exports = {
       throw new Error(`No transformer defined for script.lang=${script.lang}`);
     }
 
-    let transformer = transforms[script.lang];
+    let transformer = script && script.lang ? transforms[script.lang] : null;
     let transformedScript;
 
-    if (transformer) {
-      if (script) {
-        // We have to differ between inline code and external referenced file.
-        if (script.src) {
-          const targetSourcePath = path.resolve(
-            path.dirname(filePath),
-            script.src
-          );
-          const targetSource = fs.readFileSync(targetSourcePath, "utf8");
-          transformedScript = tsJest.process(
-            targetSource,
-            targetSourcePath,
-            jestConfig,
-            transformOptions
-          );
-        } else {
-          throw new Error(
-            `Transforming inline sources is currently not supported.`
-          );
-        }
+    if (transformer && script) {
+      // We have to differ between inline code and external referenced file.
+      if (script.src) {
+        const targetSourcePath = path.resolve(
+          path.dirname(filePath),
+          script.src
+        );
+        const targetSource = fs.readFileSync(targetSourcePath, "utf8");
+        transformedScript = tsJest.process(
+          targetSource,
+          targetSourcePath,
+          jestConfig,
+          transformOptions
+        );
       } else {
-        transformedScript = "";
+        throw new Error(
+          `Transforming inline sources is currently not supported.`
+        );
       }
-    } else {
+    } else if (script) {
       transformedScript = script.content;
     }
 
