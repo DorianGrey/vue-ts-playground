@@ -14,7 +14,8 @@
     "test:debug": "node --inspect --debug-brk scripts/test.js",
     "test:ci:debug": "node --inspect --debug-brk scripts/test.js --no-cache --coverage",
     "format": "prettier --write \"{src,scripts,config}/**/*.{js,ts}\"",
-    "precommit": "lint-staged"
+    "precommit": "lint-staged",
+    "prepush": "npm run test:ci"
   },
   "lint-staged": {
     "{src,scripts,config}/**/*.{js,ts}": [
@@ -23,7 +24,7 @@
     ]
   },
   "dependencies": {
-    "av-ts": "^0.8.2",
+    "av-ts": "^0.8.3",
     "bulma": "^0.4.3",
     "bulmaswatch": "^0.4.2",
     "font-awesome": "^4.7.0",
@@ -88,7 +89,7 @@
     "vue-template-compiler": "^2.4.1",
     "vue-template-loader": "^0.3.1",
     "webpack": "^3.2.0",
-    "webpack-bundle-analyzer": "^2.8.2",
+    "webpack-bundle-analyzer": "^2.8.3",
     "webpack-dev-server": "^2.5.1",
     "webpack-karma-die-hard": "^1.0.4",
     "webpack-merge": "^4.1.0"
@@ -125,6 +126,7 @@
     "testMatch": [
       "<rootDir>/src/**/?(*.)spec.ts"
     ],
+    "setupTestFrameworkScriptFile": "<rootDir>/config/jest/testSetup.ts",
     "transform": {
       "^.+\\.(svg|gif|png|jpe?g)$": "<rootDir>/config/jest/fileTransform.js",
       "^.+\\.s?css$": "<rootDir>/config/jest/cssTransform.js",
