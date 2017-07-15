@@ -32,21 +32,50 @@ export default class TodoEntry extends Vue {
         description: ""
       } as TodoModel;
 
+  pendingTodo: TodoModel | null = this.editable ? { ...this.targetTodo } : null;
+
   setEditable(newValue: boolean): void {
     this.editable = newValue;
     // TODO: Depending on the initial state, we have to inform the outer component to clear the entry.
     // Maybe use store for this.
+
+    // We need a copy of the current model to properly deal with edit/cancel steps.
+    if (this.editable === true) {
+      this.pendingTodo = { ...this.targetTodo };
+    }
   }
 
   onSubmit(): void {
-    // TODO: If `this.todo` already is a `todo` object,
+    if (this.pendingTodo) {
+      this.targetTodo = { ...this.pendingTodo };
+    }
+    this.setEditable(false);
+    // If `this.todo` already is a `todo` object,
     // we need to send an UPDATE instead of an ADD.
-    this.$store.commit(
-      TODO_MODULE_ACTIONS.ADD,
-      createNewTodo(this.targetTodo.headline, this.targetTodo.description)
-    );
+    if (this.targetTodo.id) {
+      this.$store.commit(TODO_MODULE_ACTIONS.UPDATE, this.targetTodo);
+    } else {
+      this.$store.commit(
+        TODO_MODULE_ACTIONS.ADD,
+        createNewTodo(this.targetTodo.headline, this.targetTodo.description)
+      );
+    }
+
     if (this.afterSubmit) {
       this.afterSubmit();
+    }
+  }
+
+  onDelete(): void {
+    if (this.targetTodo.id) {
+      this.$store.commit(TODO_MODULE_ACTIONS.DELETE, this.targetTodo.id);
+    }
+  }
+
+  onCancel(): void {
+    if (this.pendingTodo) {
+      this.targetTodo = { ...this.pendingTodo };
+      this.pendingTodo = null;
     }
     this.setEditable(false);
   }

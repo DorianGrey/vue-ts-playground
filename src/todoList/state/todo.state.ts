@@ -18,7 +18,9 @@ export const initialTodoState: TodoModel[] = [
 export const TODO_MODULE_NAME = "todos";
 
 export const TODO_MODULE_ACTIONS = {
-  ADD: `${TODO_MODULE_NAME}/ADD`
+  ADD: `${TODO_MODULE_NAME}/ADD`,
+  UPDATE: `${TODO_MODULE_NAME}/UPDATE`,
+  DELETE: `${TODO_MODULE_NAME}/DELETE`
 };
 
 export class TodoStateModule implements Module<TodoState, any> {

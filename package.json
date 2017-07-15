@@ -24,10 +24,12 @@
     ]
   },
   "dependencies": {
+    "@types/lodash-es": "^4.14.5",
     "av-ts": "^0.8.3",
     "bulma": "^0.4.3",
     "bulmaswatch": "^0.4.2",
     "font-awesome": "^4.7.0",
+    "lodash-es": "^4.17.4",
     "sanitize.css": "^5.0.0",
     "tslib": "^1.7.1",
     "vee-validate": "2.0.0-rc.6",

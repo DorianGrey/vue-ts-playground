@@ -8,7 +8,7 @@
         <p class="card-header-title">{{todo.headline}}</p>
         <div class="card-header-icon">
           <span class="icon"><i class="fa fa-edit" @click="setEditable(true)"></i></span>
-          <span class="icon"><i class="fa fa-close"></i></span>
+          <span class="icon"><i class="fa fa-close" @click="onDelete()"></i></span>
         </div>
       </div>
 
@@ -31,7 +31,7 @@
                v-validate.initial="'required'"
                type="text"
                name="title"
-               v-model="targetTodo.headline"
+               v-model="pendingTodo.headline"
                class="input"
                :class="{'is-danger': errors.has('title')}"
         >
@@ -39,16 +39,16 @@
           placeholder="Description"
           v-validate.initial="'required'"
           name="description"
-          v-model="targetTodo.description"
+          v-model="pendingTodo.description"
           class="textarea"
           :class="{'is-danger': errors.has('description')}"
         ></textarea>
 
         <footer class="card-footer todo-creation-controls">
           <button type="submit" class="button is-primary card-footer-item" :disabled="errors.any()">
-            {{targetTodo.id ? 'Create' : 'Submit'}}
+            {{pendingTodo.id ? 'Update' : 'Submit'}}
           </button>
-          <button type="button" class="button is-secondary card-footer-item" @click="setEditable(false)">
+          <button type="button" class="button is-secondary card-footer-item" @click="onCancel()">
             Cancel
           </button>
         </footer>
