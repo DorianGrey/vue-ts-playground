@@ -25,7 +25,7 @@
   },
   "dependencies": {
     "@types/lodash-es": "^4.14.5",
-    "av-ts": "^0.8.3",
+    "av-ts": "^0.9.0",
     "bulma": "^0.4.3",
     "bulmaswatch": "^0.4.2",
     "font-awesome": "^4.7.0",
@@ -40,7 +40,7 @@
     "vuex": "^2.3.1"
   },
   "devDependencies": {
-    "@types/jest": "^20.0.2",
+    "@types/jest": "^20.0.4",
     "@types/webpack-env": "^1.13.0",
     "autoprefixer": "^7.1.2",
     "case-sensitive-paths-webpack-plugin": "^2.1.1",
@@ -63,7 +63,7 @@
     "imports-loader": "^0.7.1",
     "inline-chunk-manifest-html-webpack-plugin": "^1.1.1",
     "jest": "^20.0.4",
-    "lint-staged": "^4.0.1",
+    "lint-staged": "^4.0.2",
     "lodash": "^4.17.4",
     "node-sass": "^4.5.3",
     "optimize-css-assets-webpack-plugin": "^2.0.0",
@@ -92,7 +92,7 @@
     "vue-loader": "^13.0.2",
     "vue-template-compiler": "^2.4.1",
     "vue-template-loader": "^0.3.1",
-    "webpack": "^3.2.0",
+    "webpack": "^3.3.0",
     "webpack-bundle-analyzer": "^2.8.3",
     "webpack-dev-server": "^2.5.1",
     "webpack-karma-die-hard": "^1.0.4",
