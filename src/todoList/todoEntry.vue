@@ -65,7 +65,7 @@
   .todo-view {
     min-width: $min-page-width;
     width: 75%;
-    margin: .25rem auto;
+    margin: 0.25rem auto;
   }
 
   .new-todo-block {
@@ -79,7 +79,7 @@
       input, select, textarea {
         width: 100%;
         min-width: 100%;
-        margin-bottom: .5rem;
+        margin-bottom: 0.5rem;
 
         &.invalid {
           box-shadow: 0 0 6px $color-red;

@@ -23,11 +23,11 @@ since we want it to be loaded up-front, and not be part of the "regular" stuff.
   top: 1.7em;
   left: 1.7em;
   background-color: transparent;
-  border-left: .25em solid $color-whitesmoke;
+  border-left: 0.25em solid $color-whitesmoke;
   transform: rotate(45deg);
 }
 
-#hill:after {
+#hill::after {
   content: '';
   position: absolute;
   width: 7.1em;
@@ -39,14 +39,14 @@ since we want it to be loaded up-front, and not be part of the "regular" stuff.
 #box {
   position: absolute;
   left: 0;
-  bottom: -.1em;
+  bottom: -0.1em;
   width: 1em;
   height: 1em;
   background-color: transparent;
-  border: .25em solid $color-whitesmoke;
+  border: 0.25em solid $color-whitesmoke;
   border-radius: 15%;
   transform: translate(0, -1em) rotate(-45deg);
-  animation: push 2.5s cubic-bezier(.79, 0, .47, .97) infinite;
+  animation: push 2.5s cubic-bezier(0.79, 0, 0.47, 0.97) infinite;
 }
 
 @keyframes push {

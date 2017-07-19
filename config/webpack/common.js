@@ -186,6 +186,24 @@ const RULE_IMAGES = function(isDev) {
 };
 
 module.exports = function(isDev, extractTextPluginOptions, publicUrl) {
+  /*
+  There is a curious glitch in the stylelint plugin:
+  - In dev (watch) mode, if quiet is set to `false`, every output is generated twice.
+  - In build mode, if it is not set to `false`, no error detail output is generated. However,
+    it gets generated properly once this field is set to `false`.
+ */
+  const styleLintConfig = {
+    failOnError: !isDev,
+    emitErrors: true,
+    configFile: paths.resolveApp("stylelint.config.js"),
+    files: ["src/**/*.vue", "src/!(bootstrap-cyborg)/*.scss"],
+    syntax: "scss",
+    formatter: require("stylelint-formatter-pretty")
+  };
+  if (!isDev) {
+    styleLintConfig.quiet = false;
+  }
+
   return {
     // resolve TypeScript and Vue file
     module: {
@@ -255,15 +273,7 @@ module.exports = function(isDev, extractTextPluginOptions, publicUrl) {
         formatter: "codeframe"
       }),
 
-      new StyleLintPlugin({
-        quiet: false,
-        emitErrors: true,
-        failOnError: !isDev,
-        configFile: paths.resolveApp("stylelint.json"),
-        files: ["src/**/*.vue", "src/!(bootstrap-cyborg)/*.scss"],
-        syntax: "scss",
-        formatter: require("stylelint-formatter-pretty")
-      }),
+      new StyleLintPlugin(styleLintConfig),
 
       new ProgressBarPlugin({
         complete: ".",
