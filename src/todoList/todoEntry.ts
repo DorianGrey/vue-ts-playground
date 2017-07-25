@@ -24,6 +24,12 @@ export default class TodoEntry extends Vue {
     required: false
   });
 
+  @Prop
+  afterCancel = p({
+    type: Function,
+    required: false
+  });
+
   editable = this.initialEditable || false;
   targetTodo: TodoModel = this.todo
     ? { ...this.todo }
@@ -78,5 +84,9 @@ export default class TodoEntry extends Vue {
       this.pendingTodo = null;
     }
     this.setEditable(false);
+
+    if (this.afterCancel) {
+      this.afterCancel();
+    }
   }
 }

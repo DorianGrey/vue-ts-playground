@@ -19,7 +19,7 @@
         <i class="fa fa-plus-circle"></i>
       </button>
 
-      <todo-entry :initialEditable="true" :afterSubmit="hideNewTodoBlock" v-if="newTodoEditable"></todo-entry>
+      <todo-entry :initialEditable="true" :afterSubmit="hideNewTodoBlock" :afterCancel="hideNewTodoBlock" v-if="newTodoEditable"></todo-entry>
 
     </div>
 
