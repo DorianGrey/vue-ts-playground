@@ -26,14 +26,14 @@
   "dependencies": {
     "@types/lodash-es": "^4.14.5",
     "av-ts": "^0.9.0",
-    "bulma": "^0.4.3",
+    "bulma": "^0.4.4",
     "bulmaswatch": "^0.4.2",
     "font-awesome": "^4.7.0",
     "lodash-es": "^4.17.4",
     "sanitize.css": "^5.0.0",
     "tslib": "^1.7.1",
     "vee-validate": "2.0.0-rc.6",
-    "vue": "^2.4.1",
+    "vue": "^2.4.2",
     "vue-carousel-3d": "^0.1.18",
     "vue-i18n": "^7.0.5",
     "vue-router": "^2.7.0",
@@ -66,7 +66,7 @@
     "lint-staged": "^4.0.2",
     "lodash": "^4.17.4",
     "node-sass": "^4.5.3",
-    "optimize-css-assets-webpack-plugin": "^2.0.0",
+    "optimize-css-assets-webpack-plugin": "^3.0.0",
     "postcss-flexbugs-fixes": "^3.0.0",
     "postcss-loader": "^2.0.6",
     "prettier": "^1.5.3",
@@ -90,11 +90,11 @@
     "typescript": "^2.4.2",
     "url-loader": "^0.5.9",
     "vue-loader": "^13.0.2",
-    "vue-template-compiler": "^2.4.1",
+    "vue-template-compiler": "^2.4.2",
     "vue-template-loader": "^0.3.1",
     "webpack": "^3.3.0",
     "webpack-bundle-analyzer": "^2.8.3",
-    "webpack-dev-server": "^2.5.1",
+    "webpack-dev-server": "^2.6.1",
     "webpack-karma-die-hard": "^1.0.4",
     "webpack-merge": "^4.1.0"
   },
@@ -104,7 +104,6 @@
       "!src/**/*.spec.{js,ts}",
       "!src/{index,bootloader}.ts"
     ],
-    "collectCoverage": true,
     "coverageReporters": [
       "lcov",
       "text"
