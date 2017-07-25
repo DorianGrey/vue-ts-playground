@@ -1,4 +1,5 @@
-import { Component, p, Prop, Vue } from "av-ts";
+import { Component, Lifecycle, p, Prop, Vue } from "av-ts";
+import * as Flatpickr from "flatpickr";
 
 import { createNewTodo } from "./state/creators";
 import { TodoModel } from "./state/interfaces";
@@ -30,6 +31,15 @@ export default class TodoEntry extends Vue {
     required: false
   });
 
+  flatpickr: Flatpickr;
+  flatpickrOptions: Flatpickr.Options = {
+    enableTime: true,
+    locale: "en", // TODO: Replace with Intl-dependent decision stuff once available. Requires lang pack for flatpickr.
+    time_24hr: true, // TODO: Replace with Intl-dependent decision stuff once available.
+    minDate: new Date(),
+    onChange: this.setTodoDeadline.bind(this)
+  };
+
   editable = this.initialEditable || false;
   targetTodo: TodoModel = this.todo
     ? { ...this.todo }
@@ -38,16 +48,38 @@ export default class TodoEntry extends Vue {
         description: ""
       } as TodoModel;
 
-  pendingTodo: TodoModel | null = this.editable ? { ...this.targetTodo } : null;
+  pendingTodo: TodoModel | null = null;
+
+  @Lifecycle
+  beforeDestroy() {
+    // Free up memory
+    if (this.flatpickr) {
+      this.flatpickr.destroy();
+    }
+  }
+
+  @Lifecycle
+  beforeMount() {
+    if (this.editable) {
+      this.pendingTodo = { ...this.targetTodo };
+      Vue.nextTick(() => this.initFlatpicker());
+    }
+  }
+
+  setTodoDeadline(selectedDates: Date[]) {
+    if (this.pendingTodo) {
+      this.pendingTodo.deadline = selectedDates[0];
+    }
+  }
 
   setEditable(newValue: boolean): void {
     this.editable = newValue;
-    // TODO: Depending on the initial state, we have to inform the outer component to clear the entry.
-    // Maybe use store for this.
-
     // We need a copy of the current model to properly deal with edit/cancel steps.
     if (this.editable === true) {
       this.pendingTodo = { ...this.targetTodo };
+      Vue.nextTick(() => this.initFlatpicker());
+    } else {
+      this.flatpickr && this.flatpickr.destroy();
     }
   }
 
@@ -63,7 +95,11 @@ export default class TodoEntry extends Vue {
     } else {
       this.$store.commit(
         TODO_MODULE_ACTIONS.ADD,
-        createNewTodo(this.targetTodo.headline, this.targetTodo.description)
+        createNewTodo(
+          this.targetTodo.headline,
+          this.targetTodo.description,
+          this.targetTodo.deadline
+        )
       );
     }
 
@@ -88,5 +124,16 @@ export default class TodoEntry extends Vue {
     if (this.afterCancel) {
       this.afterCancel();
     }
+  }
+
+  private initFlatpicker(): void {
+    this.flatpickrOptions.defaultDate = (this
+      .pendingTodo as TodoModel).deadline;
+    this.flatpickr = new Flatpickr(
+      this.$el.querySelector("#deadlineInput") as HTMLElement,
+      this.flatpickrOptions
+    );
+    // Call is required, since it won't recognize the change by flatpickr otherwise.
+    this.$validator.validateAll();
   }
 }

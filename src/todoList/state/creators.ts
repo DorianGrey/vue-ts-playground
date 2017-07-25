@@ -4,14 +4,15 @@ let todoId = 1;
 
 export function createNewTodo(
   headline: string,
-  description: string
+  description: string,
+  deadline: Date
 ): TodoModel {
   todoId++;
   return {
     id: todoId,
     headline,
     description,
-    deadline: new Date(Date.now() + 3600000),
+    deadline,
     created: new Date()
   };
 }

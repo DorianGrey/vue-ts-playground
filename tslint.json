@@ -4,7 +4,6 @@
     "tslint-config-prettier"
   ],
   "rules": {
-    "array-type": [true, "array-simple"],
     "ban": false,
     "class-name": true,
     "comment-format": [
@@ -44,14 +43,12 @@
     "no-construct": true,
     "no-debugger": true,
     "no-duplicate-variable": true,
-    "no-empty": true,
     "no-eval": true,
     "no-inferrable-types": false,
     "no-internal-module": true,
-    "no-object-literal-type-assertion": false,
     "no-shadowed-variable": true,
-    "no-string-literal": false,
     "no-switch-case-fall-through": true,
+    "no-unused-expression": [true, "allow-fast-null-checks"],
     "no-use-before-declare": true,
     "no-var-keyword": true,
     "no-var-requires": true,

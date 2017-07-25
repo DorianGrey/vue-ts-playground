@@ -24,10 +24,12 @@
     ]
   },
   "dependencies": {
+    "@types/flatpickr": "^3.0.1",
     "@types/lodash-es": "^4.14.5",
     "av-ts": "^0.9.0",
     "bulma": "^0.4.4",
     "bulmaswatch": "^0.4.2",
+    "flatpickr": "^3.0.6",
     "font-awesome": "^4.7.0",
     "lodash-es": "^4.17.4",
     "sanitize.css": "^5.0.0",

@@ -27,13 +27,14 @@
 
     <div class="new-todo-block" v-if="editable">
       <form v-on:submit.prevent="onSubmit" novalidate>
-        <input placeholder="Title"
-               v-validate.initial="'required'"
-               type="text"
-               name="title"
-               v-model="pendingTodo.headline"
-               class="input"
-               :class="{'is-danger': errors.has('title')}"
+        <input
+          placeholder="Title"
+          v-validate.initial="'required'"
+          type="text"
+          name="title"
+          v-model="pendingTodo.headline"
+          class="input"
+          :class="{'is-danger': errors.has('title')}"
         >
         <textarea
           placeholder="Description"
@@ -43,6 +44,16 @@
           class="textarea"
           :class="{'is-danger': errors.has('description')}"
         ></textarea>
+        <input
+          type="text"
+          v-validate.initial="'required'"
+          placeholder="Deadline"
+          name="deadline"
+          required
+          class="input"
+          :class="{'is-danger': errors.has('deadline')}"
+          id="deadlineInput"
+        >
 
         <footer class="card-footer todo-creation-controls">
           <button type="submit" class="button is-primary card-footer-item" :disabled="errors.any()">
@@ -60,6 +71,7 @@
 <script lang="ts" src="./todoEntry.ts"></script>
 
 <style lang="scss">
+  @import "~flatpickr/dist/themes/airbnb";
   @import "../styles/typography";
 
   .todo-view {
@@ -86,5 +98,9 @@
         }
       }
     }
+  }
+
+  .flatpickr-month {
+    height: 35px;
   }
 </style>

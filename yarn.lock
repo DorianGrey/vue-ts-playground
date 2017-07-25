@@ -33,6 +33,10 @@
   dependencies:
     "@types/babel-types" "*"
 
+"@types/flatpickr@^3.0.1":
+  version "3.0.1"
+  resolved "https://registry.yarnpkg.com/@types/flatpickr/-/flatpickr-3.0.1.tgz#99bbc1bd5e322f61e72c986328816e1787362f2b"
+
 "@types/jest@^20.0.4":
   version "20.0.4"
   resolved "https://registry.yarnpkg.com/@types/jest/-/jest-20.0.4.tgz#91e2c76fbe90b3a719b5d689958f0495f005beb9"
@@ -2314,6 +2318,10 @@ flat-cache@^1.2.1:
     del "^2.0.2"
     graceful-fs "^4.1.2"
     write "^0.2.1"
+
+flatpickr@^3.0.6:
+  version "3.0.6"
+  resolved "https://registry.yarnpkg.com/flatpickr/-/flatpickr-3.0.6.tgz#81540f1a0f010fa3b96d929943b6396bbb25b1b6"
 
 flatten@^1.0.2:
   version "1.0.2"
