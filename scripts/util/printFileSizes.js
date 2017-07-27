@@ -12,10 +12,14 @@ const chalk = require("chalk");
 const path = require("path");
 const filesize = require("filesize");
 const stripAnsi = require("strip-ansi");
-const gzipsize = require("gzip-size").sync;
+const zlib = require("zlib");
 
 const paths = require("../../config/paths");
 const formatUtils = require("./formatUtil");
+
+const assetsSizeWarnLimit = 250 * 1024; // <=> 250 KB.
+const potentiallyExtractedChunkSizeLimit = 512; // <=> 1 KB.
+const gzipOpts = { level: 6 }; // This level is used by default by many servers like nginx.
 
 const assetCategories = {
   Scripts: /\.js$/,
@@ -24,6 +28,10 @@ const assetCategories = {
   Images: /\.(jpe?g|png|gif|bmp)$/,
   Fonts: /\.(woff2?|eot|ttf|svg)$/
 };
+
+function gzipsize(src) {
+  return zlib.gzipSync(src, gzipOpts).length;
+}
 
 function partition(src, predicate) {
   let res1 = [],
@@ -40,7 +48,7 @@ function partition(src, predicate) {
   return [res1, res2];
 }
 
-function printFileSizesOnAssetCategory(assetsStats) {
+function printFileSizesOnAssetCategory(assetsStats, exceptionalAssetCnt) {
   const buildFolder = paths.appBuild;
 
   const assets = assetsStats.map(asset => {
@@ -51,6 +59,7 @@ function printFileSizesOnAssetCategory(assetsStats) {
     return {
       folder: path.join(path.dirname(asset.name)),
       name: path.basename(asset.name),
+      originalFileSize,
       size: gzipSize,
       sizeLabel: {
         src: `${filesize(originalFileSize)} (src)`,
@@ -76,12 +85,30 @@ function printFileSizesOnAssetCategory(assetsStats) {
   );
 
   assets.forEach(asset => {
-    let sizeLabelSrc = alignPad(asset.sizeLabel.src, longestSrcSizeLabelLength);
-    let sizeLabelGzip = alignPad(
+    const sizeLabelSrc = alignPad(
+      asset.sizeLabel.src,
+      longestSrcSizeLabelLength
+    );
+    const sizeLabelGzip = alignPad(
       asset.sizeLabel.gzip,
       longestGzipSizeLabelLength
     );
-    let assetName = chalk.cyan(
+
+    const assetTooLarge = asset.originalFileSize > assetsSizeWarnLimit;
+    const assetMayBeExtractedChunk =
+      asset.originalFileSize < potentiallyExtractedChunkSizeLimit &&
+      !/\.map$/.test(asset.name);
+    if (assetTooLarge) {
+      exceptionalAssetCnt.tooLarge++;
+    }
+    if (assetMayBeExtractedChunk) {
+      exceptionalAssetCnt.extracted++;
+    }
+    const colorer = assetTooLarge
+      ? chalk.yellow
+      : assetMayBeExtractedChunk ? chalk.grey : chalk.cyan;
+
+    const assetName = colorer(
       alignPad(asset.name, longestFileNameSize - (asset.folder.length + 1))
     );
 
@@ -111,30 +138,66 @@ function printFileSizes(webpackStats /*, previousSizeMap*/) {
   const jsonStats = webpackStats.toJson();
   const assetsStats = jsonStats.assets;
 
+  let exceptionalAssetCnt = {
+    tooLarge: 0,
+    extracted: 0
+  };
+
   process.stdout.write(
-    formatUtils.formatNote(
-      `Emitted assets in ${chalk.cyan(path.resolve(paths.appBuild))}:`
-    ) + "\n"
+    "\n" +
+      formatUtils.formatNote(
+        `Emitted assets in ${chalk.cyan(
+          path.resolve(paths.appBuild)
+        )} (displayed gzip sizes refer to compression level=${gzipOpts.level}):`
+      ) +
+      "\n"
   );
 
-  let relevantAssets = assetsStats;
-  for (let c in assetCategories) {
-    if (assetCategories.hasOwnProperty(c)) {
-      const [_relevantAssets, nextAssets] = partition(relevantAssets, asset =>
-        assetCategories[c].test(asset.name)
-      );
-      if (_relevantAssets.length > 0) {
-        process.stdout.write(formatUtils.formatIndicator("> " + c) + "\n");
-        printFileSizesOnAssetCategory(_relevantAssets);
-        process.stdout.write("\n");
-      }
-      relevantAssets = nextAssets;
+  let remainingAssets = Object.getOwnPropertyNames(
+    assetCategories
+  ).reduce((relevantAssets, c) => {
+    const [_relevantAssets, nextAssets] = partition(relevantAssets, asset =>
+      assetCategories[c].test(asset.name)
+    );
+    if (_relevantAssets.length > 0) {
+      process.stdout.write(formatUtils.formatIndicator("> " + c) + "\n");
+      printFileSizesOnAssetCategory(_relevantAssets, exceptionalAssetCnt);
+      process.stdout.write("\n");
     }
+    return nextAssets;
+  }, assetsStats);
+
+  if (remainingAssets.length > 0) {
+    process.stdout.write(formatUtils.formatIndicator("> Others") + "\n");
+    printFileSizesOnAssetCategory(remainingAssets);
+    process.stdout.write("\n");
   }
 
-  if (relevantAssets.length > 0) {
-    process.stdout.write(formatUtils.formatIndicator("> Others") + "\n");
-    printFileSizesOnAssetCategory(relevantAssets);
+  if (exceptionalAssetCnt.tooLarge > 0) {
+    process.stdout.write(
+      formatUtils.formatWarning(
+        `${exceptionalAssetCnt.tooLarge === 1
+          ? "There is"
+          : "There are"} ${exceptionalAssetCnt.tooLarge} assets which exceed the configured size limit of ${filesize(
+          assetsSizeWarnLimit
+        )}. These are marked in ${chalk.yellow("yellow")}.`
+      ) + "\n"
+    );
+    process.stdout.write("\n");
+  }
+
+  if (exceptionalAssetCnt.extracted > 0) {
+    process.stdout.write(
+      formatUtils.formatNote(
+        `${exceptionalAssetCnt.extracted === 1
+          ? "There is"
+          : "There are"} ${exceptionalAssetCnt.extracted} assets which are smaller than the configured lower size limit of ${filesize(
+          potentiallyExtractedChunkSizeLimit
+        )}. These should be considered remains of extracted chunks and are marked in ${chalk.grey(
+          "grey"
+        )}.`
+      ) + "\n"
+    );
     process.stdout.write("\n");
   }
 }

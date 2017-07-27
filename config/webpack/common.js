@@ -244,10 +244,6 @@ module.exports = function(isDev, extractTextPluginOptions, publicUrl) {
 
     node: nodeOptions,
 
-    performance: {
-      hints: isDev ? false : "warning"
-    },
-
     resolve: {
       extensions: [".ts", ".vue", ".js"]
     },
