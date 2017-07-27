@@ -8,7 +8,7 @@ module.exports = {
     "lcov",
     "text"
   ],
-  "coverageDirectory": "./test-results/coverage",
+  "coverageDirectory": "<rootDir>/test-results/coverage",
   "globals": {
     "ts-jest": {
       "tsConfigFile": "tsconfig.test.json"

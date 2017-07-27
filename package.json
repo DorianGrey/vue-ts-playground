@@ -42,7 +42,7 @@
     "vuex": "^2.3.1"
   },
   "devDependencies": {
-    "@types/jest": "^20.0.4",
+    "@types/jest": "^20.0.5",
     "@types/webpack-env": "^1.13.0",
     "autoprefixer": "^7.1.2",
     "case-sensitive-paths-webpack-plugin": "^2.1.1",
@@ -86,7 +86,7 @@
     "stylelint-scss": "^1.5.1",
     "stylelint-webpack-plugin": "^0.9.0",
     "ts-jest": "^20.0.7",
-    "ts-loader": "^2.3.1",
+    "ts-loader": "^2.3.2",
     "tslint": "^5.5.0",
     "tslint-config-prettier": "^1.1.0",
     "typescript": "^2.4.2",
@@ -94,7 +94,7 @@
     "vue-loader": "^13.0.2",
     "vue-template-compiler": "^2.4.2",
     "vue-template-loader": "^0.3.1",
-    "webpack": "^3.3.0",
+    "webpack": "^3.4.1",
     "webpack-bundle-analyzer": "^2.8.3",
     "webpack-dev-server": "^2.6.1",
     "webpack-karma-die-hard": "^1.0.4",
