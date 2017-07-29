@@ -1,8 +1,8 @@
 <template>
   <article>
     <section>
-      <div>You entered: {{inputText}}</div>
-      <input type="text" v-model="inputText">
+      <div>{{$t('input-test.label')}}: {{inputText}}</div>
+      <input type="text" v-model="inputText" class="input">
     </section>
   </article>
 </template>

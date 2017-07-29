@@ -17,12 +17,11 @@ import TodoList from "./todoList/todoList.vue";
 import { bootloader } from "./bootloader";
 import { TODO_MODULE_NAME, TodoStateModule } from "./todoList/state/todo.state";
 
-import { BROWSER_LANGUAGE } from "./i18n/browserLanguage";
-import { DATE_TIME_FORMATS } from "./i18n/dateTimeFormats";
+import { LanguagePack, loadBrowserLanguagePack } from "./i18n/languagePack";
 
 let app: any;
 
-function main() {
+function main(languagePack: LanguagePack) {
   Vue.use(VueRouter);
   Vue.use(Vuex);
   Vue.use(VueI18n);
@@ -57,6 +56,7 @@ function main() {
       component: NotFound
     }
   ];
+
   const router = new VueRouter({
     mode: window.history.pushState ? "history" : "hash",
     routes,
@@ -77,8 +77,13 @@ function main() {
   });
 
   const i18n = new VueI18n({
-    locale: BROWSER_LANGUAGE, // set locale
-    dateTimeFormats: DATE_TIME_FORMATS
+    locale: languagePack.language, // set locale
+    dateTimeFormats: {
+      [languagePack.language]: languagePack.dateTimeFormat
+    },
+    messages: {
+      [languagePack.language]: languagePack.messages
+    }
   });
 
   app = new Vue({
@@ -91,4 +96,6 @@ function main() {
   });
 }
 
-bootloader(main);
+bootloader(() => {
+  loadBrowserLanguagePack().then(main).catch(err => console.error(err));
+});

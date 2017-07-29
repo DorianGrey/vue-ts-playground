@@ -1,0 +1,36 @@
+{
+  "header": {
+    "demo-app": "Demo App",
+    "input-test": "Input Test",
+    "todo-list": "Todo list",
+    "gallery": "Gallery"
+  },
+
+  "input-test": {
+    "label": "You have entered"
+  },
+
+  "todo-entry": {
+    "created": "Created",
+    "deadline": "Deadline",
+    "title": "Title",
+    "description": "Description",
+    "update": "Update",
+    "submit": "Submit",
+    "cancel": "Cancel"
+  },
+
+  "todo-list": {
+    "active": "Active todos",
+    "expired": "Expired todos"
+  },
+
+  "gallery": {
+    "pic-q-host": "While doing quests for in the \"Hearts of Stone\" extension...",
+    "pic-beauclair-sunset": "Sunset in Toussaint",
+    "pic-beauclair-river": "Toussaint: A view of Beauclair from river side",
+    "pic-beauclair-majoran": "Toussaint: The statue of Majoran",
+    "pic-beauclair-sunrise": "Toussaint: Beauclair after sunrise, from far distance",
+    "pic-toussaint-bhad": "Toussaint: The miniature city in the fairy land in \"Beyond Hill and Dale...\""
+  }
+}

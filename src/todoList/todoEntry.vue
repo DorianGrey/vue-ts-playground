@@ -17,8 +17,8 @@
       </div>
 
       <footer class="card-footer">
-        <div class="card-footer-item">Created: {{$d(todo.created, 'long')}}</div>
-        <div class="card-footer-item">Deadline: {{$d(todo.deadline, 'long')}}</div>
+        <div class="card-footer-item">{{$t('todo-entry.created')}}: {{$d(todo.created, 'long')}}</div>
+        <div class="card-footer-item">{{$t('todo-entry.deadline')}}: {{$d(todo.deadline, 'long')}}</div>
       </footer>
 
     </div>
@@ -28,7 +28,7 @@
     <div class="new-todo-block" v-if="editable">
       <form v-on:submit.prevent="onSubmit" novalidate>
         <input
-          placeholder="Title"
+          :placeholder="$t('todo-entry.title')"
           v-validate.initial="'required'"
           type="text"
           name="title"
@@ -37,7 +37,7 @@
           :class="{'is-danger': errors.has('title')}"
         >
         <textarea
-          placeholder="Description"
+          :placeholder="$t('todo-entry.description')"
           v-validate.initial="'required'"
           name="description"
           v-model="pendingTodo.description"
@@ -47,7 +47,7 @@
         <input
           type="text"
           v-validate.initial="'required'"
-          placeholder="Deadline"
+          :placeholder="$t('todo-entry.deadline')"
           name="deadline"
           required
           class="input"
@@ -57,10 +57,10 @@
 
         <footer class="card-footer todo-creation-controls">
           <button type="submit" class="button is-primary card-footer-item" :disabled="errors.any()">
-            {{pendingTodo.id ? 'Update' : 'Submit'}}
+            {{$t( 'todo-entry.' + (pendingTodo.id ? 'update' : 'submit'))}}
           </button>
           <button type="button" class="button is-secondary card-footer-item" @click="onCancel()">
-            Cancel
+            {{$t('todo-entry.cancel')}}
           </button>
         </footer>
       </form>

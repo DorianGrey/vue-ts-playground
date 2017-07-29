@@ -1,0 +1,36 @@
+{
+  "header": {
+    "demo-app": "Demo-Anwendung",
+    "input-test": "Eingabe-Test",
+    "todo-list": "Aufgabenliste",
+    "gallery": "Galerie"
+  },
+
+  "input-test": {
+    "label": "Du hast eingegeben"
+  },
+
+  "todo-entry": {
+    "created": "Angelegt",
+    "deadline": "Fällig bis",
+    "title": "Titel",
+    "description": "Beschreibung",
+    "update": "Aktualisieren",
+    "submit": "Erstellen",
+    "cancel": "Abbrechen"
+  },
+
+  "todo-list": {
+    "active": "Laufende Aufgaben",
+    "expired": "Abgelaufene Aufgaben"
+  },
+
+  "gallery": {
+    "pic-q-host": "Beim questen in der \"Hearts of Stone\" Erweiterung...",
+    "pic-beauclair-sunset": "Sonnenuntergang in Toussaint",
+    "pic-beauclair-river": "Toussaint: Beauclair vom Fluss aus",
+    "pic-beauclair-majoran": "Toussaint: Die Statue von Majoran",
+    "pic-beauclair-sunrise": "Toussaint: Beauclair nach Sonnenaufgang, aus großer Distanz",
+    "pic-toussaint-bhad": "Toussaint: Die Miniatur-Statd im Märchenland in \"Hinter Berg und Tal...\""
+  }
+}

@@ -1,11 +1,11 @@
 <template>
   <article>
-    <carousel-3d :controls-visible="true" :clickable="true" :height="380" :width="600">
+    <carousel-3d :controls-visible="true" :clickable="true" :height="550" :width="900">
       <slide :index="0">
         <figure>
           <img src="../static/gallery/20160709150245_1.jpg">
           <figcaption>
-            While doing quests for in the "Hearts of Stone" extension...
+            {{$t('gallery.pic-q-host')}}
           </figcaption>
         </figure>
       </slide>
@@ -14,7 +14,7 @@
         <figure>
           <img src="../static/gallery/20170319154359_1.jpg">
           <figcaption>
-            Sunset in Toussaint
+            {{$t('gallery.pic-beauclair-sunset')}}
           </figcaption>
         </figure>
       </slide>
@@ -23,7 +23,7 @@
         <figure>
           <img src="../static/gallery/20170319162423_1.jpg">
           <figcaption>
-            Toussaint: A view of Beauclair from river side
+            {{$t('gallery.pic-beauclair-river')}}
           </figcaption>
         </figure>
       </slide>
@@ -32,7 +32,7 @@
         <figure>
           <img src="../static/gallery/20170329193830_1.jpg">
           <figcaption>
-            Toussaint: The statue of Majoran
+            {{$t('gallery.pic-beauclair-majoran')}}
           </figcaption>
         </figure>
       </slide>
@@ -41,7 +41,7 @@
         <figure>
           <img src="../static/gallery/20170331194617_1.jpg">
           <figcaption>
-            Toussaint: Beauclair after sunrise, from far distance
+            {{$t('gallery.pic-beauclair-sunrise')}}
           </figcaption>
         </figure>
       </slide>
@@ -50,7 +50,7 @@
         <figure>
           <img src="../static/gallery/20170406211004_1.jpg">
           <figcaption>
-            Toussaint: The miniature city in the fairy land in "Beyond Hill and Dale..."
+            {{$t('gallery.pic-toussaint-bhad')}}
           </figcaption>
         </figure>
       </slide>

@@ -5,7 +5,7 @@
 
       <div class="nav-left nav-item app-info">
         <i class="fa fa-bookmark" aria-hidden="true"></i>
-        <span>Demo App</span>
+        <span>{{$t('header.demo-app')}}</span>
       </div>
 
       <!-- Dropdown menu for mobile (i.e. < 768px width). -->
@@ -18,15 +18,15 @@
       <div class="nav-right nav-menu" :class="{'is-active': isMenuOpen}">
         <router-link class="nav-item" to="/input-test">
           <i class="fa fa-keyboard-o" aria-hidden="true"></i>
-          Input Test
+          {{$t('header.input-test')}}
         </router-link>
         <router-link class="nav-item" to="/todo-list/42">
           <i class="fa fa-calendar" aria-hidden="true"></i>
-          Todo list
+          {{$t('header.todo-list')}}
         </router-link>
         <router-link class="nav-item" to="/gallery">
           <i class="fa fa-picture-o" aria-hidden="true"></i>
-          Gallery
+          {{$t('header.gallery')}}
         </router-link>
       </div>
     </nav>

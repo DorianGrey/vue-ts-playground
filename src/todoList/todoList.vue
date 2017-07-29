@@ -3,10 +3,10 @@
     <div class="tabs is-centered is-medium is-toggle is-fullwidth">
       <ul>
         <li :class="{'is-active': activeTab === 'active'}" @click="setActiveTab('active')">
-          <a>Active todos</a>
+          <a>{{$t('todo-list.active')}}</a>
         </li>
         <li :class="{'is-active': activeTab === 'expired'}" @click="setActiveTab('expired')">
-          <a>Expired todos</a>
+          <a>{{$t('todo-list.expired')}}</a>
         </li>
       </ul>
     </div>
