@@ -9,6 +9,7 @@ export default {
   dateTimeFormat,
   flatPickr: {
     locale: de,
+    useTimeFormat_24hrs: true,
     dateFormat: "d.m.Y",
     dateTimeFormat: "d.m.Y H:i"
   }

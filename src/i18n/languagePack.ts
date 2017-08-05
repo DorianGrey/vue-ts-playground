@@ -8,6 +8,7 @@ export interface LanguagePack {
   dateTimeFormat: DateTimeFormat;
   flatPickr: {
     locale: Locale;
+    useTimeFormat_24hrs: boolean;
     dateFormat: string;
     dateTimeFormat: string;
   };

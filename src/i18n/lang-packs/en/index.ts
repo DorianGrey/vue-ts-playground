@@ -9,6 +9,7 @@ export default {
   dateTimeFormat,
   flatPickr: {
     locale: Flatpickr.l10ns.default,
+    useTimeFormat_24hrs: false,
     dateFormat: "Y/m/d",
     dateTimeFormat: "Y/m/d H:i"
   }

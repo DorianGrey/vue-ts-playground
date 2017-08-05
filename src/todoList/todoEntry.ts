@@ -36,7 +36,6 @@ export default class TodoEntry extends Vue {
   flatpickr: Flatpickr;
   flatpickrOptions: Flatpickr.Options = {
     enableTime: true,
-    time_24hr: true, // TODO: Replace with Intl-dependent decision stuff once available.
     minDate: new Date(),
     onChange: this.setTodoDeadline.bind(this)
   };
@@ -135,6 +134,7 @@ export default class TodoEntry extends Vue {
     this.flatpickrOptions.defaultDate = (this
       .pendingTodo as TodoModel).deadline;
     this.flatpickrOptions.dateFormat = this.languagePack.flatPickr.dateTimeFormat;
+    this.flatpickrOptions.time_24hr = this.languagePack.flatPickr.useTimeFormat_24hrs;
     this.flatpickr = new Flatpickr(
       this.$el.querySelector("#deadlineInput") as HTMLElement,
       this.flatpickrOptions
