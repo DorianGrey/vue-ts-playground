@@ -4,6 +4,8 @@ import * as Flatpickr from "flatpickr";
 import { createNewTodo } from "./state/creators";
 import { TodoModel } from "./state/interfaces";
 import { TODO_MODULE_ACTIONS } from "./state/todo.state";
+import { I18N_MODULE_NAME } from "../i18n/state/i18n.state";
+import { LanguagePack } from "../i18n/languagePack";
 
 @Component
 export default class TodoEntry extends Vue {
@@ -63,6 +65,10 @@ export default class TodoEntry extends Vue {
       this.pendingTodo = { ...this.targetTodo };
       Vue.nextTick(() => this.initFlatpicker());
     }
+  }
+
+  get languagePack(): LanguagePack {
+    return this.$store.getters[`${I18N_MODULE_NAME}/currentLanguagePack`];
   }
 
   setTodoDeadline(selectedDates: Date[]) {
@@ -128,6 +134,7 @@ export default class TodoEntry extends Vue {
   private initFlatpicker(): void {
     this.flatpickrOptions.defaultDate = (this
       .pendingTodo as TodoModel).deadline;
+    this.flatpickrOptions.dateFormat = this.languagePack.flatPickr.dateTimeFormat;
     this.flatpickr = new Flatpickr(
       this.$el.querySelector("#deadlineInput") as HTMLElement,
       this.flatpickrOptions

@@ -7,5 +7,9 @@ export default {
   language: "en",
   messages,
   dateTimeFormat,
-  flatPickrLocale: Flatpickr.l10ns.default
+  flatPickr: {
+    locale: Flatpickr.l10ns.default,
+    dateFormat: "Y/m/d",
+    dateTimeFormat: "Y/m/d H:i"
+  }
 } as LanguagePack;

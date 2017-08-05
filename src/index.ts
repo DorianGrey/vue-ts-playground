@@ -19,6 +19,7 @@ import { TODO_MODULE_NAME, TodoStateModule } from "./todoList/state/todo.state";
 
 import { LanguagePack, loadBrowserLanguagePack } from "./i18n/languagePack";
 import * as Flatpickr from "flatpickr";
+import { I18N_MODULE_NAME, I18nStateModule } from "./i18n/state/i18n.state";
 
 let app: any;
 
@@ -73,7 +74,8 @@ function main(languagePack: LanguagePack) {
   const store = new Vuex.Store({
     strict: process.env.NODE_ENV !== "production",
     modules: {
-      [TODO_MODULE_NAME]: new TodoStateModule()
+      [TODO_MODULE_NAME]: new TodoStateModule(),
+      [I18N_MODULE_NAME]: new I18nStateModule(languagePack)
     }
   });
 
@@ -87,7 +89,7 @@ function main(languagePack: LanguagePack) {
     }
   });
 
-  Flatpickr.localize(languagePack.flatPickrLocale);
+  Flatpickr.localize(languagePack.flatPickr.locale);
 
   app = new Vue({
     el: "#app",

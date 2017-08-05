@@ -6,7 +6,11 @@ export interface LanguagePack {
   language: string;
   messages: LocaleMessageObject;
   dateTimeFormat: DateTimeFormat;
-  flatPickrLocale: Locale;
+  flatPickr: {
+    locale: Locale;
+    dateFormat: string;
+    dateTimeFormat: string;
+  };
 }
 
 export function loadLanguagePack(lang: string): Promise<LanguagePack> {
