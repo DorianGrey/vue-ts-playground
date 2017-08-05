@@ -34,7 +34,6 @@ export default class TodoEntry extends Vue {
   flatpickr: Flatpickr;
   flatpickrOptions: Flatpickr.Options = {
     enableTime: true,
-    locale: "en", // TODO: Replace with Intl-dependent decision stuff once available. Requires lang pack for flatpickr.
     time_24hr: true, // TODO: Replace with Intl-dependent decision stuff once available.
     minDate: new Date(),
     onChange: this.setTodoDeadline.bind(this)

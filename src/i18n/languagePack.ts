@@ -1,10 +1,12 @@
 import { DateTimeFormat, LocaleMessageObject } from "vue-i18n";
 import { BROWSER_LANGUAGE } from "./browserLanguage";
+import { Locale } from "flatpickr";
 
 export interface LanguagePack {
   language: string;
   messages: LocaleMessageObject;
   dateTimeFormat: DateTimeFormat;
+  flatPickrLocale: Locale;
 }
 
 export function loadLanguagePack(lang: string): Promise<LanguagePack> {

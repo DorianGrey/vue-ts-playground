@@ -18,6 +18,7 @@ import { bootloader } from "./bootloader";
 import { TODO_MODULE_NAME, TodoStateModule } from "./todoList/state/todo.state";
 
 import { LanguagePack, loadBrowserLanguagePack } from "./i18n/languagePack";
+import * as Flatpickr from "flatpickr";
 
 let app: any;
 
@@ -85,6 +86,8 @@ function main(languagePack: LanguagePack) {
       [languagePack.language]: languagePack.messages
     }
   });
+
+  Flatpickr.localize(languagePack.flatPickrLocale);
 
   app = new Vue({
     el: "#app",
