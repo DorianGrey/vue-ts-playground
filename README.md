@@ -1,5 +1,5 @@
 # vue-ts-playground
-
+[![Build Status](https://travis-ci.org/DorianGrey/vue-ts-playground.svg?branch=master)](https://travis-ci.org/DorianGrey/vue-ts-playground)
 [![styled with prettier](https://img.shields.io/badge/styled_with-prettier-ff69b4.svg)](https://github.com/prettier/prettier)
 
 Playground with vue.js and typescript.
