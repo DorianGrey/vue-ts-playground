@@ -15,14 +15,13 @@ const BundleAnalyzerPlugin = require("webpack-bundle-analyzer")
   .BundleAnalyzerPlugin;
 const OptimizeCssAssetsPlugin = require("optimize-css-assets-webpack-plugin");
 const PurifyCSSPlugin = require("purifycss-webpack");
-const glob = require("glob-all");
+const WorkboxPlugin = require("workbox-webpack-plugin");
+const glob = require("globby");
 
 const paths = require("../paths");
 const commonConfig = require("./common");
 
-const publicPath = "/";
-const shouldUseRelativeAssetPaths = publicPath === "./";
-const publicUrl = publicPath.slice(0, -1);
+const shouldUseRelativeAssetPaths = paths.publicPath === "./";
 
 if (process.env.NODE_ENV !== "production") {
   throw new Error("Production builds must have NODE_ENV=production.");
@@ -41,88 +40,100 @@ const extractTextPluginOptions = shouldUseRelativeAssetPaths
   : {};
 
 module.exports = function() {
-  return merge.smart(commonConfig(false, extractTextPluginOptions, publicUrl), {
-    bail: true,
-    entry: paths.appIndex,
+  return merge.smart(
+    commonConfig(false, extractTextPluginOptions, paths.publicUrl),
+    {
+      bail: true,
+      entry: paths.appIndex,
 
-    // TODO: Handle https://vue-loader.vuejs.org/en/configurations/extract-css.html !
+      // TODO: Handle https://vue-loader.vuejs.org/en/configurations/extract-css.html !
 
-    output: {
-      path: paths.appBuild,
-      filename: "static/js/[name].[chunkhash:8].js",
-      chunkFilename: "static/js/[name].[chunkhash:8].chunk.js",
-      publicPath: publicPath,
-      devtoolModuleFilenameTemplate: info =>
-        path.relative(paths.appSrc, info.absoluteResourcePath)
-    },
+      output: {
+        path: paths.appBuild,
+        filename: "static/js/[name].[chunkhash:8].js",
+        chunkFilename: "static/js/[name].[chunkhash:8].chunk.js",
+        publicPath: paths.publicPath,
+        devtoolModuleFilenameTemplate: info =>
+          path.relative(paths.appSrc, info.absoluteResourcePath)
+      },
 
-    plugins: [
-      // Plugin to let the whole build fail on any error; i.e. do not tolerate these
-      new NoEmitOnErrorsPlugin(),
-      // For more consistent module IDs
-      new HashedModuleIdsPlugin(),
-      // Creates a dynamic vendor chunk by including all entries from the `node_modules` directory.
-      new CommonsChunkPlugin({
-        name: "vendor",
-        minChunks: ({ resource }) => /node_modules/.test(resource)
-      }),
-      // Externalizes the application manifest.
-      new CommonsChunkPlugin("manifest"),
-      // Generate a manifest file which contains a mapping of all asset filenames
-      // to their corresponding output file so that tools can pick it up without
-      // having to parse `index.html`.
-      // Extracts the chunk manifest and inlines it into the template, while retaining
-      // the original file.
-      new InlineChunkManifestHtmlWebpackPlugin({
-        filename: "asset-manifest.json",
-        dropAsset: true
-      }),
-      new UglifyJsPlugin({
-        compress: {
-          warnings: false,
-          // This feature has been reported as buggy a few times, such as:
-          // https://github.com/mishoo/UglifyJS2/issues/1964
-          // We'll wait with enabling it by default until it is more solid.
-          reduce_vars: false
-        },
-        output: {
-          comments: false
-        },
-        sourceMap: true
-      }),
-      // Extract CSS, purify, dedupe and optimize it.
-      new ExtractTextPlugin({
-        filename: cssFilename
-      }),
-      new PurifyCSSPlugin({
-        paths: glob.sync([
-          paths.resolveApp("src/index.html"),
-          paths.resolveApp("src/**/*.vue"),
-          paths.resolveApp("node_modules/flatpickr/**/*.js")
-        ])
-      }),
-      new OptimizeCssAssetsPlugin({
-        cssProcessor: require("cssnano"),
-        cssProcessorOptions: { discardComments: { removeAll: true } },
-        canPrint: true
-      }),
-      // Generate some information about the generated bundle size
-      new BundleAnalyzerPlugin({
-        analyzerMode: "static",
-        reportFilename: path.join(
-          paths.appBuildStats,
-          "bundle-size-report.html"
-        ),
-        openAnalyzer: false,
-        generateStatsFile: true,
-        statsFilename: path.join(
-          paths.appBuildStats,
-          "bundle-size-report.json"
-        ),
-        logLevel: "silent"
-      }),
+      plugins: [
+        // Plugin to let the whole build fail on any error; i.e. do not tolerate these
+        new NoEmitOnErrorsPlugin(),
+        // For more consistent module IDs
+        new HashedModuleIdsPlugin(),
+        // Creates a dynamic vendor chunk by including all entries from the `node_modules` directory.
+        new CommonsChunkPlugin({
+          name: "vendor",
+          minChunks: ({ resource }) => /node_modules/.test(resource)
+        }),
+        // Externalizes the application manifest.
+        new CommonsChunkPlugin("manifest"),
+        // Generate a manifest file which contains a mapping of all asset filenames
+        // to their corresponding output file so that tools can pick it up without
+        // having to parse `index.html`.
+        // Extracts the chunk manifest and inlines it into the template, while retaining
+        // the original file.
+        new InlineChunkManifestHtmlWebpackPlugin({
+          filename: "asset-manifest.json",
+          dropAsset: true
+        }),
+        // Extract CSS, purify, dedupe and optimize it.
+        new ExtractTextPlugin({
+          filename: cssFilename
+        }),
+        new PurifyCSSPlugin({
+          paths: glob.sync([
+            paths.resolveApp("src/index.html"),
+            paths.resolveApp("src/**/*.vue"),
+            paths.resolveApp("node_modules/flatpickr/**/*.js")
+          ])
+        }),
+        new OptimizeCssAssetsPlugin({
+          cssProcessor: require("cssnano"),
+          cssProcessorOptions: { discardComments: { removeAll: true } },
+          canPrint: true
+        }),
+        // Generate some information about the generated bundle size
+        new BundleAnalyzerPlugin({
+          analyzerMode: "static",
+          reportFilename: path.join(
+            paths.appBuildStats,
+            "bundle-size-report.html"
+          ),
+          openAnalyzer: false,
+          generateStatsFile: true,
+          statsFilename: path.join(
+            paths.appBuildStats,
+            "bundle-size-report.json"
+          ),
+          logLevel: "silent"
+        }),
 
-      new ModuleConcatenationPlugin()
-    ]
-  });
+        new ModuleConcatenationPlugin(),
+
+        new WorkboxPlugin({
+          globDirectory: paths.appBuild,
+          globPatterns: ["**/*.{html,js,css,jpg,eot,svg,woff2,woff,ttf}"],
+          globIgnores: ["**/*.map"],
+          swDest: path.join(paths.appBuild, "service-worker.js"),
+          swSrc: path.join(paths.appSrc, "service-worker.js")
+        }),
+
+        new UglifyJsPlugin({
+          compress: {
+            warnings: false,
+            // This feature has been reported as buggy a few times, such as:
+            // https://github.com/mishoo/UglifyJS2/issues/1964
+            // We'll wait with enabling it by default until it is more solid.
+            reduce_vars: false
+          },
+          output: {
+            comments: false
+          },
+          sourceMap: true
+        })
+      ]
+    }
+  );
 };

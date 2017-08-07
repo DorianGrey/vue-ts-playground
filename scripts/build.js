@@ -2,6 +2,9 @@
 
 process.env.NODE_ENV = "production";
 
+const path = require("path");
+const glob = require("globby");
+
 const renderLoadingAnimation = require("./util/renderLoading");
 const formatUtil = require("./util/formatUtil");
 const statsFormatter = require("./util/statsFormatter");
@@ -42,14 +45,30 @@ renderLoadingAnimation()
     // const outputOptions = presetToOptions("none");
     fs.emptyDirSync(paths.appBuild);
     fs.emptyDirSync(paths.appBuildStats);
+
+    writer(formatUtil.formatInfo("Copying non-referenced static files...\n"));
     fs.copySync(paths.appPublic, paths.appBuild, {
       dereference: true,
       filter: file => file !== paths.appHtml
     });
+    const pa = require.resolve("workbox-sw"),
+      swTargetPath = path.join(paths.appBuild, path.basename(pa));
+    fs.copySync(pa, swTargetPath, {
+      dereference: true
+    });
 
-    writer(
-      formatUtil.formatInfo("Loading animation rendered, processing build...\n")
+    // Determine copied paths, and add the generated service worker stuff as well
+    // used for properly generating an output.
+    const staticAssets = glob
+      .sync([paths.appPublic + "**/*", `!${paths.appPublic}/index.html`])
+      .map(p => p.replace(paths.appPublic, "."));
+
+    staticAssets.push(
+      swTargetPath.replace(paths.appBuild, ""),
+      "service-worker.js"
     );
+
+    writer(formatUtil.formatInfo("Processing build...\n"));
 
     return new Promise((resolve, reject) => {
       compiler.run((err, stats) => {
@@ -64,8 +83,9 @@ renderLoadingAnimation()
         if (formattedStats.errors.length) {
           return reject(formattedStats.errors);
         } else {
-          printFileSizes(stats);
+          printFileSizes(stats, staticAssets);
           printHostingInformation(hasYarn);
+
           resolve();
         }
       });

@@ -21,7 +21,7 @@ fs.pathExists(paths.appBuild).then(exists => {
     process.exit(1);
   } else {
     // Enter your proxy rules here.
-    const serverPort = 4000;
+    const serverPort = 4004;
     const app = express();
     const router = express.Router();
     const proxy = httpProxy.createProxyServer();

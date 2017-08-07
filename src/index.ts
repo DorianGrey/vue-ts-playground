@@ -6,6 +6,8 @@ import VueI18n from "vue-i18n";
 import VueRouter, { RouteConfig } from "vue-router";
 import Vuex from "vuex";
 
+import registerServiceWorker from "./registerServiceWorker";
+
 // More "fancyness" stuff.
 import VueCarousel3d from "vue-carousel-3d";
 
@@ -99,6 +101,10 @@ function main(languagePack: LanguagePack) {
     router,
     store
   });
+
+  if (process.env.NODE_ENV === "production") {
+    registerServiceWorker();
+  }
 }
 
 bootloader(() => {

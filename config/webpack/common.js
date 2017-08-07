@@ -1,6 +1,6 @@
 "use strict";
 
-const { DefinePlugin } = require("webpack");
+const { EnvironmentPlugin } = require("webpack");
 const chalk = require("chalk");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const ExtractTextPlugin = require("extract-text-webpack-plugin");
@@ -255,10 +255,9 @@ module.exports = function(isDev, extractTextPluginOptions, publicUrl) {
     plugins: [
       PLUGIN_HTML(isDev, publicUrl),
       new CaseSensitivePathsPlugin(),
-      new DefinePlugin({
-        "process.env": {
-          NODE_ENV: JSON.stringify(isDev ? "development" : "production")
-        }
+      new EnvironmentPlugin({
+        NODE_ENV: isDev ? "development" : "production",
+        PUBLIC_URL: publicUrl
       }),
 
       new ForkTsCheckerWebpackPlugin({

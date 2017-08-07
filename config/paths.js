@@ -5,6 +5,9 @@ const appDirectory = fs.realpathSync(process.cwd());
 const resolveApp = (...relativePath) =>
   path.resolve(appDirectory, ...relativePath);
 
+const publicPath = "/";
+const publicUrl = publicPath.slice(0, -1);
+
 module.exports = {
   resolveApp: resolveApp,
   appPublic: resolveApp("public"),
@@ -14,5 +17,7 @@ module.exports = {
   appIndex: resolveApp("src/index.ts"),
   appHtml: resolveApp("public/index.html"),
   appGenerated: resolveApp("src/generated"),
-  yarnLockFile: resolveApp("yarn.lock")
+  yarnLockFile: resolveApp("yarn.lock"),
+  publicPath,
+  publicUrl
 };
