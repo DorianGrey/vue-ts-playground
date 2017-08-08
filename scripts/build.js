@@ -52,8 +52,14 @@ renderLoadingAnimation()
       filter: file => file !== paths.appHtml
     });
     const pa = require.resolve("workbox-sw"),
-      swTargetPath = path.join(paths.appBuild, path.basename(pa));
+      swTargetPath = path.join(paths.appBuild, path.basename(pa)),
+      paMap = pa + ".map",
+      swMapPath = path.join(paths.appBuild, path.basename(pa) + ".map");
+
     fs.copySync(pa, swTargetPath, {
+      dereference: true
+    });
+    fs.copySync(paMap, swMapPath, {
       dereference: true
     });
 
@@ -65,6 +71,7 @@ renderLoadingAnimation()
 
     staticAssets.push(
       swTargetPath.replace(`${paths.appBuild}/`, ""),
+      swMapPath.replace(`${paths.appBuild}/`, ""),
       "service-worker.js"
     );
 

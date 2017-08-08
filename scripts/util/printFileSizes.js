@@ -22,6 +22,7 @@ const potentiallyExtractedChunkSizeLimit = 512; // <=> 1 KB.
 const gzipOpts = { level: 6 }; // This level is used by default by many servers like nginx.
 
 const assetCategories = {
+  "Service worker": /(workbox|service-worker).*\.js$/,
   Scripts: /\.js$/,
   Styles: /\.css$/,
   "Source maps": /\.map$/,
