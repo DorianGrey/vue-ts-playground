@@ -61,10 +61,10 @@ renderLoadingAnimation()
     // used for properly generating an output.
     const staticAssets = glob
       .sync([paths.appPublic + "**/*", `!${paths.appPublic}/index.html`])
-      .map(p => p.replace(paths.appPublic, "."));
+      .map(p => p.replace(`${paths.appPublic}/`, ""));
 
     staticAssets.push(
-      swTargetPath.replace(paths.appBuild, ""),
+      swTargetPath.replace(`${paths.appBuild}/`, ""),
       "service-worker.js"
     );
 
