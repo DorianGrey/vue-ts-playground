@@ -1,56 +1,11 @@
 <template>
   <article>
-    <carousel-3d :controls-visible="true" :clickable="true" :height="550" :width="900">
-      <slide :index="0">
+    <carousel-3d :controls-visible="true" :clickable="true" :height="500" :width="900">
+      <slide v-for="(s, idx) in imgSlides" :index="idx" :key="s.src">
         <figure>
-          <img src="../static/gallery/20160709150245_1.jpg">
+          <img :src="s.src">
           <figcaption>
-            {{$t('gallery.pic-q-host')}}
-          </figcaption>
-        </figure>
-      </slide>
-
-      <slide :index="1">
-        <figure>
-          <img src="../static/gallery/20170319154359_1.jpg">
-          <figcaption>
-            {{$t('gallery.pic-beauclair-sunset')}}
-          </figcaption>
-        </figure>
-      </slide>
-
-      <slide :index="2">
-        <figure>
-          <img src="../static/gallery/20170319162423_1.jpg">
-          <figcaption>
-            {{$t('gallery.pic-beauclair-river')}}
-          </figcaption>
-        </figure>
-      </slide>
-
-      <slide :index="3">
-        <figure>
-          <img src="../static/gallery/20170329193830_1.jpg">
-          <figcaption>
-            {{$t('gallery.pic-beauclair-majoran')}}
-          </figcaption>
-        </figure>
-      </slide>
-
-      <slide :index="4">
-        <figure>
-          <img src="../static/gallery/20170331194617_1.jpg">
-          <figcaption>
-            {{$t('gallery.pic-beauclair-sunrise')}}
-          </figcaption>
-        </figure>
-      </slide>
-
-      <slide :index="5">
-        <figure>
-          <img src="../static/gallery/20170406211004_1.jpg">
-          <figcaption>
-            {{$t('gallery.pic-toussaint-bhad')}}
+            {{$t(s.desc)}}
           </figcaption>
         </figure>
       </slide>
