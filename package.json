@@ -24,8 +24,8 @@
     ]
   },
   "dependencies": {
-    "@types/flatpickr": "^3.0.1",
-    "@types/lodash-es": "^4.14.5",
+    "@types/flatpickr": "^3.0.2",
+    "@types/lodash-es": "^4.14.6",
     "av-ts": "^0.9.0",
     "bulma": "^0.4.4",
     "bulmaswatch": "^0.4.4",
@@ -93,9 +93,9 @@
     "vue-loader": "^13.0.4",
     "vue-template-compiler": "^2.4.2",
     "vue-template-loader": "^0.3.1",
-    "webpack": "^3.4.1",
+    "webpack": "^3.5.1",
     "webpack-bundle-analyzer": "^2.9.0",
-    "webpack-dev-server": "^2.6.1",
+    "webpack-dev-server": "^2.7.1",
     "webpack-merge": "^4.1.0",
     "workbox-webpack-plugin": "^1.2.0"
   }
