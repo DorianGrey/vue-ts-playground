@@ -59,7 +59,7 @@
           <button type="submit" class="button is-primary card-footer-item" :disabled="errors.any()">
             {{$t( 'todo-entry.' + (pendingTodo.id ? 'update' : 'submit'))}}
           </button>
-          <button type="button" class="button is-secondary card-footer-item" @click="onCancel()">
+          <button type="button" class="button is-warning card-footer-item" @click="onCancel()">
             {{$t('todo-entry.cancel')}}
           </button>
         </footer>
@@ -96,6 +96,11 @@
         &.invalid {
           box-shadow: 0 0 6px $color-red;
         }
+      }
+
+      .todo-creation-controls button {
+        padding-bottom: 0;
+        padding-top: 0;
       }
     }
   }

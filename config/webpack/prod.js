@@ -114,7 +114,7 @@ module.exports = function() {
 
         new WorkboxPlugin({
           globDirectory: paths.appBuild,
-          globPatterns: ["**/*.{html,js,css,jpg,eot,svg,woff2,woff,ttf}"],
+          globPatterns: ["**/*.{html,js,css,jpg,eot,svg,woff2,woff,ttf,json}"],
           globIgnores: ["**/*.map"],
           swDest: path.join(paths.appBuild, "service-worker.js"),
           swSrc: path.join(paths.appSrc, "service-worker.js")

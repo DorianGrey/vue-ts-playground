@@ -15,7 +15,7 @@
     <div v-if="activeTab === 'active'">
       <todo-entry v-for="todo in todoList" :key="todo.id" :todo="todo"></todo-entry>
 
-      <button class="button is-secondary new-todo" @click="showNewTodoBlock" v-if="!newTodoEditable">
+      <button class="button is-light new-todo" @click="showNewTodoBlock" v-if="!newTodoEditable">
         <i class="fa fa-plus-circle"></i>
       </button>
 

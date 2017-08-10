@@ -4,6 +4,7 @@ process.env.NODE_ENV = "production";
 
 const path = require("path");
 const glob = require("globby");
+const shelljs = require("shelljs");
 
 const renderLoadingAnimation = require("./util/renderLoading");
 const formatUtil = require("./util/formatUtil");
@@ -62,6 +63,14 @@ renderLoadingAnimation()
     fs.copySync(paMap, swMapPath, {
       dereference: true
     });
+
+    // Update service-worker script to properly update its referenced Workbox.js version.
+    shelljs.sed(
+      "-i",
+      /workbox-sw\.prod\.v\d.\d.\d\.js/i,
+      path.basename(pa),
+      path.resolve(paths.appSrc, "service-worker.js")
+    );
 
     // Determine copied paths, and add the generated service worker stuff as well
     // used for properly generating an output.
