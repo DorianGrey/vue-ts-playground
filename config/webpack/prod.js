@@ -86,7 +86,8 @@ module.exports = function() {
           paths: glob.sync([
             paths.resolveApp("src/index.html"),
             paths.resolveApp("src/**/*.vue"),
-            paths.resolveApp("node_modules/flatpickr/**/*.js")
+            paths.resolveApp("node_modules/flatpickr/**/*.js"),
+            paths.resolveApp("node_modules/buefy/src/components/Snackbar.vue")
           ])
         }),
         new OptimizeCssAssetsPlugin({

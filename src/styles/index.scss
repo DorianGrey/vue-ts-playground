@@ -30,6 +30,7 @@ $family-sans-serif: $font-family-sans-serif;
 @import "../../node_modules/sanitize.css/sanitize";
 @import "../../node_modules/font-awesome/scss/font-awesome";
 @import "bulma-cyborg/bulma-custom";
+@import "../../node_modules/buefy/src/scss/buefy";
 @import "./colors";
 
 // From bootstrap v4's reboot config:

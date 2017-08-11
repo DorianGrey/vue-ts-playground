@@ -238,7 +238,15 @@ module.exports = function(isDev, extractTextPluginOptions, publicUrl) {
         },
         RULE_SCSS(isDev, extractTextPluginOptions),
         RULE_WEBFONTS(),
-        RULE_IMAGES(isDev)
+        RULE_IMAGES(isDev),
+
+        {
+          test: /\.js$/,
+          include: /buefy/,
+          use: {
+            loader: require.resolve("babel-loader")
+          }
+        }
       ]
     },
 
