@@ -8,7 +8,9 @@
 // To learn more about the benefits of this model, read https://goo.gl/KwvDNy.
 // This link also includes instructions on opting out of this behavior.
 
-export default function register() {
+import { SnackbarService } from "buefy";
+
+export default function register($snackbar: SnackbarService) {
   if (process.env.NODE_ENV === "production" && "serviceWorker" in navigator) {
     window.addEventListener("load", () => {
       const swUrl = `${process.env.PUBLIC_URL}/service-worker.js`;
@@ -28,19 +30,36 @@ export default function register() {
                   // the fresh content will have been added to the cache.
                   // It's the perfect time to display a "New content is
                   // available; please refresh." message in your web app.
-                  console.log("New content is available; please refresh."); // tslint:disable-line
+                  $snackbar.open({
+                    message: "New content is available; please refresh.",
+                    type: "is-success",
+                    onAction: () => {
+                      location.reload(true);
+                    },
+                    actionText: "Reload",
+                    position: "is-bottom",
+                    duration: 60000
+                  });
                 } else {
                   // At this point, everything has been precached.
                   // It's the perfect time to display a
                   // "Content is cached for offline use." message.
-                  console.log("Content is cached for offline use."); // tslint:disable-line
+                  $snackbar.open({
+                    message: "Content is cached for offline use.",
+                    actionText: null,
+                    position: "is-bottom"
+                  });
                 }
               }
             };
           };
         })
         .catch(error => {
-          console.error("Error during service worker registration:", error); // tslint:disable-line
+          $snackbar.open({
+            message: `Error during service worker registration: ${error}`,
+            type: "is-danger",
+            position: "is-bottom"
+          });
         });
     });
   }

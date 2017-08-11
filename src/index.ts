@@ -1,5 +1,6 @@
 import "./styles/index.scss";
 
+import Snackbar from "buefy/src/components/snackbar";
 import VeeValidate from "vee-validate";
 import Vue, { CreateElement } from "vue";
 import VueI18n from "vue-i18n";
@@ -31,6 +32,13 @@ function main(languagePack: LanguagePack) {
   Vue.use(VueI18n);
   Vue.use(VeeValidate); // TODO: Attempt more strict typing.
   Vue.use(VueCarousel3d);
+  // TODO: Figure out if we can pick up particular elements, but still using the config.
+  // Also, some kind of tree-shaking would be likely ...
+  // Vue.use(Buefy, {
+  //   defaultIconPack: "fa"
+  // });
+
+  Vue.prototype.$snackbar = Snackbar;
 
   // Router configuration.
   const routes: RouteConfig[] = [
@@ -103,7 +111,7 @@ function main(languagePack: LanguagePack) {
   });
 
   if (process.env.NODE_ENV === "production") {
-    registerServiceWorker();
+    registerServiceWorker(app.$snackbar);
   }
 }
 

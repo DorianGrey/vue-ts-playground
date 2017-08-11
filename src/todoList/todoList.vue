@@ -41,8 +41,8 @@
   }
 
   .new-todo {
-    width: 50%;
-    min-width: $min-page-width;
+    min-width: 250px;
+    max-width: 900px;
     margin: auto;
     font-size: 3em;
     text-align: center;
