@@ -111,7 +111,7 @@ function main(languagePack: LanguagePack) {
   });
 
   if (process.env.NODE_ENV === "production") {
-    registerServiceWorker(app.$snackbar);
+    registerServiceWorker(app.$snackbar, app.$t.bind(app));
   }
 }
 

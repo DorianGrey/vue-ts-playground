@@ -32,5 +32,12 @@
     "pic-beauclair-majoran": "Toussaint: The statue of Majoran",
     "pic-beauclair-sunrise": "Toussaint: Beauclair after sunrise, from far distance",
     "pic-toussaint-bhad": "Toussaint: The miniature city in the fairy land in \"Beyond Hill and Dale...\""
+  },
+
+  "service-worker": {
+    "new-content":"New content is available.",
+    "reload": "Refresh",
+    "is-cached": "Content is cached for offline use.",
+    "failed-cache": "Offline mode could not be enabled."
   }
 }

@@ -6,6 +6,7 @@ const compression = require("compression");
 const path = require("path");
 const httpProxy = require("http-proxy");
 const fs = require("fs-extra");
+const formatUtil = require("../scripts/util/formatUtil");
 
 const paths = require("../config/paths");
 
@@ -45,11 +46,15 @@ fs.pathExists(paths.appBuild).then(exists => {
     );
 
     app.listen(serverPort, () => {
-      console.log(
-        `Serving from directories ${chalk.cyan(serveDirs.join(", "))}...`
+      process.stdout.write(
+        formatUtil.formatInfo(
+          `Serving from directories ${chalk.cyan(serveDirs.join(", "))} ...\n`
+        )
       );
-      console.info(
-        `Listening on ${chalk.cyan(`http://localhost:${serverPort}`)} ...`
+      process.stdout.write(
+        formatUtil.formatInfo(
+          `Listening on ${chalk.cyan(`http://localhost:${serverPort}`)} ...\n`
+        )
       );
     });
   }

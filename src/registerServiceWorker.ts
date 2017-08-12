@@ -9,8 +9,12 @@
 // This link also includes instructions on opting out of this behavior.
 
 import { SnackbarService } from "buefy";
+import VueI18n from "vue-i18n";
 
-export default function register($snackbar: SnackbarService) {
+export default function register(
+  $snackbar: SnackbarService,
+  $t: typeof VueI18n.prototype.t
+) {
   if (process.env.NODE_ENV === "production" && "serviceWorker" in navigator) {
     window.addEventListener("load", () => {
       const swUrl = `${process.env.PUBLIC_URL}/service-worker.js`;
@@ -31,12 +35,12 @@ export default function register($snackbar: SnackbarService) {
                   // It's the perfect time to display a "New content is
                   // available; please refresh." message in your web app.
                   $snackbar.open({
-                    message: "New content is available; please refresh.",
+                    message: $t("service-worker.new-content").toString(),
                     type: "is-success",
                     onAction: () => {
                       location.reload(true);
                     },
-                    actionText: "Reload",
+                    actionText: $t("service-worker.reload").toString(),
                     position: "is-bottom",
                     duration: 60000
                   });
@@ -45,9 +49,10 @@ export default function register($snackbar: SnackbarService) {
                   // It's the perfect time to display a
                   // "Content is cached for offline use." message.
                   $snackbar.open({
-                    message: "Content is cached for offline use.",
+                    message: $t("service-worker.is-cached").toString(),
                     actionText: null,
-                    position: "is-bottom"
+                    position: "is-bottom",
+                    duration: 5000
                   });
                 }
               }
@@ -56,10 +61,12 @@ export default function register($snackbar: SnackbarService) {
         })
         .catch(error => {
           $snackbar.open({
-            message: `Error during service worker registration: ${error}`,
+            message: $t("service-worker.failed-cache").toString(),
             type: "is-danger",
-            position: "is-bottom"
+            position: "is-bottom",
+            duration: 10000
           });
+          console.warn(error);
         });
     });
   }

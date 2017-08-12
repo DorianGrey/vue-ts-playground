@@ -32,5 +32,12 @@
     "pic-beauclair-majoran": "Toussaint: Die Statue von Majoran",
     "pic-beauclair-sunrise": "Toussaint: Beauclair nach Sonnenaufgang, aus großer Distanz",
     "pic-toussaint-bhad": "Toussaint: Die Miniatur-Statd im Märchenland in \"Hinter Berg und Tal...\""
+  },
+
+  "service-worker": {
+    "new-content":"Neue Inhalte sind verfügbar.",
+    "reload": "Aktualisieren",
+    "is-cached": "Inhalte sind für Offline-Nutzung bereit.",
+    "failed-cache": "Offline-Modus konnte nicht aktiviert werden."
   }
 }
