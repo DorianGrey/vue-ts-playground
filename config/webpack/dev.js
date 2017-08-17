@@ -6,12 +6,11 @@ const { NoEmitOnErrorsPlugin } = require("webpack");
 const HotModuleReplacementPlugin = require("webpack/lib/HotModuleReplacementPlugin");
 const NamedModulesPlugin = require("webpack/lib/NamedModulesPlugin");
 const merge = require("webpack-merge");
-const FriendlyErrorsWebpackPlugin = require("friendly-errors-webpack-plugin");
 
+const ErrorFormatterPlugin = require("../webpack/plugins/ErrorFormatterPlugin");
 const paths = require("../paths");
 const commonConfig = require("./common");
 const { DEFAULT_PORT, HOST, PUBLIC_ADDRESS } = require("../hostInfo");
-const { transform, format } = require("./pluginUtils/friendlyErrors");
 
 const publicPath = "/";
 const publicUrl = "";
@@ -43,18 +42,14 @@ module.exports = function() {
         new NamedModulesPlugin(),
         new HotModuleReplacementPlugin(),
         new NoEmitOnErrorsPlugin(),
-        new FriendlyErrorsWebpackPlugin({
-          compilationSuccessInfo: {
-            messages: [
-              `Development server is available at ${chalk.cyan(
-                `${HOST}:${DEFAULT_PORT}`
-              )} (public at ${chalk.cyan(
-                `${PUBLIC_ADDRESS}:${DEFAULT_PORT}`
-              )})...`
-            ]
-          },
-          additionalTransformers: [transform],
-          additionalFormatters: [format]
+        new ErrorFormatterPlugin({
+          successMessages: [
+            `Development server is available at:
+            
+                Local: ${chalk.cyan(`${HOST}:${DEFAULT_PORT}`)}
+                Public: ${chalk.cyan(`${PUBLIC_ADDRESS}:${DEFAULT_PORT}`)}
+            `
+          ]
         })
       ]
     }

@@ -23,6 +23,10 @@ exports.formatError = function(text) {
   return `${chalk.bgRed.black("", "ERROR", "")} ${text}`;
 };
 
+exports.formatSuccess = function(text) {
+  return `${chalk.bgGreen.black("", "SUCCESS", "")} ${text}`;
+};
+
 exports.cls = function() {
   "use strict";
   if (process.stdout.isTTY) {
@@ -32,6 +36,12 @@ exports.cls = function() {
     readline.cursorTo(process.stdout, 0, 0);
     readline.clearScreenDown(process.stdout);
   }
+};
+
+exports.hardCls = function() {
+  process.stdout.write(
+    process.platform === "win32" ? "\x1Bc" : "\x1B[2J\x1B[3J\x1B[H"
+  );
 };
 
 exports.formatFirstLineMessage = function(text) {

@@ -272,13 +272,14 @@ module.exports = function(isDev, extractTextPluginOptions, publicUrl) {
         watch: "./src",
         tsconfig: "./tsconfig.json",
         tslint: "./tslint.json",
-        async: false,
+        async: isDev,
         formatter: "codeframe"
       }),
 
       new StyleLintPlugin(styleLintConfig),
 
       new ProgressBarPlugin({
+        clear: true,
         complete: ".",
         format: `${formatUtil.formatIndicator(">")}${chalk.cyan(
           ":bar"
