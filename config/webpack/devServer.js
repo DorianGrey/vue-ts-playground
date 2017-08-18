@@ -2,7 +2,7 @@
 
 const paths = require("../paths");
 
-module.exports = function(selectedHost, publicHost, port) {
+module.exports = function(publicHost, port, publicPath) {
   return {
     quiet: true, // Performed by FriendlyErrorsWebpackPlugin
 
@@ -14,6 +14,8 @@ module.exports = function(selectedHost, publicHost, port) {
     hot: true,
     inline: true,
     stats: "minimal",
+    host: "::",
+    publicPath,
     watchOptions: {
       ignored: /node_modules/
     },

@@ -29,12 +29,13 @@ renderLoadingAnimation()
       PUBLIC_ADDRESS
     } = require("../config/hostInfo");
 
-    const compiler = webpack(devConfig());
+    const config = devConfig();
+    const compiler = webpack(config);
 
     const devServerConfig = devServerConfigFactory(
-      HOST,
       PUBLIC_ADDRESS,
-      DEFAULT_PORT
+      DEFAULT_PORT,
+      config.output.publicPath
     );
     const devServer = new WebpackDevServer(compiler, devServerConfig);
 
