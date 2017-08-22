@@ -37,6 +37,7 @@ $family-sans-serif: $font-family-sans-serif;
 
 html {
   font-family: sans-serif;
+  height: 100%;
   line-height: 1.15;
   -ms-overflow-style: scrollbar;
   -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
@@ -52,6 +53,21 @@ body {
   font-family: $font-family-sans-serif;
   // background-color: $color-black;
   margin: 0;
+  position: relative;
+  padding-bottom: 25rem;
+  min-height: 100%;
+
+  > .footer {
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    padding-bottom: 3rem;
+
+    .tile {
+      justify-content: center;
+    }
+  }
 }
 
 img {

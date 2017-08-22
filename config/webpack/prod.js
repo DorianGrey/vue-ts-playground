@@ -85,13 +85,17 @@ module.exports = function() {
         }),
         new PurifyCSSPlugin({
           paths: glob.sync([
-            paths.resolveApp("src/index.html"),
+            paths.resolveApp("public/index.html"),
             paths.resolveApp("src/**/*.vue"),
             paths.resolveApp("node_modules/flatpickr/**/*.js"),
             paths.resolveApp(
               "node_modules/buefy/src/components/snackbar/Snackbar.vue"
             )
-          ])
+          ]),
+          styleExtensions: [".sass", ".scss", ".css"],
+          purifyOptions: {
+            whitelist: ["*:not*"] // See issue: https://github.com/purifycss/purifycss/issues/161
+          }
         }),
         new OptimizeCssAssetsPlugin({
           cssProcessor: require("cssnano"),
