@@ -16,7 +16,6 @@ const BundleAnalyzerPlugin = require("webpack-bundle-analyzer")
 const OptimizeCssAssetsPlugin = require("optimize-css-assets-webpack-plugin");
 const PurifyCSSPlugin = require("purifycss-webpack");
 const WorkboxPlugin = require("workbox-webpack-plugin");
-const OptimizeJsPlugin = require("optimize-js-plugin");
 const glob = require("globby");
 
 const paths = require("../paths");
@@ -127,8 +126,6 @@ module.exports = function() {
           swDest: path.join(paths.appBuild, "service-worker.js"),
           swSrc: path.join(paths.appSrc, "service-worker.js")
         }),
-
-        new OptimizeJsPlugin(),
 
         new UglifyJsPlugin({
           compress: {
