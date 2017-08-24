@@ -6,9 +6,9 @@
   version "3.0.2"
   resolved "https://registry.yarnpkg.com/@types/flatpickr/-/flatpickr-3.0.2.tgz#b8938bb4ab186eb0a384112ab357549234424cf2"
 
-"@types/jest@^20.0.7":
-  version "20.0.7"
-  resolved "https://registry.yarnpkg.com/@types/jest/-/jest-20.0.7.tgz#39cd215db8bda03928dceb933a1e63eb2cbd210e"
+"@types/jest@^20.0.8":
+  version "20.0.8"
+  resolved "https://registry.yarnpkg.com/@types/jest/-/jest-20.0.8.tgz#7f8c97f73d20d3bf5448fbe33661a342002b5954"
 
 "@types/lodash-es@^4.14.6":
   version "4.14.6"
@@ -319,9 +319,9 @@ autoprefixer@^7.1.2:
     postcss "^6.0.6"
     postcss-value-parser "^3.2.3"
 
-av-ts@^0.9.0:
-  version "0.9.0"
-  resolved "https://registry.yarnpkg.com/av-ts/-/av-ts-0.9.0.tgz#ffe6a48d1f74c52f15ba85aedbbcd436981c59a8"
+av-ts@^0.9.1:
+  version "0.9.1"
+  resolved "https://registry.yarnpkg.com/av-ts/-/av-ts-0.9.1.tgz#44495853a650f3c146b607defa7fe438ca0cdb9f"
 
 aws-sign2@~0.6.0:
   version "0.6.0"
@@ -4254,9 +4254,9 @@ levn@~0.3.0:
     prelude-ls "~1.1.2"
     type-check "~0.3.2"
 
-lint-staged@^4.0.3:
-  version "4.0.3"
-  resolved "https://registry.yarnpkg.com/lint-staged/-/lint-staged-4.0.3.tgz#1ce55591bc2c83a781a90b69a0a0c8aa0fc6370b"
+lint-staged@^4.0.4:
+  version "4.0.4"
+  resolved "https://registry.yarnpkg.com/lint-staged/-/lint-staged-4.0.4.tgz#9ca6968b30dfbfe81365b7a763cd4f4992896553"
   dependencies:
     app-root-path "^2.0.0"
     cosmiconfig "^1.1.0"

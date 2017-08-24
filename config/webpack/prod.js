@@ -128,6 +128,8 @@ module.exports = function() {
           swSrc: path.join(paths.appSrc, "service-worker.js")
         }),
 
+        new OptimizeJsPlugin(),
+
         new UglifyJsPlugin({
           compress: {
             warnings: false,
@@ -140,9 +142,7 @@ module.exports = function() {
             comments: false
           },
           sourceMap: true
-        }),
-
-        new OptimizeJsPlugin()
+        })
       ]
     }
   );
