@@ -7357,9 +7357,9 @@ vary@~1.1.0, vary@~1.1.1:
   version "1.1.1"
   resolved "https://registry.yarnpkg.com/vary/-/vary-1.1.1.tgz#67535ebb694c1d52257457984665323f587e8d37"
 
-vee-validate@^2.0.0-rc.13:
-  version "2.0.0-rc.13"
-  resolved "https://registry.yarnpkg.com/vee-validate/-/vee-validate-2.0.0-rc.13.tgz#b2aadf729c277d7a908bec5d71169d02c54b7890"
+vee-validate@^2.0.0-rc.14:
+  version "2.0.0-rc.14"
+  resolved "https://registry.yarnpkg.com/vee-validate/-/vee-validate-2.0.0-rc.14.tgz#ecbd3ddff33fa6a42ebb4a468c343e1eb5d2b38f"
 
 vendors@^1.0.0:
   version "1.0.1"
@@ -7709,26 +7709,26 @@ wordwrap@~1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/wordwrap/-/wordwrap-1.0.0.tgz#27584810891456a4171c8d0226441ade90cbcaeb"
 
-workbox-build@^1.3.0:
-  version "1.3.0"
-  resolved "https://registry.yarnpkg.com/workbox-build/-/workbox-build-1.3.0.tgz#00e9a02424214cf9dd41cba761f296bb556b6c8a"
+workbox-build@^2.0.0:
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/workbox-build/-/workbox-build-2.0.0.tgz#3f3b3591dcab71c39a64be1dce7445f0190acb72"
   dependencies:
     chalk "^1.1.3"
     fs-extra "^3.0.1"
     glob "^7.1.1"
     lodash.template "^4.4.0"
     mkdirp "^0.5.1"
-    workbox-sw "^1.3.0"
+    workbox-sw "^2.0.0"
 
-workbox-sw@^1.3.0:
-  version "1.3.0"
-  resolved "https://registry.yarnpkg.com/workbox-sw/-/workbox-sw-1.3.0.tgz#60f59207d4ce8035c6af978fd5bd2007beca0bb7"
+workbox-sw@^2.0.0:
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/workbox-sw/-/workbox-sw-2.0.0.tgz#06b80d26b6cee08a3a7928345f033d48269b5dad"
 
-workbox-webpack-plugin@^1.3.0:
-  version "1.3.0"
-  resolved "https://registry.yarnpkg.com/workbox-webpack-plugin/-/workbox-webpack-plugin-1.3.0.tgz#078ec3f6fe8a3a3785fed3a70633dea03ef1addc"
+workbox-webpack-plugin@^2.0.0:
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/workbox-webpack-plugin/-/workbox-webpack-plugin-2.0.0.tgz#23442b6c2dac807d9457f8ca68c73b7587357052"
   dependencies:
-    workbox-build "^1.3.0"
+    workbox-build "^2.0.0"
 
 worker-farm@^1.3.1:
   version "1.4.1"
