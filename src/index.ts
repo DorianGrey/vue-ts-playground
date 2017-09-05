@@ -45,16 +45,16 @@ function main(languagePack: LanguagePack) {
     {
       path: "/",
       redirect: "/input-test"
-    },
+    } as RouteConfig,
     {
       path: "/input-test",
       component: InputTest
-    },
+    } as RouteConfig,
     {
       path: "/todo-list/:id",
       component: TodoList,
       props: true // The value of :id is set as a prop on the component itself.
-    },
+    } as RouteConfig,
     {
       path: "/gallery",
       // Note: Naming the created chunk is possible since webpack 2.4.0
@@ -62,11 +62,11 @@ function main(languagePack: LanguagePack) {
       // import(/* webpackChunkName: "my-chunk-name" */ "module")
       component: () =>
         import(/* webpackChunkName: "gallery" */ "./gallery/gallery.vue")
-    },
+    } as RouteConfig,
     {
       path: "*",
       component: NotFound
-    }
+    } as RouteConfig
   ];
 
   const router = new VueRouter({
@@ -116,5 +116,7 @@ function main(languagePack: LanguagePack) {
 }
 
 bootloader(() => {
-  loadBrowserLanguagePack().then(main).catch(err => console.error(err));
+  loadBrowserLanguagePack()
+    .then(main)
+    .catch(err => console.error(err));
 });
