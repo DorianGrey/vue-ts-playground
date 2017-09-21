@@ -1,7 +1,12 @@
 import { Component, Vue } from "av-ts";
 import onceEventHelper from "../utility/onceEvent";
+import LanguageSelector from "../languageSelector/languageSelector.vue";
 
-@Component
+@Component({
+  components: {
+    languageSelector: LanguageSelector
+  }
+})
 export default class App extends Vue {
   // a: string = 6;
   isMenuOpen = false;

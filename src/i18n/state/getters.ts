@@ -1,10 +1,10 @@
 import { GetterTree } from "vuex";
 import { I18nState } from "./interfaces";
 
-export function currentLanguagePack(state: I18nState) {
+export function GET(state: I18nState) {
   return state.languagePack;
 }
 
 export default {
-  currentLanguagePack
+  GET
 } as GetterTree<I18nState, any>;

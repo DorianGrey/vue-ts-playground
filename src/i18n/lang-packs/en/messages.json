@@ -6,6 +6,11 @@
     "gallery": "Gallery"
   },
 
+  "languages": {
+    "de": "German",
+    "en": "English"
+  },
+
   "input-test": {
     "label": "You have entered"
   },

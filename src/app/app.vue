@@ -1,5 +1,4 @@
 <template>
-
   <div id="app">
     <nav class="nav">
 
@@ -32,6 +31,65 @@
     </nav>
 
     <router-view></router-view>
+
+    <footer class="footer">
+      <div class="container">
+        <div class="tile is-ancestor">
+          <div class="tile is-parent is-vertical">
+            <div class="tile">Basic tech powered by:</div>
+            <div class="tile">
+              <a class="icon" href="https://github.com/vuejs/vue" target="_blank" rel="noopener">
+                <i class="fa fa-github"></i>
+              </a>
+              Vuejs + related libraries
+            </div>
+            <div class="tile">
+              <a class="icon" href="https://github.com/GoogleChrome/workbox" target="_blank" rel="noopener">
+                <i class="fa fa-github"></i>
+              </a>
+              Workbox
+            </div>
+          </div>
+          <div class="tile is-parent is-vertical">
+            <div class="tile">User interface powered by:</div>
+            <div class="tile">
+              <a class="icon" href="https://github.com/jgthms/bulma" target="_blank" rel="noopener">
+                <i class="fa fa-github"></i>
+              </a>
+              Bulma
+            </div>
+            <div class="tile">
+              <a class="icon" href="https://github.com/jenil/bulmaswatch" target="_blank" rel="noopener">
+                <i class="fa fa-github"></i>
+              </a>
+              bulmaswatch
+            </div>
+            <div class="tile">
+              <a class="icon" href="https://github.com/rafaelpimpa/buefy" target="_blank" rel="noopener">
+                <i class="fa fa-github"></i>
+              </a>
+              Buefy
+            </div>
+          </div>
+        </div>
+
+        <div class="container has-text-centered">
+          <div class="tile is-ancestor">
+            <div class="tile">
+              <a class="icon" href="https://github.com/DorianGrey/vue-ts-playground" target="_blank" rel="noopener">
+                <i class="fa fa-github"></i>
+              </a>
+              Project page
+            </div>
+            <div class="tile">
+              <language-selector></language-selector>
+            </div>
+          </div>
+        </div>
+
+
+      </div>
+    </footer>
   </div>
 </template>
 
@@ -45,6 +103,7 @@
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     text-align: center;
+    min-height: 100%;
 
     nav {
       .app-info {
