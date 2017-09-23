@@ -4,7 +4,7 @@ import * as Flatpickr from "flatpickr";
 import { createNewTodo } from "./state/creators";
 import { TodoModel } from "./state/interfaces";
 import { TODO_MODULE_ACTIONS } from "./state/todo.state";
-import { I18N_MODULE_NAME } from "../i18n/state/i18n.state";
+import { I18N_MODULE_ACTIONS } from "../i18n/state/i18n.state";
 import { LanguagePack } from "../i18n/languagePack";
 
 @Component
@@ -50,24 +50,31 @@ export default class TodoEntry extends Vue {
 
   pendingTodo: TodoModel | null = null;
 
+  unsubscribe: (() => void) | null = null;
+
   @Lifecycle
-  beforeDestroy() {
+  beforeDestroy(): void {
     // Free up memory
-    if (this.flatpickr) {
-      this.flatpickr.destroy();
-    }
+    this.flatpickr && this.flatpickr.destroy();
+    this.unsubscribe && this.unsubscribe();
   }
 
   @Lifecycle
-  beforeMount() {
+  beforeMount(): void {
     if (this.editable) {
       this.pendingTodo = { ...this.targetTodo };
       Vue.nextTick(() => this.initFlatpicker());
     }
+    this.$store.subscribe(() => {
+      if (this.flatpickr) {
+        this.flatpickr.destroy();
+        this.initFlatpicker();
+      }
+    });
   }
 
   get languagePack(): LanguagePack {
-    return this.$store.getters[`${I18N_MODULE_NAME}/currentLanguagePack`];
+    return this.$store.getters[I18N_MODULE_ACTIONS.GET];
   }
 
   setTodoDeadline(selectedDates: Date[]) {
