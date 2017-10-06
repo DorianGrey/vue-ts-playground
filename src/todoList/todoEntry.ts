@@ -138,8 +138,9 @@ export default class TodoEntry extends Vue {
   }
 
   private initFlatpicker(): void {
-    this.flatpickrOptions.defaultDate = (this
-      .pendingTodo as TodoModel).deadline;
+    if (this.pendingTodo) {
+      this.flatpickrOptions.defaultDate = this.pendingTodo.deadline;
+    }
     this.flatpickrOptions.dateFormat = this.languagePack.flatPickr.dateTimeFormat;
     this.flatpickrOptions.time_24hr = this.languagePack.flatPickr.useTimeFormat_24hrs;
     this.flatpickr = new Flatpickr(

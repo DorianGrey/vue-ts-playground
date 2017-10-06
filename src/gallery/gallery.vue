@@ -4,6 +4,10 @@
       <slide v-for="(s, idx) in imgSlides" :index="idx" :key="s.src">
         <figure>
           <img :src="s.src">
+          <!--
+            Note: Using v-t here does not in a reactive way under these circumstances,
+            thus we fall back to $t.
+          -->
           <figcaption>
             {{$t(s.desc)}}
           </figcaption>

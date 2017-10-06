@@ -12,12 +12,13 @@
   },
 
   "input-test": {
-    "label": "Du hast eingegeben"
+    "label": "Du hast eingegeben: {text}"
   },
 
   "todo-entry": {
-    "created": "Angelegt",
+    "created": "Angelegt: {date}",
     "deadline": "Fällig bis",
+    "deadline-value": "Fällig bis: {date}",
     "title": "Titel",
     "description": "Beschreibung",
     "update": "Aktualisieren",
@@ -44,5 +45,10 @@
     "reload": "Aktualisieren",
     "is-cached": "Inhalte sind für Offline-Nutzung bereit.",
     "failed-cache": "Offline-Modus konnte nicht aktiviert werden."
+  },
+
+  "powered": {
+    "tech": "Basis-Technologie:",
+    "ui": "Oberfläche basierend auf:"
   }
 }

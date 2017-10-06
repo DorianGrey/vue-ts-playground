@@ -12,12 +12,13 @@
   },
 
   "input-test": {
-    "label": "You have entered"
+    "label": "You have entered: {text}"
   },
 
   "todo-entry": {
-    "created": "Created",
+    "created": "Created: {date}",
     "deadline": "Deadline",
+    "deadline-value": "Deadline: {date}",
     "title": "Title",
     "description": "Description",
     "update": "Update",
@@ -44,5 +45,10 @@
     "reload": "Refresh",
     "is-cached": "Content is cached for offline use.",
     "failed-cache": "Offline mode could not be enabled."
+  },
+
+  "powered": {
+    "tech": "Basic tech powered by:",
+    "ui": "User interface powered by:"
   }
 }

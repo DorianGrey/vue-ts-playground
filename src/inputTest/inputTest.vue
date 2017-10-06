@@ -1,7 +1,7 @@
 <template>
   <article>
     <section>
-      <div>{{$t('input-test.label')}}: {{inputText}}</div>
+      <div v-t="{path: 'input-test.label', args:{text: inputText}}"></div>
       <input type="text" v-model="inputText" class="input">
     </section>
   </article>

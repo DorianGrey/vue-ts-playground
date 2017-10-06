@@ -6,8 +6,16 @@ Vue.use(VueI18n);
 
 describe("inputTest", () => {
   it("should render contents correctly", () => {
-    // TODO: Not yet working...
-    const i18n = new VueI18n({});
+    const i18n = new VueI18n({
+      locale: "en",
+      messages: {
+        en: {
+          "input-test": {
+            label: "You have entered: {text}"
+          }
+        }
+      }
+    });
     const Ctor = Vue.extend(inputTest);
     const vm = new Ctor({ i18n }).$mount();
 

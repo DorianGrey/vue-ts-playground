@@ -4,7 +4,7 @@
 
       <div class="nav-left nav-item app-info">
         <i class="fa fa-bookmark" aria-hidden="true"></i>
-        <span>{{$t('header.demo-app')}}</span>
+        <span v-t="'header.demo-app'"></span>
       </div>
 
       <!-- Dropdown menu for mobile (i.e. < 768px width). -->
@@ -17,15 +17,15 @@
       <div class="nav-right nav-menu" :class="{'is-active': isMenuOpen}">
         <router-link class="nav-item" to="/input-test">
           <i class="fa fa-keyboard-o" aria-hidden="true"></i>
-          {{$t('header.input-test')}}
+          <span v-t="'header.input-test'"></span>
         </router-link>
         <router-link class="nav-item" to="/todo-list/42">
           <i class="fa fa-calendar" aria-hidden="true"></i>
-          {{$t('header.todo-list')}}
+          <span v-t="'header.todo-list'"></span>
         </router-link>
         <router-link class="nav-item" to="/gallery">
           <i class="fa fa-picture-o" aria-hidden="true"></i>
-          {{$t('header.gallery')}}
+          <span v-t="'header.gallery'"></span>
         </router-link>
       </div>
     </nav>
@@ -36,7 +36,7 @@
       <div class="container">
         <div class="tile is-ancestor">
           <div class="tile is-parent is-vertical">
-            <div class="tile">Basic tech powered by:</div>
+            <div class="tile" v-t="'powered.tech'"></div>
             <div class="tile">
               <a class="icon" href="https://github.com/vuejs/vue" target="_blank" rel="noopener">
                 <i class="fa fa-github"></i>
@@ -51,7 +51,7 @@
             </div>
           </div>
           <div class="tile is-parent is-vertical">
-            <div class="tile">User interface powered by:</div>
+            <div class="tile" v-t="'powered.ui'"></div>
             <div class="tile">
               <a class="icon" href="https://github.com/jgthms/bulma" target="_blank" rel="noopener">
                 <i class="fa fa-github"></i>

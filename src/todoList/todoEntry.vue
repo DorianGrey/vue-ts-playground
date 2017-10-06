@@ -17,8 +17,8 @@
       </div>
 
       <footer class="card-footer">
-        <div class="card-footer-item">{{$t('todo-entry.created')}}: {{$d(todo.created, 'long')}}</div>
-        <div class="card-footer-item">{{$t('todo-entry.deadline')}}: {{$d(todo.deadline, 'long')}}</div>
+        <div class="card-footer-item" v-t="{path: 'todo-entry.created', args: {date: $d(todo.created, 'long')}}"></div>
+        <div class="card-footer-item" v-t="{path: 'todo-entry.deadline-value', args: {date: $d(todo.deadline, 'long')}}"></div>
       </footer>
 
     </div>
@@ -56,11 +56,9 @@
         >
 
         <footer class="card-footer todo-creation-controls">
-          <button type="submit" class="button is-primary card-footer-item" :disabled="errors.any()">
-            {{$t( 'todo-entry.' + (pendingTodo.id ? 'update' : 'submit'))}}
+          <button type="submit" class="button is-primary card-footer-item" :disabled="errors.any()" v-t="{path: 'todo-entry.' + (pendingTodo.id ? 'update' : 'submit')}">
           </button>
-          <button type="button" class="button is-warning card-footer-item" @click="onCancel()">
-            {{$t('todo-entry.cancel')}}
+          <button type="button" class="button is-warning card-footer-item" @click="onCancel()" v-t="'todo-entry.cancel'">
           </button>
         </footer>
       </form>
