@@ -1,5 +1,5 @@
 declare module "buefy" {
-  import Vue from "vue";
+  import {PluginFunction} from "vue";
 
   export type StyleType = "is-white" | "is-black" | "is-light" | "is-dark" | "is-primary" | "is-info" | "is-success" | "is-warning" | "is-danger";
 
@@ -14,7 +14,7 @@ declare module "buefy" {
     defaultInputAutocomplete: "on" | "off";
   }
 
-  const def: Vue.PluginFunction<Partial<BuefyOptions>>;
+  const def: PluginFunction<Partial<BuefyOptions>>;
   export default def;
 
 
