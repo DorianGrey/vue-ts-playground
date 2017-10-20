@@ -28,7 +28,7 @@
     "buefy": "^0.5.3",
     "bulma": "^0.5.3",
     "bulmaswatch": "^0.5.1",
-    "flatpickr": "^3.0.7",
+    "flatpickr": "3.0.7",
     "font-awesome": "^4.7.0",
     "lodash-es": "^4.17.4",
     "sanitize.css": "^5.0.0",
