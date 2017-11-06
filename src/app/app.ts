@@ -5,7 +5,7 @@ import LanguageSelector from "../languageSelector/languageSelector.vue";
 @Component({
   components: {
     languageSelector: LanguageSelector
-  }
+  } as any // work around typing problems with TS 2.6.1
 })
 export default class App extends Vue {
   // a: string = 6;

@@ -9,7 +9,7 @@ type ActiveTab = "active" | "expired";
 @Component({
   components: {
     todoEntry: TodoEntry
-  }
+  } as any // work around typing problems with TS 2.6.1
 })
 export default class TodoList extends Vue {
   @Prop

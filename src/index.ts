@@ -75,7 +75,7 @@ function main(languagePack: LanguagePack) {
     scrollBehavior: (
       _to: any,
       _from: any,
-      savedPosition: { x: number; y: number }
+      savedPosition: { x: number; y: number } | void
     ) => {
       return savedPosition;
     }
@@ -103,7 +103,7 @@ function main(languagePack: LanguagePack) {
 
   app = new Vue({
     el: "#app",
-    components: { App },
+    components: { App } as any, // work around typing problems with TS 2.6.1
     render: (h: CreateElement) => h("app"),
     i18n,
     router,

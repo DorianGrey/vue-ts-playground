@@ -14,7 +14,7 @@ export function UPDATE(state: TodoState, newTodo: TodoModel) {
   }
 }
 
-export function DELETE(state: TodoState, todoId: string) {
+export function DELETE(state: TodoState, todoId: number) {
   const currentIndex = findIndex(state.todoList, { id: todoId });
   if (currentIndex >= 0) {
     state.todoList.splice(currentIndex, 1);
