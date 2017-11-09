@@ -5690,9 +5690,13 @@ preserve@^0.2.0:
   version "0.2.0"
   resolved "https://registry.yarnpkg.com/preserve/-/preserve-0.2.0.tgz#815ed1f6ebc65926f865b310c0713bcb3315ce4b"
 
-prettier@^1.7.0, prettier@^1.7.4:
+prettier@^1.7.0:
   version "1.7.4"
   resolved "https://registry.yarnpkg.com/prettier/-/prettier-1.7.4.tgz#5e8624ae9363c80f95ec644584ecdf55d74f93fa"
+
+prettier@^1.8.1:
+  version "1.8.1"
+  resolved "https://registry.yarnpkg.com/prettier/-/prettier-1.8.1.tgz#91064d778c08c85ac1cbe6b23195c34310d039f9"
 
 pretty-error@^2.0.2:
   version "2.1.1"
@@ -7074,9 +7078,9 @@ trim-right@^1.0.1:
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/trim-right/-/trim-right-1.0.1.tgz#cb2e1203067e0c8de1f614094b9fe45704ea6003"
 
-ts-jest@^21.1.4:
-  version "21.1.4"
-  resolved "https://registry.yarnpkg.com/ts-jest/-/ts-jest-21.1.4.tgz#6b720cd4ebfacbc935468e60dd395392f817095b"
+ts-jest@^21.2.1:
+  version "21.2.1"
+  resolved "https://registry.yarnpkg.com/ts-jest/-/ts-jest-21.2.1.tgz#cc98f4ed432c8f650940b5090a2efef365693fd0"
   dependencies:
     babel-core "^6.24.1"
     babel-plugin-istanbul "^4.1.4"
@@ -7416,9 +7420,9 @@ vue-i18n@^7.3.2:
   version "7.3.2"
   resolved "https://registry.yarnpkg.com/vue-i18n/-/vue-i18n-7.3.2.tgz#1205bb8811323fd5c44e57e4fd619beaf2f7a9a1"
 
-vue-loader@^13.3.0:
-  version "13.4.0"
-  resolved "https://registry.yarnpkg.com/vue-loader/-/vue-loader-13.4.0.tgz#44aa7eef4fb1be89fbc37193ad33b8253417c4b9"
+vue-loader@^13.5.0:
+  version "13.5.0"
+  resolved "https://registry.yarnpkg.com/vue-loader/-/vue-loader-13.5.0.tgz#52f7b3790a267eff80012b77ea187a54586dd5d4"
   dependencies:
     consolidate "^0.14.0"
     hash-sum "^1.0.2"

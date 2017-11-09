@@ -8,9 +8,9 @@ function printErrors(errors, writer) {
     writer("\n");
     writer(
       formatUtil.formatError(
-        `There ${eCnt === 1 ? "is" : "are"} ${eCnt} build error${eCnt === 1
-          ? ""
-          : "s"}:\n`
+        `There ${eCnt === 1 ? "is" : "are"} ${eCnt} build error${
+          eCnt === 1 ? "" : "s"
+        }:\n`
       )
     );
     errors.forEach(err => {
@@ -25,9 +25,9 @@ function printWarnings(warnings, writer) {
     writer("\n");
     writer(
       formatUtil.formatWarning(
-        `There ${eCnt === 1 ? "is" : "are"} ${eCnt} build warning${eCnt === 1
-          ? ""
-          : "s"}:\n`
+        `There ${eCnt === 1 ? "is" : "are"} ${eCnt} build warning${
+          eCnt === 1 ? "" : "s"
+        }:\n`
       )
     );
     warnings.forEach(warn => {

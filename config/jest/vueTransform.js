@@ -26,7 +26,9 @@ function generateOutput(script, renderFn, staticRenderFns) {
     `? module.exports.options: module.exports)\n`;
   if (renderFn && staticRenderFns) {
     output += `/* istanbul ignore next */__vue__options__.render = ${renderFn}\n
-      /* istanbul ignore next */__vue__options__.staticRenderFns = ${staticRenderFns}\n`;
+      /* istanbul ignore next */__vue__options__.staticRenderFns = ${
+        staticRenderFns
+      }\n`;
   }
   return output;
 }
@@ -95,7 +97,9 @@ function transformScript(filePath, jestConfig, transformOptions, script) {
       transformedScript = script.content;
     } else {
       throw new Error(
-        `Cannot find preprocessor for script of ${filePath}, but it requires one. Used ${targetSourcePath} for determination.`
+        `Cannot find preprocessor for script of ${
+          filePath
+        }, but it requires one. Used ${targetSourcePath} for determination.`
       );
     }
   }

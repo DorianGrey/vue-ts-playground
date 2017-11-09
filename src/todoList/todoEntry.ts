@@ -43,10 +43,10 @@ export default class TodoEntry extends Vue {
   editable = this.initialEditable || false;
   targetTodo: TodoModel = this.todo
     ? { ...this.todo }
-    : {
+    : ({
         headline: "",
         description: ""
-      } as TodoModel;
+      } as TodoModel);
 
   pendingTodo: TodoModel | null = null;
 
