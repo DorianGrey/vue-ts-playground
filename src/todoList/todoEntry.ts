@@ -1,5 +1,5 @@
 import { Component, Lifecycle, p, Prop, Vue } from "av-ts";
-import * as Flatpickr from "flatpickr";
+import * as FlatPickr from "flatpickr";
 
 import { createNewTodo } from "./state/creators";
 import { TodoModel } from "./state/interfaces";
@@ -33,8 +33,8 @@ export default class TodoEntry extends Vue {
     required: false
   });
 
-  flatpickr: Flatpickr;
-  flatpickrOptions: Flatpickr.Options = {
+  flatpickr: FlatPickr.Instance;
+  flatpickrOptions: FlatPickr.Options.Options = {
     enableTime: true,
     minDate: new Date(),
     onChange: this.setTodoDeadline.bind(this)
@@ -143,10 +143,10 @@ export default class TodoEntry extends Vue {
     }
     this.flatpickrOptions.dateFormat = this.languagePack.flatPickr.dateTimeFormat;
     this.flatpickrOptions.time_24hr = this.languagePack.flatPickr.useTimeFormat_24hrs;
-    this.flatpickr = new Flatpickr(
+    this.flatpickr = FlatPickr(
       this.$el.querySelector("#deadlineInput") as HTMLElement,
       this.flatpickrOptions
-    );
+    ) as FlatPickr.Instance;
     // Call is required, since it won't recognize the change by flatpickr otherwise.
     this.$validator.validateAll();
   }

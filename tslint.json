@@ -87,5 +87,10 @@
       true,
       "ban-keywords"
     ]
+  },
+  "linterOptions": {
+    "exclude": [
+      "node_modules/**/*.ts"
+    ]
   }
 }
