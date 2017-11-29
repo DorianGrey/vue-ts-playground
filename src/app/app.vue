@@ -106,19 +106,6 @@
     min-height: 100%;
 
     nav {
-      .app-info {
-        line-height: 28px;
-
-        i {
-          margin-right: 10px;
-          vertical-align: sub;
-        }
-
-        span {
-          font-style: italic;
-        }
-      }
-
       a {
         background-color: $color-black;
         color: $color-dark-grey;
@@ -130,6 +117,19 @@
 
         i {
           margin-right: 5px;
+        }
+      }
+
+      .app-info {
+        line-height: 28px;
+
+        i {
+          margin-right: 10px;
+          vertical-align: sub;
+        }
+
+        span {
+          font-style: italic;
         }
       }
     }
