@@ -20,13 +20,3 @@ declare module "*.vue" {
   let __vue__: ComponentOptions<Vue>;
   export default __vue__;
 }
-
-// To avoid having to use @types/node, we'll define the required process.env.NODE_ENV here.
-interface Process {
-  env: {
-    PUBLIC_URL: string;
-    NODE_ENV: "production" | "development";
-  };
-}
-
-declare const process: Process;
