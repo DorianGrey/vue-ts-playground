@@ -1,4 +1,4 @@
 declare module "flatpickr/dist/l10n/de" {
   import {Locale} from "flatpickr";
-  export const de: Locale;
+  export const German: Locale;
 }
