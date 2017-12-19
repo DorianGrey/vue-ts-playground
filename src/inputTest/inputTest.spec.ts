@@ -1,10 +1,14 @@
 import Vue from "vue";
-import inputTest from "./inputTest.vue";
+import InputTest from "./inputTest.vue";
 import VueI18n from "vue-i18n";
 
-Vue.use(VueI18n);
+import { shallow } from "vue-test-utils";
 
 describe("inputTest", () => {
+  beforeAll(() => {
+    Vue.use(VueI18n);
+  });
+
   it("should render contents correctly", () => {
     const i18n = new VueI18n({
       locale: "en",
@@ -16,17 +20,16 @@ describe("inputTest", () => {
         }
       }
     });
-    const Ctor = Vue.extend(inputTest);
-    const vm = new Ctor({ i18n }).$mount();
 
-    const inputElement = vm.$el.getElementsByTagName("input")[0];
-    const divElement = vm.$el.getElementsByTagName("div")[0];
+    const wrapper = shallow(InputTest, { i18n });
 
-    // Elements should exist
-    expect(inputElement).not.toBeUndefined();
-    expect(divElement).not.toBeUndefined();
-    // Elements should have correct values.
-    expect(divElement.textContent).toMatch(/bass$/);
-    expect((inputElement as HTMLInputElement).value).toEqual("bass");
+    expect(wrapper.findAll("input")).toHaveLength(1);
+    expect(wrapper.findAll("div")).toHaveLength(1);
+    // Note: .text() and .html() do not work on an input element, thus we have to
+    // access the element manually.
+    expect((wrapper.find("input").element as HTMLInputElement).value).toEqual(
+      "bass"
+    );
+    expect(wrapper.find("div").text()).toMatch(/bass$/);
   });
 });
