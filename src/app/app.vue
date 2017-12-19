@@ -14,7 +14,7 @@
         <span></span>
       </span>
 
-      <div class="nav-right nav-menu" :class="{'is-active': isMenuOpen}">
+      <div class="nav-right nav-menu" :class="{'is-active': !isMenuOpen}">
         <router-link class="nav-item" to="/input-test">
           <i class="fa fa-keyboard-o" aria-hidden="true"></i>
           <span v-t="'header.input-test'"></span>

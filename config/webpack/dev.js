@@ -6,11 +6,14 @@ const { NoEmitOnErrorsPlugin } = require("webpack");
 const HotModuleReplacementPlugin = require("webpack/lib/HotModuleReplacementPlugin");
 const NamedModulesPlugin = require("webpack/lib/NamedModulesPlugin");
 const merge = require("webpack-merge");
+const AutoDllPlugin = require("autodll-webpack-plugin");
+const HardSourceWebpackPlugin = require("hard-source-webpack-plugin");
 
 const ErrorFormatterPlugin = require("../webpack/plugins/ErrorFormatterPlugin");
 const paths = require("../paths");
 const commonConfig = require("./common");
 const { DEFAULT_PORT, HOST, PUBLIC_ADDRESS } = require("../hostInfo");
+const dllConfig = require("./dll");
 
 const publicPath = "/";
 const publicUrl = "";
@@ -50,7 +53,10 @@ module.exports = function() {
                 Public: ${chalk.cyan(`${PUBLIC_ADDRESS}:${DEFAULT_PORT}`)}
             `
           ]
-        })
+        }),
+        new AutoDllPlugin(dllConfig),
+        // See https://github.com/mzgoddard/hard-source-webpack-plugin
+        new HardSourceWebpackPlugin()
       ]
     }
   );

@@ -10,6 +10,7 @@ const publicUrl = publicPath.slice(0, -1);
 
 module.exports = {
   resolveApp: resolveApp,
+  appRoot: resolveApp("."),
   appPublic: resolveApp("public"),
   appBuild: resolveApp("build"),
   appBuildStats: resolveApp("buildStats"),
@@ -17,6 +18,7 @@ module.exports = {
   appIndex: resolveApp("src/index.ts"),
   appHtml: resolveApp("public/index.html"),
   appGenerated: resolveApp("src/generated"),
+  appPackageJson: resolveApp("package.json"),
   yarnLockFile: resolveApp("yarn.lock"),
   publicPath,
   publicUrl
