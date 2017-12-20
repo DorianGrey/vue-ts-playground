@@ -1,4 +1,4 @@
-import { DateTimeFormat } from "vue-i18n";
+import VueI18n from "vue-i18n";
 
 export default {
   long: {
@@ -9,4 +9,4 @@ export default {
     minute: "2-digit",
     second: "2-digit"
   }
-} as DateTimeFormat;
+} as VueI18n.DateTimeFormat;

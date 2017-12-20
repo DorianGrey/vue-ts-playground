@@ -10,8 +10,8 @@ declare module "*.svg" {
 }
 
 declare module "*/messages.json" {
-  import {LocaleMessageObject} from "vue-i18n";
-  let __json__: LocaleMessageObject;
+  import VueI18n from "vue-i18n";
+  let __json__: VueI18n.LocaleMessageObject;
   export default __json__;
 }
 

@@ -1,11 +1,11 @@
-import { DateTimeFormat, LocaleMessageObject } from "vue-i18n";
+import VueI18n from "vue-i18n";
 import { BROWSER_LANGUAGE } from "./browserLanguage";
 import { Locale } from "flatpickr";
 
 export interface LanguagePack {
   language: string;
-  messages: LocaleMessageObject;
-  dateTimeFormat: DateTimeFormat;
+  messages: VueI18n.LocaleMessageObject;
+  dateTimeFormat: VueI18n.DateTimeFormat;
   flatPickr: {
     locale: Locale;
     useTimeFormat_24hrs: boolean;
