@@ -1,4 +1,7 @@
 {
+  "save": "Save",
+  "cancel": "Cancel",
+
   "header": {
     "demo-app": "Demo App",
     "input-test": "Input Test",
@@ -12,23 +15,25 @@
   },
 
   "input-test": {
+    "help": "An arbitrary text",
     "label": "You have entered: {text}"
   },
 
   "todo-entry": {
     "created": "Created: {date}",
-    "deadline": "Deadline",
+    "deadline-date": "Date",
+    "deadline-time": "Time",
     "deadline-value": "Deadline: {date}",
     "title": "Title",
     "description": "Description",
     "update": "Update",
-    "submit": "Submit",
-    "cancel": "Cancel"
+    "submit": "Submit"
   },
 
   "todo-list": {
-    "active": "Active todos",
-    "expired": "Expired todos"
+    "headline": "Todo list",
+    "active": "Active",
+    "expired": "Expired"
   },
 
   "gallery": {

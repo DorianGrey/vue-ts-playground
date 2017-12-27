@@ -1,6 +1,6 @@
 import { TodoModel } from "./interfaces";
 
-let todoId = 1;
+let todoId = 2;
 
 export function createNewTodo(
   headline: string,

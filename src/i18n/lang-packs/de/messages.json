@@ -1,4 +1,7 @@
 {
+  "save": "Speichern",
+  "cancel": "Abbrechen",
+
   "header": {
     "demo-app": "Demo-Anwendung",
     "input-test": "Eingabe-Test",
@@ -12,23 +15,25 @@
   },
 
   "input-test": {
+    "help": "Irgendein Beispieltext",
     "label": "Du hast eingegeben: {text}"
   },
 
   "todo-entry": {
     "created": "Angelegt: {date}",
-    "deadline": "Fällig bis",
+    "deadline-date": "Datum",
+    "deadline-time": "Uhrzeit",
     "deadline-value": "Fällig bis: {date}",
     "title": "Titel",
     "description": "Beschreibung",
     "update": "Aktualisieren",
-    "submit": "Erstellen",
-    "cancel": "Abbrechen"
+    "submit": "Erstellen"
   },
 
   "todo-list": {
-    "active": "Laufende Aufgaben",
-    "expired": "Abgelaufene Aufgaben"
+    "headline": "Aufgabenliste",
+    "active": "Aktive",
+    "expired": "Abgelaufene"
   },
 
   "gallery": {

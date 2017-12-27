@@ -98,12 +98,9 @@ module.exports = function() {
           paths: glob.sync([
             paths.resolveApp("public/index.html"),
             paths.resolveApp("src/**/*.vue"),
-            paths.resolveApp("node_modules/flatpickr/**/*.js"),
-            paths.resolveApp(
-              "node_modules/buefy/src/components/snackbar/Snackbar.vue"
-            )
+            paths.resolveApp("node_modules/vuetify/es5/**/*.js")
           ]),
-          styleExtensions: [".sass", ".scss", ".css"],
+          styleExtensions: [".sass", ".scss", ".css", ".styl"],
           purifyOptions: {
             whitelist: [
               "*:not*", // See issue: https://github.com/purifycss/purifycss/issues/161
