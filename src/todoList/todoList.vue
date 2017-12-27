@@ -1,34 +1,40 @@
 <template>
-  <section>
-    <div class="tabs is-centered is-medium is-toggle is-fullwidth">
-      <ul>
-        <li :class="{'is-active': activeTab === 'active'}" @click="setActiveTab('active')">
-          <a v-t="'todo-list.active'"></a>
-        </li>
-        <li :class="{'is-active': activeTab === 'expired'}" @click="setActiveTab('expired')">
-          <a v-t="'todo-list.expired'"></a>
-        </li>
-      </ul>
-    </div>
+  <v-tabs v-model="activeTab" centered grow>
+    <v-toolbar>
+      <v-toolbar-title v-t="'todo-list.headline'" />
+    </v-toolbar>
 
-    <!-- The 'active' tab - new todos can only be added here. -->
-    <div v-if="activeTab === 'active'">
-      <todo-entry v-for="todo in todoList" :key="todo.id" :todo="todo"></todo-entry>
+    <v-tabs-bar>
+      <v-tabs-item @click="setActiveTab('active')" class="grey darken-1" href="#active">
+        <span v-t="'todo-list.active'"></span>
+      </v-tabs-item>
+      <v-tabs-item @click="setActiveTab('expired')" class="grey darken-1" href="#expired">
+        <span v-t="'todo-list.expired'"></span>
+      </v-tabs-item>
 
-      <button class="button is-light new-todo" @click="showNewTodoBlock" v-if="!newTodoEditable">
-        <i class="fa fa-plus-circle"></i>
-      </button>
+      <v-tabs-slider color="cyan"></v-tabs-slider>
+    </v-tabs-bar>
 
-      <todo-entry :initialEditable="true" :afterSubmit="hideNewTodoBlock" :afterCancel="hideNewTodoBlock" v-if="newTodoEditable"></todo-entry>
+    <v-tabs-items>
+      <v-tabs-content id="active">
+        <v-layout column id="todo-list">
+          <todo-entry v-for="todo in todoList" :key="todo.id" :todo="todo" />
 
-    </div>
+          <button class="button is-light new-todo" @click="showNewTodoBlock" v-if="!newTodoEditable">
+            <v-icon>add_circle_outline</v-icon>
+          </button>
 
-    <!-- The 'expired' tab -->
-    <div v-if="activeTab === 'expired'">
-      <todo-entry v-for="todo in expiredTodos" :key="todo.id" :todo="todo"></todo-entry>
-    </div>
+          <todo-entry :initialEditable="true" :afterSubmit="hideNewTodoBlock" :afterCancel="hideNewTodoBlock"
+                      v-if="newTodoEditable" />
+        </v-layout>
 
-  </section>
+      </v-tabs-content>
+
+      <v-tabs-content id="expired">
+        <todo-entry v-for="todo in expiredTodos" :key="todo.id" :todo="todo" />
+      </v-tabs-content>
+    </v-tabs-items>
+  </v-tabs>
 </template>
 
 <script lang="ts" src="./todoList.ts"></script>
@@ -36,8 +42,11 @@
 <style lang="scss">
   @import "../styles/typography";
 
-  .todos {
-    margin-bottom: 3rem;
+  #todo-list {
+    > * {
+      margin-top: 1rem;
+      margin-bottom: 1rem;
+    }
   }
 
   .new-todo {

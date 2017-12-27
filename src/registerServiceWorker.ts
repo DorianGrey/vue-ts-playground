@@ -8,11 +8,12 @@
 // To learn more about the benefits of this model, read https://goo.gl/KwvDNy.
 // This link also includes instructions on opting out of this behavior.
 
-import { SnackbarService } from "buefy";
 import VueI18n from "vue-i18n";
 
+type Cb = () => void;
+
 export default function register(
-  $snackbar: SnackbarService,
+  showSnackbar: (text: string, buttonText: string, callback?: Cb) => void,
   $t: typeof VueI18n.prototype.t
 ) {
   if (process.env.NODE_ENV === "production" && "serviceWorker" in navigator) {
@@ -34,38 +35,25 @@ export default function register(
                   // the fresh content will have been added to the cache.
                   // It's the perfect time to display a "New content is
                   // available; please refresh." message in your web app.
-                  $snackbar.open({
-                    message: $t("service-worker.new-content").toString(),
-                    type: "is-success",
-                    onAction: () => {
-                      location.reload(true);
-                    },
-                    actionText: $t("service-worker.reload").toString(),
-                    position: "is-bottom",
-                    duration: 60000
-                  });
+                  showSnackbar(
+                    $t("service-worker.new-content").toString(),
+                    $t("service-worker.reload").toString(),
+                    () => location.reload(true)
+                  );
                 } else {
                   // At this point, everything has been precached.
                   // It's the perfect time to display a
                   // "Content is cached for offline use." message.
-                  $snackbar.open({
-                    message: $t("service-worker.is-cached").toString(),
-                    actionText: null,
-                    position: "is-bottom",
-                    duration: 5000
-                  });
+                  showSnackbar($t("service-worker.is-cached").toString(), "OK");
                 }
               }
             };
           };
         })
         .catch(error => {
-          $snackbar.open({
-            message: $t("service-worker.failed-cache").toString(),
-            type: "is-danger",
-            position: "is-bottom",
-            duration: 10000
-          });
+          showSnackbar($t("service-worker.failed-cache").toString(), "OK", () =>
+            location.reload(true)
+          );
           console.warn(error);
         });
     });

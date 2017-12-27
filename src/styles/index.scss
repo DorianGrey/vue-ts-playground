@@ -2,7 +2,9 @@
 // Note: "Roboto" was put a little bit lower on that list to not conflict with Google Maps, which loads the Roboto font.
 // To avoid some crazy hacks to suppress this loading behavior, we'll put it somewhere lower so that it's only used on Android.
 
-$font-family-sans-serif: // Safari for OS X and iOS (San Francisco)
+$font-family-sans-serif:
+  "Roboto",
+  // Safari for OS X and iOS (San Francisco)
   -apple-system,
   // Chrome >= 56 for OS X (San Francisco), Windows, Linux and Android
   system-ui,
@@ -18,8 +20,6 @@ $font-family-sans-serif: // Safari for OS X and iOS (San Francisco)
   "Cantarell",
   // FF OS
   "Fira Sans",
-  // Android
-  "Roboto",
   // Older android versions
   "Droid Sans",
   // Basic web fallback
@@ -28,12 +28,8 @@ $font-family-sans-serif: // Safari for OS X and iOS (San Francisco)
 $family-sans-serif: $font-family-sans-serif;
 
 @import "../../node_modules/sanitize.css/sanitize";
-@import "../../node_modules/font-awesome/scss/font-awesome";
-@import "bulma-custom/bulma-custom";
-@import "../../node_modules/buefy/src/scss/buefy";
+@import "../../node_modules/vuetify/dist/vuetify.css";
 @import "./colors";
-
-// From bootstrap v4's reboot config:
 
 html {
   font-family: sans-serif;
@@ -49,33 +45,20 @@ html {
   box-sizing: inherit;
 }
 
-body {
+body, .application {
   font-family: $font-family-sans-serif;
-  // background-color: $color-black;
-  margin: 0;
-  position: relative;
-  padding-bottom: 25rem;
-  min-height: 100%;
+}
 
-  .footer {
-    position: absolute;
-    right: 0;
-    bottom: 0;
-    left: 0;
-    padding-bottom: 3rem;
-
-    .tile {
-      justify-content: center;
-    }
-  }
+.btn {
+  // Padding - texts inside may be too tight towards the button's borders otherwise.
+  padding-left: 10px;
+  padding-right: 10px;
 }
 
 img {
   max-width: 100%;
 }
 
-// TODO: Possible more symbols to come.
-.fa-edit,
-.fa-close {
-  cursor: pointer;
+a {
+  text-decoration-line: none;
 }
