@@ -1,16 +1,11 @@
 import { LanguagePack } from "../../languagePack";
 import dateTimeFormat from "./dateTimeFormat";
-import { German } from "flatpickr/dist/l10n/de";
 import messages from "./messages.json";
 
 export default {
   language: "de",
   messages,
   dateTimeFormat,
-  flatPickr: {
-    locale: German,
-    useTimeFormat_24hrs: true,
-    dateFormat: "d.m.Y",
-    dateTimeFormat: "d.m.Y H:i"
-  }
+  timeFormat: "24hr",
+  firstDayOfWeek: 1 // Monday
 } as LanguagePack;

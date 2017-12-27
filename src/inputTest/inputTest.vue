@@ -1,10 +1,13 @@
 <template>
-  <article>
-    <section>
-      <div v-t="{path: 'input-test.label', args:{text: inputText}}"></div>
-      <input type="text" v-model="inputText" class="input">
-    </section>
-  </article>
+  <div>
+    <v-text-field
+      name="input-1"
+      :label="$t('input-test.help')"
+      v-model="inputText"
+      dark
+    />
+    <div v-t="{path: 'input-test.label', args:{text: inputText}}" class="output"></div>
+  </div>
 </template>
 
 <script lang="ts" src="./inputTest.ts"></script>
