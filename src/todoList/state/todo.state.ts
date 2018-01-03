@@ -12,6 +12,14 @@ export const initialTodoState: TodoModel[] = [
     description: "A lot of stuff to be done!",
     deadline: new Date(Date.now() + 60 * 60 * 1000),
     created: new Date()
+  },
+  {
+    id: 2,
+    headline: "Test todo #2",
+    description:
+      "Picanha porchetta ribeye cow, spare ribs t-bone short loin. Leberkas pastrami meatloaf boudin, bresaola salami capicola swine filet mignon chicken pork loin shankle ball tip jowl. Bresaola kielbasa sausage ribeye salami. Turkey beef ribs corned beef andouille, pork belly boudin jowl kielbasa cupim short loin shank.",
+    deadline: new Date(Date.now() + 60 * 60 * 1000 * 2),
+    created: new Date()
   }
 ];
 

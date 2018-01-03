@@ -1,5 +1,4 @@
 import { Component, Lifecycle, p, Prop, Vue } from "av-ts";
-import * as FlatPickr from "flatpickr";
 
 import { createNewTodo } from "./state/creators";
 import { TodoModel } from "./state/interfaces";
@@ -33,12 +32,7 @@ export default class TodoEntry extends Vue {
     required: false
   });
 
-  flatpickr: FlatPickr.Instance;
-  flatpickrOptions: FlatPickr.Options.Options = {
-    enableTime: true,
-    minDate: new Date(),
-    onChange: this.setTodoDeadline.bind(this)
-  };
+  isValid: boolean = false;
 
   editable = this.initialEditable || false;
   targetTodo: TodoModel = this.todo
@@ -50,52 +44,42 @@ export default class TodoEntry extends Vue {
 
   pendingTodo: TodoModel | null = null;
 
-  unsubscribe: (() => void) | null = null;
+  deadlineModel = {
+    date: null as string | null,
+    time: null as string | null
+  };
 
-  @Lifecycle
-  beforeDestroy(): void {
-    // Free up memory
-    this.flatpickr && this.flatpickr.destroy();
-    this.unsubscribe && this.unsubscribe();
-  }
+  modals = {
+    date: false,
+    time: false
+  };
+
+  readonly todayStart = new Date().setHours(0, 0, 0, 0);
 
   @Lifecycle
   beforeMount(): void {
     if (this.editable) {
       this.pendingTodo = { ...this.targetTodo };
-      Vue.nextTick(() => this.initFlatpicker());
+      this.updateDeadlineModel();
     }
-    this.$store.subscribe(() => {
-      if (this.flatpickr) {
-        this.flatpickr.destroy();
-        this.initFlatpicker();
-      }
-    });
   }
 
   get languagePack(): LanguagePack {
     return this.$store.getters[I18N_MODULE_ACTIONS.GET];
   }
 
-  setTodoDeadline(selectedDates: Date[]) {
-    if (this.pendingTodo) {
-      this.pendingTodo.deadline = selectedDates[0];
-    }
-  }
-
   setEditable(newValue: boolean): void {
     this.editable = newValue;
     // We need a copy of the current model to properly deal with edit/cancel steps.
-    if (this.editable === true) {
+    if (this.editable) {
       this.pendingTodo = { ...this.targetTodo };
-      Vue.nextTick(() => this.initFlatpicker());
-    } else {
-      this.flatpickr && this.flatpickr.destroy();
+      this.updateDeadlineModel();
     }
   }
 
   onSubmit(): void {
     if (this.pendingTodo) {
+      this.pendingTodo.deadline = this.determineDeadline();
       this.targetTodo = { ...this.pendingTodo };
     }
     this.setEditable(false);
@@ -137,17 +121,67 @@ export default class TodoEntry extends Vue {
     }
   }
 
-  private initFlatpicker(): void {
-    if (this.pendingTodo) {
-      this.flatpickrOptions.defaultDate = this.pendingTodo.deadline;
+  isUpcomingDate(formattedDate: string): boolean {
+    const date = new Date(formattedDate);
+    return date.getTime() >= this.todayStart;
+  }
+
+  private updateDeadlineModel() {
+    if (this.pendingTodo && this.pendingTodo.deadline) {
+      const minutes = this.pendingTodo.deadline.getMinutes();
+      const [hours, suffix] = this.determineTimeSuffix(
+        this.pendingTodo.deadline.getHours()
+      );
+      this.deadlineModel.time = `${hours}:${minutes}${suffix}`;
+      this.deadlineModel.date = this.pendingTodo.deadline
+        .toISOString()
+        .split("T", 1)[0];
     }
-    this.flatpickrOptions.dateFormat = this.languagePack.flatPickr.dateTimeFormat;
-    this.flatpickrOptions.time_24hr = this.languagePack.flatPickr.useTimeFormat_24hrs;
-    this.flatpickr = FlatPickr(
-      this.$el.querySelector("#deadlineInput") as HTMLElement,
-      this.flatpickrOptions
-    ) as FlatPickr.Instance;
-    // Call is required, since it won't recognize the change by flatpickr otherwise.
-    this.$validator.validateAll();
+  }
+
+  private determineTimeSuffix(hours: number): [number, string] {
+    if (this.languagePack.timeFormat === "24hr") {
+      if (hours > 12) {
+        return [hours - 12, "pm"];
+      } else if (hours === 0) {
+        return [12, "am"];
+      } else {
+        return [hours, "am"];
+      }
+    } else {
+      return [hours, ""];
+    }
+  }
+
+  private determineDeadline(): Date {
+    const date = this.deadlineModel.date as string;
+    const time = this.deadlineModel.time as string;
+
+    let targetDate = new Date(date);
+
+    const parsed = /(\d?\d):(\d\d)(am|pm)?/;
+    const match: RegExpMatchArray | null = time.match(parsed);
+    if (match) {
+      let hours = parseInt(match[1], 10);
+      const minutes = parseInt(match[2], 10);
+      const amPm = match[3];
+      switch (amPm) {
+        case "am":
+          if (hours === 12) {
+            // Special case: There is no
+            hours = 0;
+          }
+          break;
+        case "pm":
+          hours += 12;
+          break;
+        default:
+          break;
+      }
+
+      targetDate = new Date(targetDate.setHours(hours, minutes));
+    }
+
+    return targetDate;
   }
 }

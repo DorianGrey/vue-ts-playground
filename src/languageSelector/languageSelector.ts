@@ -1,5 +1,4 @@
 import { Component, Lifecycle, Vue } from "av-ts";
-import * as Flatpickr from "flatpickr";
 import { LanguagePack, loadLanguagePack } from "../i18n/languagePack";
 import { I18N_MODULE_ACTIONS } from "../i18n/state/i18n.state";
 
@@ -24,15 +23,20 @@ export default class LanguageSelector extends Vue {
     ] as LanguagePack).language;
   }
 
-  langChanged(): void {
-    loadLanguagePack(this.currentLanguage).then(langPack => {
-      Flatpickr.localize(langPack.flatPickr.locale);
-      this.$i18n.setDateTimeFormat(langPack.language, langPack.dateTimeFormat);
-      this.$i18n.setLocaleMessage(langPack.language, langPack.messages);
+  langChanged(newLang: string): void {
+    if (newLang !== this.currentLanguage) {
+      this.currentLanguage = newLang;
+      loadLanguagePack(this.currentLanguage).then(langPack => {
+        this.$i18n.setDateTimeFormat(
+          langPack.language,
+          langPack.dateTimeFormat
+        );
+        this.$i18n.setLocaleMessage(langPack.language, langPack.messages);
 
-      // These two calls will trigger the actual UI update.
-      this.$store.commit(I18N_MODULE_ACTIONS.SET, langPack);
-      this.$i18n.locale = langPack.language;
-    });
+        // These two calls will trigger the actual UI update.
+        this.$store.commit(I18N_MODULE_ACTIONS.SET, langPack);
+        this.$i18n.locale = langPack.language;
+      });
+    }
   }
 }

@@ -1,36 +1,86 @@
 <template>
-  <div id="app">
-    <nav class="nav">
+  <v-app id="app" dark>
+    <v-navigation-drawer
+      clipped
+      fixed
+      v-model="isMenuOpen"
+      app
+    >
+      <v-list dense>
+        <v-list-tile>
+          <v-list-tile-action>
+            <v-icon>perm_contact_calendar</v-icon>
+          </v-list-tile-action>
+          <v-list-tile-content>
+            <v-list-tile-title>
+              <router-link class="nav-item" to="/input-test">
+                <span v-t="'header.input-test'"></span>
+              </router-link>
+            </v-list-tile-title>
+          </v-list-tile-content>
+        </v-list-tile>
 
-      <div class="nav-left nav-item app-info">
-        <i class="fa fa-bookmark" aria-hidden="true"></i>
-        <span v-t="'header.demo-app'"></span>
-      </div>
+        <v-list-tile>
+          <v-list-tile-action>
+            <v-icon>assignment</v-icon>
+          </v-list-tile-action>
+          <v-list-tile-content>
+            <v-list-tile-title>
+              <router-link class="nav-item" to="/todo-list/42">
+                <span v-t="'header.todo-list'"></span>
+              </router-link>
+            </v-list-tile-title>
+          </v-list-tile-content>
+        </v-list-tile>
 
-      <!-- Dropdown menu for mobile (i.e. < 768px width). -->
-      <span class="nav-toggle" :class="{'is-active': isMenuOpen}" @click="openMenu($event)">
-        <span></span>
-        <span></span>
-        <span></span>
-      </span>
+        <v-list-tile>
+          <v-list-tile-action>
+            <v-icon>question_answer</v-icon>
+          </v-list-tile-action>
+          <v-list-tile-content>
+            <v-list-tile-title>
+              <router-link class="nav-item" to="/gallery">
+                <span v-t="'header.gallery'"></span>
+              </router-link>
+            </v-list-tile-title>
+          </v-list-tile-content>
+        </v-list-tile>
 
-      <div class="nav-right nav-menu" :class="{'is-active': !isMenuOpen}">
-        <router-link class="nav-item" to="/input-test">
-          <i class="fa fa-keyboard-o" aria-hidden="true"></i>
-          <span v-t="'header.input-test'"></span>
-        </router-link>
-        <router-link class="nav-item" to="/todo-list/42">
-          <i class="fa fa-calendar" aria-hidden="true"></i>
-          <span v-t="'header.todo-list'"></span>
-        </router-link>
-        <router-link class="nav-item" to="/gallery">
-          <i class="fa fa-picture-o" aria-hidden="true"></i>
-          <span v-t="'header.gallery'"></span>
-        </router-link>
-      </div>
-    </nav>
+      </v-list>
+    </v-navigation-drawer>
 
-    <router-view></router-view>
+    <v-toolbar app fixed clipped-left>
+      <v-toolbar-side-icon @click.stop="isMenuOpen = !isMenuOpen"/>
+      <v-toolbar-title v-t="'header.demo-app'" />
+      <v-spacer />
+      <language-selector />
+    </v-toolbar>
+    <v-content>
+      <v-container fluid fill-height>
+        <!-- TODO: Maybe re-add "align-center" here.-->
+        <v-layout justify-center>
+
+          <router-view />
+
+        </v-layout>
+      </v-container>
+    </v-content>
+    <v-footer app>
+      <span>&copy; 2018</span>
+    </v-footer>
+
+    <v-snackbar
+      :bottom="true"
+      v-model="snackbarOptions.show"
+    >
+      {{ snackbarOptions.text }}
+      <v-btn flat color="pink" @click.native="hideSnackbar()">{{snackbarOptions.buttonText}}</v-btn>
+    </v-snackbar>
+
+  </v-app>
+  <!--     -->
+
+  <!--<div id="app">
 
     <footer class="footer">
       <div class="container">
@@ -90,7 +140,7 @@
 
       </div>
     </footer>
-  </div>
+  </div>-->
 </template>
 
 <script lang="ts" src="./app.ts"></script>
@@ -102,36 +152,10 @@
   #app {
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
-    text-align: center;
     min-height: 100%;
 
-    nav {
-      a {
-        background-color: $color-black;
-        color: $color-dark-grey;
-        font-weight: 600;
-
-        &:hover, &.router-link-active {
-          color: $color-white;
-        }
-
-        i {
-          margin-right: 5px;
-        }
-      }
-
-      .app-info {
-        line-height: 28px;
-
-        i {
-          margin-right: 10px;
-          vertical-align: sub;
-        }
-
-        span {
-          font-style: italic;
-        }
-      }
+    .footer {
+      justify-content: space-between;
     }
   }
 
