@@ -40,8 +40,8 @@
   "devDependencies": {
     "@types/jest": "^22.1.2",
     "@types/lodash-es": "4.17.0",
-    "@types/webpack-env": "^1.13.5",
     "@types/webfontloader": "^1.6.29",
+    "@types/webpack-env": "^1.13.5",
     "autodll-webpack-plugin": "^0.3.8",
     "autoprefixer": "^8.0.0",
     "babel-core": "^6.26.0",
@@ -87,6 +87,8 @@
     "stylelint-processor-html": "^1.0.0",
     "stylelint-scss": "^2.3.0",
     "stylelint-webpack-plugin": "^0.10.2",
+    "stylus": "^0.54.5",
+    "stylus-loader": "^3.0.1",
     "ts-jest": "^22.0.4",
     "ts-loader": "^3.5.0",
     "tslint": "^5.9.1",
