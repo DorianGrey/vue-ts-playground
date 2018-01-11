@@ -1,5 +1,5 @@
 import { Component, Lifecycle, Vue } from "av-ts";
-import * as Flatpickr from "flatpickr";
+import Flatpickr from "flatpickr";
 import { LanguagePack, loadLanguagePack } from "../i18n/languagePack";
 import { I18N_MODULE_ACTIONS } from "../i18n/state/i18n.state";
 

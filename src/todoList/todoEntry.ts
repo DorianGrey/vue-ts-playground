@@ -1,5 +1,5 @@
 import { Component, Lifecycle, p, Prop, Vue } from "av-ts";
-import * as FlatPickr from "flatpickr";
+import FlatPickr from "flatpickr";
 
 import { createNewTodo } from "./state/creators";
 import { TodoModel } from "./state/interfaces";

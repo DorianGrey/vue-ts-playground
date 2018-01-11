@@ -21,7 +21,7 @@ import { bootloader } from "./bootloader";
 import { TODO_MODULE_NAME, TodoStateModule } from "./todoList/state/todo.state";
 
 import { LanguagePack, loadBrowserLanguagePack } from "./i18n/languagePack";
-import * as Flatpickr from "flatpickr";
+import Flatpickr from "flatpickr";
 import { I18N_MODULE_NAME, I18nStateModule } from "./i18n/state/i18n.state";
 
 let app: any;
