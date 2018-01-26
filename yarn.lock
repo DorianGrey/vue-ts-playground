@@ -10,9 +10,9 @@
     esutils "^2.0.2"
     js-tokens "^3.0.0"
 
-"@types/jest@^22.0.1":
-  version "22.0.1"
-  resolved "https://registry.yarnpkg.com/@types/jest/-/jest-22.0.1.tgz#6370a6d60cce3845e4cd5d00bf65f654264685bc"
+"@types/jest@^22.1.0":
+  version "22.1.0"
+  resolved "https://registry.yarnpkg.com/@types/jest/-/jest-22.1.0.tgz#c1de03bbac66fac4cc741f7a69cb73bc01a1707c"
 
 "@types/lodash-es@4.17.0":
   version "4.17.0"
@@ -3007,9 +3007,9 @@ flat-cache@^1.2.1:
     graceful-fs "^4.1.2"
     write "^0.2.1"
 
-flatpickr@4.2.3:
-  version "4.2.3"
-  resolved "https://registry.yarnpkg.com/flatpickr/-/flatpickr-4.2.3.tgz#084b95d353b3b64a164ebfe7151df75c8dae14b1"
+flatpickr@4.2.4:
+  version "4.2.4"
+  resolved "https://registry.yarnpkg.com/flatpickr/-/flatpickr-4.2.4.tgz#abd6dedd0fa41e2118acb96a22f49819ba2d0157"
 
 flatten@^1.0.2:
   version "1.0.2"
@@ -5009,9 +5009,9 @@ levn@~0.3.0:
     prelude-ls "~1.1.2"
     type-check "~0.3.2"
 
-lint-staged@^6.0.1:
-  version "6.0.1"
-  resolved "https://registry.yarnpkg.com/lint-staged/-/lint-staged-6.0.1.tgz#855f2993ab4a265430e2fd9828427e648d65e6b4"
+lint-staged@^6.1.0:
+  version "6.1.0"
+  resolved "https://registry.yarnpkg.com/lint-staged/-/lint-staged-6.1.0.tgz#28f600c10a6cbd249ceb003118a1552e53544a93"
   dependencies:
     app-root-path "^2.0.0"
     chalk "^2.1.0"
@@ -8444,9 +8444,9 @@ ts-jest@^22.0.1:
     source-map-support "^0.5.0"
     yargs "^10.0.3"
 
-ts-loader@^3.3.0:
-  version "3.3.0"
-  resolved "https://registry.yarnpkg.com/ts-loader/-/ts-loader-3.3.0.tgz#3f393e10e5992009b2bffd7204dc28378b753557"
+ts-loader@^3.3.1:
+  version "3.3.1"
+  resolved "https://registry.yarnpkg.com/ts-loader/-/ts-loader-3.3.1.tgz#5d24b425876cfed094f8da95375c9fd1e598faec"
   dependencies:
     chalk "^2.3.0"
     enhanced-resolve "^3.0.0"
@@ -8866,17 +8866,17 @@ vm-browserify@0.0.4:
   dependencies:
     indexof "0.0.1"
 
-vue-carousel-3d@^0.1.19:
-  version "0.1.19"
-  resolved "https://registry.yarnpkg.com/vue-carousel-3d/-/vue-carousel-3d-0.1.19.tgz#b817d06531e88f41e06faacfd92c262d9bfb42f3"
+vue-carousel-3d@^0.1.20:
+  version "0.1.20"
+  resolved "https://registry.yarnpkg.com/vue-carousel-3d/-/vue-carousel-3d-0.1.20.tgz#873cc0b5469927a5f5f8c8364cb46865753297f1"
 
 vue-hot-reload-api@^2.2.0, vue-hot-reload-api@^2.2.4:
   version "2.2.4"
   resolved "https://registry.yarnpkg.com/vue-hot-reload-api/-/vue-hot-reload-api-2.2.4.tgz#683bd1d026c0d3b3c937d5875679e9a87ec6cd8f"
 
-vue-i18n@^7.4.0:
-  version "7.4.0"
-  resolved "https://registry.yarnpkg.com/vue-i18n/-/vue-i18n-7.4.0.tgz#bd96cee90b3074e3f43e7347639e6fad0b45b6ae"
+vue-i18n@^7.4.1:
+  version "7.4.1"
+  resolved "https://registry.yarnpkg.com/vue-i18n/-/vue-i18n-7.4.1.tgz#3b2582edc3ea10609b0b890b79b62bd9642c9ddd"
 
 vue-loader@^13.7.0:
   version "13.7.0"
