@@ -12,27 +12,24 @@ const chalk = require("chalk");
 const path = require("path");
 const filesize = require("filesize");
 const stripAnsi = require("strip-ansi");
-const zlib = require("zlib");
+const { gzipsize, gzipOpts } = require("./gzipSize");
 
 const paths = require("../../config/paths");
 const formatUtils = require("./formatUtil");
+const getRelativeChunkName = require("./getRelativeChunkName");
 
 const assetsSizeWarnLimit = 250 * 1024; // <=> 250 KB.
 const potentiallyExtractedChunkSizeLimit = 512; // <=> 1 KB.
-const gzipOpts = { level: 6 }; // This level is used by default by many servers like nginx.
 
 const assetCategories = {
   "Service worker": /(workbox|service-worker).*\.js$/,
+  "Language packs": /lang-.+\.chunk\.js$/,
   Scripts: /\.js$/,
   Styles: /\.css$/,
   "Source maps": /\.map$/,
   Images: /\.(jpe?g|png|gif|bmp)$/,
   Fonts: /\.(woff2?|eot|ttf|svg)$/
 };
-
-function gzipsize(src) {
-  return zlib.gzipSync(src, gzipOpts).length;
-}
 
 function partition(src, predicate) {
   let res1 = [],
@@ -49,7 +46,59 @@ function partition(src, predicate) {
   return [res1, res2];
 }
 
-function printFileSizesOnAssetCategory(assetsStats, exceptionalAssetCnt) {
+function colorizeDiffLabel(difference, currentLabel, alertLimit) {
+  let label = currentLabel;
+  if (difference >= 0) {
+    label = `+${label}`;
+  }
+
+  let coloring;
+  switch (true) {
+    case difference >= alertLimit:
+      coloring = chalk.red;
+      break;
+    case difference > 0 && difference < alertLimit:
+      coloring = chalk.yellow;
+      break;
+    case difference < 0:
+      coloring = chalk.green;
+      break;
+    default:
+      coloring = chalk.grey;
+      break;
+  }
+
+  return coloring(`(${label})`);
+}
+
+function determineSizeDiff(
+  previousFileSizes,
+  buildFolder,
+  assetName,
+  currentSize,
+  type,
+  alertLimit
+) {
+  const relativeName = getRelativeChunkName(buildFolder, assetName);
+  const previousInfo = previousFileSizes.sizes[relativeName];
+  if (previousInfo) {
+    const difference = currentSize - previousInfo[type];
+    const label = colorizeDiffLabel(
+      difference,
+      filesize(difference),
+      alertLimit
+    );
+    return !Number.isNaN(difference) && label ? ` ${label}` : "";
+  } else {
+    return "";
+  }
+}
+
+function printFileSizesOnAssetCategory(
+  previousFileSizes,
+  assetsStats,
+  exceptionalAssetCnt
+) {
   const buildFolder = paths.appBuild;
 
   const assets = assetsStats.map(asset => {
@@ -57,14 +106,32 @@ function printFileSizesOnAssetCategory(assetsStats, exceptionalAssetCnt) {
     const fileContents = fs.readFileSync(filePath);
     const originalFileSize = fs.statSync(filePath).size;
     const gzipSize = gzipsize(fileContents);
+
+    const originalSizeDiff = determineSizeDiff(
+      previousFileSizes,
+      buildFolder,
+      asset.name,
+      originalFileSize,
+      "original",
+      1024 * 50 * 3
+    );
+    const gzipSizeDiff = determineSizeDiff(
+      previousFileSizes,
+      buildFolder,
+      asset.name,
+      gzipSize,
+      "gzip",
+      1024 * 50
+    );
+
     return {
       folder: path.join(path.dirname(asset.name)),
       name: path.basename(asset.name),
       originalFileSize,
       size: gzipSize,
       sizeLabel: {
-        src: `${filesize(originalFileSize)} (src)`,
-        gzip: `${filesize(gzipSize)} (gzip)`
+        src: `${filesize(originalFileSize)}${originalSizeDiff} (src)`,
+        gzip: `${filesize(gzipSize)}${gzipSizeDiff} (gzip)`
       }
     };
   });
@@ -134,7 +201,7 @@ function alignPad(originalLabel, to) {
   return originalLabel;
 }
 
-function printFileSizes(webpackStats, staticAssets = []) {
+function printFileSizes(previousFileSizes, webpackStats, staticAssets = []) {
   // Prints a detailed summary of build files.
   const jsonStats = webpackStats.toJson();
   const assetsStats = jsonStats.assets;
@@ -167,7 +234,11 @@ function printFileSizes(webpackStats, staticAssets = []) {
         );
         if (_relevantAssets.length > 0) {
           process.stdout.write(formatUtils.formatIndicator("> " + c) + "\n");
-          printFileSizesOnAssetCategory(_relevantAssets, exceptionalAssetCnt);
+          printFileSizesOnAssetCategory(
+            previousFileSizes,
+            _relevantAssets,
+            exceptionalAssetCnt
+          );
           process.stdout.write("\n");
         }
         return nextAssets;
@@ -177,7 +248,11 @@ function printFileSizes(webpackStats, staticAssets = []) {
 
     if (remainingAssets.length > 0) {
       process.stdout.write(formatUtils.formatIndicator("> Others") + "\n");
-      printFileSizesOnAssetCategory(remainingAssets, exceptionalAssetCnt);
+      printFileSizesOnAssetCategory(
+        previousFileSizes,
+        remainingAssets,
+        exceptionalAssetCnt
+      );
       process.stdout.write("\n");
     }
 

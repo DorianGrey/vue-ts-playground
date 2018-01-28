@@ -12,6 +12,8 @@ const statsFormatter = require("./util/statsFormatter");
 const printFileSizes = require("./util/printFileSizes");
 const printHostingInformation = require("./util/printHostingInformation");
 const formatWebpackMessages = require("./util/formatWebpackMessages");
+const determineFileSizesBeforeBuild = require("./util/determineFileSizesBeforeBuild");
+const paths = require("../config/paths");
 
 formatUtil.cls();
 const writer = process.stdout.write.bind(process.stdout);
@@ -26,10 +28,25 @@ writer(formatUtil.formatInfo("Rendering loading animation...\n"));
 
 renderLoadingAnimation()
   .then(() => {
+    let previousFileSizes;
+    try {
+      previousFileSizes = determineFileSizesBeforeBuild(paths.appBuild);
+    } catch (e) {
+      writer(
+        formatUtil.formatError(
+          "Determining file sizes before build failed, due to",
+          e,
+          "Going ahead with empty object.\n"
+        )
+      );
+      previousFileSizes = {
+        root: paths.appBuild,
+        sizes: {}
+      };
+    }
     const webpack = require("webpack");
     const fs = require("fs-extra");
 
-    const paths = require("../config/paths");
     const prodConfig = require("../config/webpack/prod");
 
     const hasYarn = fs.existsSync(paths.yarnLockFile);
@@ -99,7 +116,7 @@ renderLoadingAnimation()
         if (formattedStats.errors.length) {
           return reject(formattedStats.errors);
         } else {
-          printFileSizes(stats, staticAssets);
+          printFileSizes(previousFileSizes, stats, staticAssets);
           printHostingInformation(hasYarn);
 
           resolve();
