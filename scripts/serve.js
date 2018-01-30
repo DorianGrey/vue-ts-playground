@@ -6,9 +6,11 @@ const compression = require("compression");
 const path = require("path");
 const httpProxy = require("http-proxy");
 const fs = require("fs-extra");
-const formatUtil = require("../scripts/util/formatUtil");
+const LabeledFormatter = require("../config/webpack/pluginUtils/LabeledFormatter");
 
 const paths = require("../config/paths");
+
+const out = new LabeledFormatter();
 
 fs.pathExists(paths.appBuild).then(exists => {
   if (!exists) {
@@ -46,16 +48,17 @@ fs.pathExists(paths.appBuild).then(exists => {
     );
 
     app.listen(serverPort, () => {
-      process.stdout.write(
-        formatUtil.formatInfo(
-          `Serving from directories ${chalk.cyan(serveDirs.join(", "))} ...\n`
+      out
+        .info(
+          `Serving from directories ${chalk.cyan(serveDirs.join(", "))} ...`
         )
-      );
-      process.stdout.write(
-        formatUtil.formatInfo(
-          `Listening on ${chalk.cyan(`http://localhost:${serverPort}`)} ...\n`
+        .endl();
+
+      out
+        .info(
+          `Listening on ${chalk.cyan(`http://localhost:${serverPort}`)} ...`
         )
-      );
+        .endl();
     });
   }
 });

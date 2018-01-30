@@ -2,21 +2,18 @@
 
 process.env.NODE_ENV = "development";
 
-const chalk = require("chalk");
 const renderLoadingAnimation = require("./util/renderLoading");
-const formatUtil = require("./util/formatUtil");
+const LabeledFormatter = require("../config/webpack/pluginUtils/LabeledFormatter");
 
-formatUtil.cls();
-process.stdout.write(
-  formatUtil.formatInfo("Starting development environment...\n")
-);
-process.stdout.write(formatUtil.formatInfo("Rendering loading animation...\n"));
+const out = new LabeledFormatter();
+
+out.softCls();
+out.info("Starting development environment...").endl();
+out.info("Rendering loading animation...").endl();
 
 renderLoadingAnimation()
   .then(() => {
-    process.stdout.write(
-      formatUtil.formatInfo("Loading animation rendered, starting server...\n")
-    );
+    out.info("Loading animation rendered, starting server...").endl();
 
     const WebpackDevServer = require("webpack-dev-server");
     const webpack = require("webpack");

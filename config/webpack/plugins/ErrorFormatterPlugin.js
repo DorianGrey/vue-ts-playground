@@ -1,8 +1,44 @@
 const statsFormatter = require("../../../scripts/util/statsFormatter");
 const formatWebpackMessages = require("../../../scripts/util/formatWebpackMessages");
-const formatUtil = require("../../../scripts/util/formatUtil");
 
-const writer = process.stdout.write.bind(process.stdout);
+const LabeledFormatter = require("../pluginUtils/LabeledFormatter");
+
+function msToPeriod(ms) {
+  "use strict";
+  ms = Math.round(ms);
+
+  const divisorSecond = 1000,
+    divisorMinute = 60 * divisorSecond,
+    divisorHour = 60 * divisorMinute;
+
+  const hours = Math.floor(ms / divisorHour);
+  ms = ms % divisorHour;
+
+  const minutes = Math.floor(ms / divisorMinute);
+  ms = ms % divisorMinute;
+
+  const seconds = Math.ceil(ms / divisorSecond);
+  ms = ms % divisorSecond;
+
+  let result = [];
+  if (hours > 0) {
+    result.push(`${hours}h`);
+  }
+
+  if (minutes > 0) {
+    result.push(`${minutes}m`);
+  }
+
+  if (seconds > 0) {
+    result.push(`${seconds}s`);
+  }
+
+  if (ms > 0) {
+    result.push(`${ms}ms`);
+  }
+
+  return result.join(" ");
+}
 
 class ErrorFormatterPlugin {
   constructor(options) {
@@ -19,8 +55,12 @@ class ErrorFormatterPlugin {
         ? this.options.clear.onDone
         : false;
 
-    this.cls =
-      this.options.clear.mode === "soft" ? formatUtil.cls : formatUtil.hardCls;
+    this.out = new LabeledFormatter();
+
+    this.cls = (this.options.clear.mode === "soft"
+      ? this.out.softCls
+      : this.out.hardCls
+    ).bind(this.out);
   }
 
   apply(compiler) {
@@ -28,32 +68,31 @@ class ErrorFormatterPlugin {
       this.options.clear.onDone && this.cls();
       const hasErrors = stats.hasErrors();
       const hasWarnings = stats.hasWarnings();
+      const compileTime = getCompileTime(stats);
+      const time = msToPeriod(compileTime);
 
       if (!hasErrors && !hasWarnings) {
-        const time = getCompileTime(stats);
-        writer("\n");
-        writer(
-          `${formatUtil.formatSuccess(
-            `Compiled successfully in ${time} ms.`
-          )}\n`
-        );
+        this.out
+          .endl()
+          .success(`Compiled successfully in ${time}.`)
+          .endl();
 
         if (this.options.successMessages.length > 0) {
-          writer("\n");
+          this.out.endl();
           this.options.successMessages.forEach(msg => {
-            writer(`${formatUtil.formatNote(msg)}\n`);
+            this.out.note(msg).endl();
           });
-          writer("\n");
+          this.out.endl();
         }
-
-        return;
+      } else {
+        this.out.errorLabel(`Compilation failed after ${time}. `).endl();
+        this.displayMalfunctions(hasErrors, hasWarnings, stats);
       }
-      this.displayMalfunctions(hasErrors, hasWarnings, stats);
     });
 
     compiler.plugin("invalid", () => {
       this.options.clear.onInvalid && this.cls();
-      writer(`${formatUtil.formatInfo("Compiling...")}\n`);
+      this.out.info("Compiling...").endl();
     });
   }
 
@@ -62,13 +101,13 @@ class ErrorFormatterPlugin {
     const formattedStats = statsFormatter.formatStats(jsonified);
 
     if (hasWarnings) {
-      writer("\n");
-      statsFormatter.printWarnings(formattedStats.warnings, writer);
+      this.out.endl();
+      statsFormatter.printWarnings(formattedStats.warnings, this.out);
     }
 
     if (hasErrors) {
-      writer("\n");
-      statsFormatter.printErrors(formattedStats.errors, writer);
+      this.out.endl();
+      statsFormatter.printErrors(formattedStats.errors, this.out);
     }
   }
 }

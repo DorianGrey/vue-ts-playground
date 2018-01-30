@@ -7,6 +7,10 @@ exports.formatIndicator = function(indicator) {
   return `${chalk.bgCyan.white.bold("", indicator, "")}  `;
 };
 
+exports.formatDebug = function(text) {
+  return `${chalk.bgBlack.white("", "D", "")} ${text}`;
+};
+
 exports.formatNote = function(text) {
   return `${chalk.bgWhite.black("", "N", "")} ${text}`;
 };
@@ -23,12 +27,15 @@ exports.formatError = function(text) {
   return `${chalk.bgRed.black("", "ERROR", "")} ${text}`;
 };
 
+exports.formatErrorLabel = function(text) {
+  return `${chalk.bgRed.black("", text, "")}`;
+};
+
 exports.formatSuccess = function(text) {
   return `${chalk.bgGreen.black("", "SUCCESS", "")} ${text}`;
 };
 
-exports.cls = function() {
-  "use strict";
+exports.softCls = function() {
   if (process.stdout.isTTY) {
     // Fill screen with blank lines. Then move to 0 (beginning of visible part) and clear it
     const blank = "\n".repeat(process.stdout.rows);

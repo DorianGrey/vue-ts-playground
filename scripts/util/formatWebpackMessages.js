@@ -26,7 +26,7 @@
 // https://github.com/webpack/webpack/issues/2878
 
 const chalk = require("chalk");
-const formatUtil = require("./formatUtil");
+const formatUtil = require("../../config/webpack/pluginUtils/formatUtil");
 
 const friendlySyntaxErrorLabel = "Syntax error:";
 

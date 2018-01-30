@@ -7,7 +7,7 @@ const glob = require("globby");
 const shelljs = require("shelljs");
 
 const renderLoadingAnimation = require("./util/renderLoading");
-const formatUtil = require("./util/formatUtil");
+const LabeledFormatter = require("../config/webpack/pluginUtils/LabeledFormatter");
 const statsFormatter = require("./util/statsFormatter");
 const printFileSizes = require("./util/printFileSizes");
 const printHostingInformation = require("./util/printHostingInformation");
@@ -15,16 +15,17 @@ const formatWebpackMessages = require("./util/formatWebpackMessages");
 const determineFileSizesBeforeBuild = require("./util/determineFileSizesBeforeBuild");
 const paths = require("../config/paths");
 
-formatUtil.cls();
-const writer = process.stdout.write.bind(process.stdout);
+const out = new LabeledFormatter();
+
+out.softCls();
 
 process.on("unhandledRejection", err => {
-  writer(formatUtil.formatError(`${err}\n`));
+  out.error(`${err}`).endl();
   throw err;
 });
 
-writer(formatUtil.formatInfo("Creating an optimized production build...\n"));
-writer(formatUtil.formatInfo("Rendering loading animation...\n"));
+out.info("Creating an optimized production build...").endl();
+out.info("Rendering loading animation...").endl();
 
 renderLoadingAnimation()
   .then(() => {
@@ -32,13 +33,11 @@ renderLoadingAnimation()
     try {
       previousFileSizes = determineFileSizesBeforeBuild(paths.appBuild);
     } catch (e) {
-      writer(
-        formatUtil.formatError(
-          "Determining file sizes before build failed, due to",
-          e,
-          "Going ahead with empty object.\n"
+      out
+        .error(
+          `Determining file sizes before build failed, due to ${e}, going ahead with empty object.`
         )
-      );
+        .endl();
       previousFileSizes = {
         root: paths.appBuild,
         sizes: {}
@@ -54,17 +53,17 @@ renderLoadingAnimation()
     try {
       compiler = webpack(prodConfig());
     } catch (e) {
-      process.stdout.write(formatUtil.formatError(e));
+      out.error(e).endl();
       process.exit(1);
     }
 
-    writer(formatUtil.formatInfo("Clearing target directories...\n"));
+    out.info("Clearing target directories...").endl();
 
     // const outputOptions = presetToOptions("none");
     fs.emptyDirSync(paths.appBuild);
     fs.emptyDirSync(paths.appBuildStats);
 
-    writer(formatUtil.formatInfo("Copying non-referenced static files...\n"));
+    out.info("Copying non-referenced static files...").endl();
     fs.copySync(paths.appPublic, paths.appBuild, {
       dereference: true,
       filter: file => file !== paths.appHtml
@@ -101,7 +100,7 @@ renderLoadingAnimation()
       "service-worker.js"
     );
 
-    writer(formatUtil.formatInfo("Processing build...\n"));
+    out.info("Processing build...").endl();
 
     return new Promise((resolve, reject) => {
       compiler.run((err, stats) => {
@@ -111,13 +110,13 @@ renderLoadingAnimation()
         const jsonified = formatWebpackMessages(stats.toJson({}, true));
         const formattedStats = statsFormatter.formatStats(jsonified);
 
-        statsFormatter.printWarnings(formattedStats.warnings, writer);
+        statsFormatter.printWarnings(formattedStats.warnings, out);
 
         if (formattedStats.errors.length) {
           return reject(formattedStats.errors);
         } else {
           printFileSizes(previousFileSizes, stats, staticAssets);
-          printHostingInformation(hasYarn);
+          printHostingInformation(hasYarn, out);
 
           resolve();
         }
@@ -125,6 +124,6 @@ renderLoadingAnimation()
     });
   })
   .catch(errors => {
-    statsFormatter.printErrors(errors, writer);
+    statsFormatter.printErrors(errors, out);
     process.exit(1);
   });

@@ -10,7 +10,7 @@ const ProgressBarPlugin = require("progress-bar-webpack-plugin");
 const ForkTsCheckerWebpackPlugin = require("fork-ts-checker-webpack-plugin");
 
 const paths = require("../paths");
-const formatUtil = require("../../scripts/util/formatUtil");
+const formatUtil = require("./pluginUtils/formatUtil");
 const loadingAnimation = require("../../src/generated/loading.scss.json");
 
 const nodeOptions = {

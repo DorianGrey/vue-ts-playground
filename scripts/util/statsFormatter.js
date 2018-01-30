@@ -1,37 +1,56 @@
 "use strict";
 
-const formatUtil = require("./formatUtil");
+const formatUtil = require("../../config/webpack/pluginUtils/formatUtil");
 
-function printErrors(errors, writer) {
+/**
+ *
+ * @param {string[]} errors List of errors to print.
+ * @param {LabeledFormatter} out
+ */
+function printErrors(errors, out) {
   if (errors.length) {
     const eCnt = errors.length;
-    writer("\n");
-    writer(
-      formatUtil.formatError(
+    out
+      .endl()
+      .error(
         `There ${eCnt === 1 ? "is" : "are"} ${eCnt} build error${
           eCnt === 1 ? "" : "s"
-        }:\n`
+        }:`
       )
-    );
+      .endl();
+
     errors.forEach(err => {
-      writer(err + "\n\n");
+      out
+        .raw(err)
+        .endl()
+        .endl();
     });
   }
 }
 
-function printWarnings(warnings, writer) {
+/**
+ *
+ * @param {string[]} warnings List of errors to print.
+ * @param {LabeledFormatter} out
+ */
+function printWarnings(warnings, out) {
   if (warnings.length) {
     const eCnt = warnings.length;
-    writer("\n");
-    writer(
-      formatUtil.formatWarning(
+
+    out
+      .endl()
+      .warning(
         `There ${eCnt === 1 ? "is" : "are"} ${eCnt} build warning${
           eCnt === 1 ? "" : "s"
-        }:\n`
+        }:`
       )
-    );
+      .endl();
+
     warnings.forEach(warn => {
-      writer(warn + "\n\n");
+      out
+        .raw(warn)
+        .endl()
+        .endl();
     });
   }
 }
