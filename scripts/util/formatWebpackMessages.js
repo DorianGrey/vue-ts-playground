@@ -1,31 +1,20 @@
 /**
  * Note: This utility has originally been established by the create-react-app team,
- * and is used in the corresponding tool. While I appreciate most of this style,
- * I had to adopt the parts that I dislike or consider to be not helpful.
+ * and is used in the corresponding tool. While I appreciate most of the style it applies,
+ * I had to adopt the parts that I dislike or consider to be not helpful, and make this more
+ * usable for a general purpose, not being tight to `react-dev-utils`.
+ * Things got restructured a bit as well to make everything easier to read.
  * Also, since this version is only used in node, there is no need to take care of browser
  * compatibility.
- * For completeness reasons, the original license header is included below.
  *
  * @DorianGrey
- *
- * Copyright (c) 2015-present, Facebook, Inc.
- * All rights reserved.
- *
- * This source code is licensed under the BSD-style license found in the
- * LICENSE file in the root directory of this source tree. An additional grant
- * of patent rights can be found in the PATENTS file in the same directory.
  */
 
 "use strict";
 
-// WARNING: this code is untranspiled and is used in browser too.
-// Please make sure any changes are in ES5 or contribute a Babel compile step.
-
 // Some custom utilities to prettify Webpack output.
-// This is quite hacky and hopefully won't be needed when Webpack fixes this.
-// https://github.com/webpack/webpack/issues/2878
+// See https://github.com/webpack/webpack/issues/2878 for an issue regarding "structured error reporting".
 
-const chalk = require("chalk");
 const formatUtil = require("../../config/webpack/pluginUtils/formatUtil");
 
 const friendlySyntaxErrorLabel = "Syntax error:";
@@ -34,40 +23,35 @@ function isLikelyASyntaxError(message) {
   return message.indexOf(friendlySyntaxErrorLabel) !== -1;
 }
 
-// Cleans up webpack error messages.
-// eslint-disable-next-line no-unused-vars
-function formatMessage(message, firstLineFormatter) {
-  let lines = message.split("\n");
-
+function trimExtraNewline(lines) {
   if (lines.length > 2 && lines[1] === "") {
     // Remove extra newline.
     lines.splice(1, 1);
   }
+  return lines;
+}
 
-  // Remove webpack-specific loader notation from filename.
+function trimLoaderNotation(lines) {
+  // Remove webpack-specific loader chain notation from filename.
   // Before:
   // ./~/css-loader!./~/postcss-loader!./src/App.css
   // After:
   // ./src/App.css
-  if (lines[0].lastIndexOf("!") !== -1) {
-    lines[0] = lines[0].substr(lines[0].lastIndexOf("!") + 1);
+  const lastIndexOfBang = lines[0].lastIndexOf("!");
+  if (lastIndexOfBang !== -1) {
+    lines[0] = lines[0].substr(lastIndexOfBang + 1);
   }
+  return lines;
+}
 
-  lines = lines.filter(function(line) {
-    // Webpack adds a list of entry points to warning messages:
-    //  @ ./src/index.js
-    //  @ multi react-scripts/~/react-dev-utils/webpackHotDevClient.js ...
-    // It is misleading (and unrelated to the warnings) so we clean it up.
-    // It is only useful for syntax errors but we have beautiful frames for them.
-    return line.indexOf(" @ ") !== 0;
-  });
+function trimEntryPoints(lines) {
+  // Webpack adds a list of entry points to warning messages.
+  // In most cases, this is misleading resp. unrelated, so it can be removed
+  // without losing useful information.
+  return lines.filter(line => line.indexOf(" @ ") !== 0);
+}
 
-  // line #0 is filename
-  // line #1 is the main error message
-  if (!lines[0] || !lines[1]) {
-    return lines.join("\n");
-  }
-
+function trimModuleNotFoundMessages(lines) {
   // Cleans up verbose "module not found" messages for files and packages.
   if (lines[1].indexOf("Module not found: ") === 0) {
     lines = [
@@ -80,7 +64,10 @@ function formatMessage(message, firstLineFormatter) {
         .replace("[CaseSensitivePathsPlugin] ", "")
     ];
   }
+  return lines;
+}
 
+function trimSyntaxErrorMessages(lines) {
   // Cleans up syntax error messages.
   if (lines[1].indexOf("Module build failed: ") === 0) {
     lines[1] = lines[1].replace(
@@ -88,16 +75,38 @@ function formatMessage(message, firstLineFormatter) {
       friendlySyntaxErrorLabel
     );
   }
+  return lines;
+}
 
+function trimExportErrors(lines) {
   // Clean up export errors.
-  // TODO: we should really send a PR to Webpack for this.
-  var exportError = /\s*(.+?)\s*(")?export '(.+?)' was not found in '(.+?)'/;
+  const exportError = /\s*(.+?)\s*(")?export '(.+?)' was not found in '(.+?)'/;
   if (lines[1].match(exportError)) {
     lines[1] = lines[1].replace(
       exportError,
       "$1 '$4' does not contain an export named '$3'."
     );
   }
+  return lines;
+}
+
+// Cleans up webpack error messages.
+function formatMessage(message, firstLineFormatter) {
+  let lines = message.split("\n");
+
+  lines = trimExtraNewline(lines);
+  lines = trimLoaderNotation(lines);
+  lines = trimEntryPoints(lines);
+
+  // line #0 is filename
+  // line #1 is the main error message
+  if (!lines[0] || !lines[1]) {
+    return lines.join("\n");
+  }
+
+  lines = trimModuleNotFoundMessages(lines);
+  lines = trimSyntaxErrorMessages(lines);
+  lines = trimExportErrors(lines);
 
   lines[0] = firstLineFormatter(lines[0]);
 
@@ -105,8 +114,7 @@ function formatMessage(message, firstLineFormatter) {
   message = lines.join("\n");
   // Internal stacks are generally useless so we strip them... with the
   // exception of stacks containing `webpack:` because they're normally
-  // from user code generated by WebPack. For more information see
-  // https://github.com/facebookincubator/create-react-app/pull/1050
+  // from user code generated by WebPack.
   message = message.replace(
     /^\s*at\s((?!webpack:).)*:\d+:\d+[\s\)]*(\n|$)/gm,
     ""
@@ -129,15 +137,10 @@ function formatWebpackMessages(json) {
   });
   if (result.errors.some(isLikelyASyntaxError)) {
     // If there are any syntax errors, show just them.
-    // This prevents a confusing ESLint parsing error
-    // preceding a much more useful Babel syntax error.
+    // This prevents a confusing linter parsing error
+    // preceding a much more useful transpiler syntax error.
     result.errors = result.errors.filter(isLikelyASyntaxError);
   }
-  // Only keep the first error. Others are often indicative
-  // of the same problem, but confuse the reader with noise.
-  // if (result.errors.length > 1) {
-  //   result.errors.length = 1;
-  // }
 
   return result;
 }
