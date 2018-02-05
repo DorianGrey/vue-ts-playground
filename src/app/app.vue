@@ -1,29 +1,29 @@
 <template>
   <div id="app">
-    <nav class="nav">
+    <nav class="navbar">
 
-      <div class="nav-left nav-item app-info">
+      <div class="navbar-start navbar-item app-info">
         <i class="fa fa-bookmark" aria-hidden="true"></i>
         <span v-t="'header.demo-app'"></span>
       </div>
 
       <!-- Dropdown menu for mobile (i.e. < 768px width). -->
-      <span class="nav-toggle" :class="{'is-active': isMenuOpen}" @click="openMenu($event)">
+      <span class="navbar-burger" :class="{'is-active': isMenuOpen}" @click="openMenu($event)">
         <span></span>
         <span></span>
         <span></span>
       </span>
 
-      <div class="nav-right nav-menu" :class="{'is-active': !isMenuOpen}">
-        <router-link class="nav-item" to="/input-test">
+      <div class="navbar-end navbar-menu" :class="{'is-active': isMenuOpen}">
+        <router-link class="navbar-item" to="/input-test">
           <i class="fa fa-keyboard-o" aria-hidden="true"></i>
           <span v-t="'header.input-test'"></span>
         </router-link>
-        <router-link class="nav-item" to="/todo-list/42">
+        <router-link class="navbar-item" to="/todo-list/42">
           <i class="fa fa-calendar" aria-hidden="true"></i>
           <span v-t="'header.todo-list'"></span>
         </router-link>
-        <router-link class="nav-item" to="/gallery">
+        <router-link class="navbar-item" to="/gallery">
           <i class="fa fa-picture-o" aria-hidden="true"></i>
           <span v-t="'header.gallery'"></span>
         </router-link>
