@@ -17,6 +17,7 @@
     "noImplicitThis": true,
     "strictNullChecks": true,
     "strict": true,
+    "strictPropertyInitialization": false, // Problematic editor support, so disabled for now
     "suppressImplicitAnyIndexErrors": true,
     "noUnusedParameters": true,
     "noUnusedLocals": true,
