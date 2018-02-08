@@ -5,7 +5,10 @@ const merge = require("webpack-merge");
 const { NoEmitOnErrorsPlugin } = require("webpack");
 
 const CommonsChunkPlugin = require("webpack/lib/optimize/CommonsChunkPlugin");
-const HashedModuleIdsPlugin = require("webpack/lib/HashedModuleIdsPlugin");
+const NamedModulesPlugin = require("webpack/lib/NamedModulesPlugin");
+const NamedChunksPlugin = require("webpack/lib/NamedChunksPlugin");
+const NameAllModulesPlugin = require("name-all-modules-plugin");
+
 const UglifyJsPlugin = require("webpack/lib/optimize/UglifyJsPlugin");
 const ModuleConcatenationPlugin = require("webpack/lib/optimize/ModuleConcatenationPlugin");
 
@@ -13,6 +16,7 @@ const ExtractTextPlugin = require("extract-text-webpack-plugin");
 const InlineChunkManifestHtmlWebpackPlugin = require("inline-chunk-manifest-html-webpack-plugin");
 const BundleAnalyzerPlugin = require("webpack-bundle-analyzer")
   .BundleAnalyzerPlugin;
+const ShakePlugin = require("webpack-common-shake").Plugin;
 const OptimizeCssAssetsPlugin = require("optimize-css-assets-webpack-plugin");
 const PurifyCSSPlugin = require("purifycss-webpack");
 const WorkboxPlugin = require("workbox-webpack-plugin");
@@ -72,8 +76,29 @@ module.exports = function() {
       plugins: [
         // Plugin to let the whole build fail on any error; i.e. do not tolerate these
         new NoEmitOnErrorsPlugin(),
-        // For more consistent module IDs
-        new HashedModuleIdsPlugin(),
+
+        // For more consistent module identifiers.
+        new NamedModulesPlugin(),
+        // In case any chunk does NOT yet have a name...
+        new NamedChunksPlugin(chunk => {
+          if (chunk.name) {
+            return chunk.name;
+          }
+          return (
+            chunk
+              .mapModules(m => {
+                if (!m.context || !m.request) {
+                  return null;
+                }
+                return path.relative(m.context, m.request);
+              })
+              .filter(Boolean)
+              .join("_") || null
+          );
+        }),
+        // In case anyone does NOT yet have a name...
+        new NameAllModulesPlugin(),
+
         // Creates a dynamic vendor chunk by including all entries from the `node_modules` directory.
         new CommonsChunkPlugin({
           name: "vendor",
@@ -140,6 +165,8 @@ module.exports = function() {
           manifestTransforms: [removeRevisionTransform]
         }),
 
+        // Improved tree-shaking for CJS modules... at least as far as safely possible.
+        new ShakePlugin(),
         new UglifyJsPlugin({
           compress: {
             warnings: false,
