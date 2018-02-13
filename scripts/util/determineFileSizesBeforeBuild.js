@@ -4,6 +4,7 @@ const path = require("path");
 
 const { gzipsize } = require("./gzipSize");
 const getRelativeChunkName = require("./getRelativeChunkName");
+const relevantSizeComparisonRegex = /\.(js|css|json|webmanifest)$/;
 
 function determineFileSizes(buildFolder) {
   const fileNames = shelljs
@@ -11,7 +12,7 @@ function determineFileSizes(buildFolder) {
     .map(f => path.resolve(buildFolder, f));
 
   const sizes = fileNames
-    .filter(fileName => /\.(js|css|json|webmanifest)$/.test(fileName))
+    .filter(fileName => relevantSizeComparisonRegex.test(fileName))
     .reduce((result, fileName) => {
       const contents = fs.readFileSync(fileName);
       const key = getRelativeChunkName(buildFolder, fileName);
@@ -26,4 +27,7 @@ function determineFileSizes(buildFolder) {
   return { root: buildFolder, sizes };
 }
 
-module.exports = determineFileSizes;
+module.exports = {
+  determineFileSizes,
+  relevantSizeComparisonRegex
+};

@@ -12,7 +12,8 @@ const statsFormatter = require("./util/statsFormatter");
 const printFileSizes = require("./util/printFileSizes");
 const printHostingInformation = require("./util/printHostingInformation");
 const formatWebpackMessages = require("./util/formatWebpackMessages");
-const determineFileSizesBeforeBuild = require("./util/determineFileSizesBeforeBuild");
+const determineFileSizesBeforeBuild = require("./util/determineFileSizesBeforeBuild")
+  .determineFileSizes;
 const paths = require("../config/paths");
 
 const out = new LabeledFormatter();
@@ -91,7 +92,7 @@ renderLoadingAnimation()
     // Determine copied paths, and add the generated service worker stuff as well
     // used for properly generating an output.
     const staticAssets = glob
-      .sync([paths.appPublic + "**/*", `!${paths.appPublic}/index.html`])
+      .sync([paths.appPublic + "/**/*", `!${paths.appPublic}/index.html`])
       .map(p => path.relative(paths.appPublic, p));
 
     staticAssets.push(

@@ -17,6 +17,9 @@ const { gzipsize, gzipOpts } = require("./gzipSize");
 const paths = require("../../config/paths");
 const LabeledFormatter = require("../../config/webpack/pluginUtils/LabeledFormatter");
 const getRelativeChunkName = require("./getRelativeChunkName");
+const {
+  relevantSizeComparisonRegex
+} = require("./determineFileSizesBeforeBuild");
 
 const out = new LabeledFormatter();
 
@@ -103,6 +106,8 @@ function printFileSizesOnAssetCategory(
 ) {
   const buildFolder = paths.appBuild;
 
+  const missingPreviousVersion = [];
+
   const assets = assetsStats.map(asset => {
     const filePath = path.join(buildFolder, asset.name);
     const fileContents = fs.readFileSync(filePath);
@@ -125,6 +130,10 @@ function printFileSizesOnAssetCategory(
       "gzip",
       1024 * 50
     );
+
+    if (!originalSizeDiff || !gzipSizeDiff) {
+      missingPreviousVersion.push(asset.name);
+    }
 
     return {
       folder: path.join(path.dirname(asset.name)),
@@ -192,6 +201,8 @@ function printFileSizesOnAssetCategory(
         "\n"
     );
   });
+
+  return missingPreviousVersion;
 }
 
 function alignPad(originalLabel, to) {
@@ -208,6 +219,8 @@ function printFileSizes(previousFileSizes, webpackStats, staticAssets = []) {
   const jsonStats = webpackStats.toJson();
   const assetsStats = jsonStats.assets;
   staticAssets = staticAssets.map(s => ({ name: s }));
+
+  const missingPreviousVersion = [];
 
   try {
     assetsStats.push(...staticAssets);
@@ -233,11 +246,12 @@ function printFileSizes(previousFileSizes, webpackStats, staticAssets = []) {
         );
         if (_relevantAssets.length > 0) {
           out.indicated("> " + c).endl();
-          printFileSizesOnAssetCategory(
+          const missingPrevious = printFileSizesOnAssetCategory(
             previousFileSizes,
             _relevantAssets,
             exceptionalAssetCnt
           );
+          missingPreviousVersion.push(...missingPrevious);
           out.endl();
         }
         return nextAssets;
@@ -247,11 +261,12 @@ function printFileSizes(previousFileSizes, webpackStats, staticAssets = []) {
 
     if (remainingAssets.length > 0) {
       out.indicated("> Others").endl();
-      printFileSizesOnAssetCategory(
+      const missingPrevious = printFileSizesOnAssetCategory(
         previousFileSizes,
         remainingAssets,
         exceptionalAssetCnt
       );
+      missingPreviousVersion.push(...missingPrevious);
       out.endl();
     }
 
@@ -280,6 +295,26 @@ function printFileSizes(previousFileSizes, webpackStats, staticAssets = []) {
           )}.`
         )
         .endl()
+        .endl();
+    }
+
+    const relevantMissingPreviousVersion = missingPreviousVersion.filter(a =>
+      relevantSizeComparisonRegex.test(a)
+    );
+
+    if (relevantMissingPreviousVersion.length > 0) {
+      out
+        .debug(
+          `Some assets did not have a previous version, though they should have: ${JSON.stringify(
+            missingPreviousVersion,
+            null,
+            4
+          )} in ${JSON.stringify(
+            Object.getOwnPropertyNames(previousFileSizes.sizes),
+            null,
+            4
+          )}`
+        )
         .endl();
     }
   } catch (e) {

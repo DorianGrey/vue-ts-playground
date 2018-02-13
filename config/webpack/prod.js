@@ -105,7 +105,11 @@ module.exports = function() {
           ]),
           styleExtensions: [".sass", ".scss", ".css"],
           purifyOptions: {
-            whitelist: ["*:not*"] // See issue: https://github.com/purifycss/purifycss/issues/161
+            whitelist: [
+              "*:not*", // See issue: https://github.com/purifycss/purifycss/issues/161
+              ".notices", // Hierarchy not detected correctly.
+              ".snackbar" // Same
+            ]
           }
         }),
         new OptimizeCssAssetsPlugin({
