@@ -1,22 +1,19 @@
 <template>
-  <v-tabs v-model="activeTab" centered grow>
+  <div>
     <v-toolbar>
       <v-toolbar-title v-t="'todo-list.headline'" />
     </v-toolbar>
-
-    <v-tabs-bar>
-      <v-tabs-item @click="setActiveTab('active')" class="grey darken-1" href="#active">
+    <v-tabs v-model="activeTab" centered>
+      <v-tab @click="setActiveTab('active')" class="grey darken-1" href="#active">
         <span v-t="'todo-list.active'"></span>
-      </v-tabs-item>
-      <v-tabs-item @click="setActiveTab('expired')" class="grey darken-1" href="#expired">
+      </v-tab>
+      <v-tab @click="setActiveTab('expired')" class="grey darken-1" href="#expired">
         <span v-t="'todo-list.expired'"></span>
-      </v-tabs-item>
+      </v-tab>
 
       <v-tabs-slider color="cyan"></v-tabs-slider>
-    </v-tabs-bar>
 
-    <v-tabs-items>
-      <v-tabs-content id="active">
+      <v-tab-item id="active">
         <v-layout column id="todo-list">
           <todo-entry v-for="todo in todoList" :key="todo.id" :todo="todo" />
 
@@ -28,13 +25,13 @@
                       v-if="newTodoEditable" />
         </v-layout>
 
-      </v-tabs-content>
+      </v-tab-item>
 
-      <v-tabs-content id="expired">
+      <v-tab-item id="expired">
         <todo-entry v-for="todo in expiredTodos" :key="todo.id" :todo="todo" />
-      </v-tabs-content>
-    </v-tabs-items>
-  </v-tabs>
+      </v-tab-item>
+    </v-tabs>
+  </div>
 </template>
 
 <script lang="ts" src="./todoList.ts"></script>
