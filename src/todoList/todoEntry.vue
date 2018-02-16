@@ -54,9 +54,11 @@
             <v-dialog
               persistent
               v-model="modals.date"
+              ref="dateDialog"
               lazy
               full-width
               width="290px"
+              :return-value.sync="deadlineModel.date"
             >
               <v-text-field
                 slot="activator"
@@ -76,23 +78,21 @@
                 :allowed-dates="isUpcomingDate"
                 :first-day-of-week="languagePack.firstDayOfWeek"
                 :locale="languagePack.language">
-                <template slot-scope="{ save, cancel }">
-                  <v-card-actions v-if="!!pendingTodo.id">
-                    <v-spacer />
-                    <v-btn flat color="primary" @click="cancel" v-t="'cancel'" />
-                    <v-btn flat color="primary" @click="save" v-t="'save'"/>
-                  </v-card-actions>
-                </template>
+                  <v-spacer />
+                  <v-btn flat color="primary" @click="modals.date = false" v-t="'cancel'" />
+                  <v-btn flat color="primary" @click="$refs.dateDialog.save(deadlineModel.date)" v-t="'save'"/>
               </v-date-picker>
             </v-dialog>
 
             <!-- Time picker modal -->
             <v-dialog
               persistent
+              ref="timeDialog"
               v-model="modals.time"
               lazy
               full-width
               width="290px"
+              :return-value.sync="deadlineModel.time"
             >
               <v-text-field
                 slot="activator"
@@ -109,13 +109,9 @@
                 actions
                 :autosave="!pendingTodo.id"
                 :format="languagePack.timeFormat">
-                <template slot-scope="{ save, cancel }">
-                  <v-card-actions v-if="!!pendingTodo.id">
-                    <v-spacer />
-                    <v-btn flat color="primary" @click="cancel" v-t="'cancel'"/>
-                    <v-btn flat color="primary" @click="save" v-t="'save'"/>
-                  </v-card-actions>
-                </template>
+                <v-spacer />
+                <v-btn flat color="primary" @click="modals.time = false" v-t="'cancel'"/>
+                <v-btn flat color="primary" @click="$refs.timeDialog.save(deadlineModel.time)" v-t="'save'"/>
               </v-time-picker>
             </v-dialog>
 
