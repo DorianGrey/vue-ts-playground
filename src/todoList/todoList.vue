@@ -1,9 +1,9 @@
 <template>
-  <div>
+  <div id="todo-list">
     <v-toolbar>
       <v-toolbar-title v-t="'todo-list.headline'" />
     </v-toolbar>
-    <v-tabs v-model="activeTab" centered>
+    <v-tabs v-model="activeTab" centered grow>
       <v-tab @click="setActiveTab('active')" class="grey darken-1" href="#active">
         <span v-t="'todo-list.active'"></span>
       </v-tab>
@@ -40,6 +40,8 @@
   @import "../styles/typography";
 
   #todo-list {
+    width: 100%;
+
     > * {
       margin-top: 1rem;
       margin-bottom: 1rem;
