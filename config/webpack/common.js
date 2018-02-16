@@ -147,38 +147,6 @@ const RULE_SCSS = function(isDev, extractTextPluginOptions) {
   return result;
 };
 
-const RULE_STYL = function(isDev) {
-  const stylLoaderChain = [
-    {
-      loader: require.resolve("css-loader"),
-      options: {
-        importLoaders: 1,
-        minimize: !isDev,
-        sourceMap: isDev
-      }
-    },
-    {
-      loader: require.resolve("postcss-loader"),
-      options: {
-        sourceMap: isDev,
-        ident: "postcss", // https://webpack.js.org/guides/migrating/#complex-options
-        plugins: POSTCSS_PLUGINS
-      }
-    },
-    {
-      loader: require.resolve("stylus-loader"),
-      options: {
-        sourceMap: isDev
-      }
-    }
-  ];
-
-  return {
-    test: /\.styl$/,
-    use: stylLoaderChain
-  };
-};
-
 const RULE_WEBFONTS = function() {
   const webFontRule = {
     test: /\.(ttf|eot|svg|woff|woff2)(\?[a-z0-9]+)?$/,
@@ -269,7 +237,6 @@ module.exports = function(isDev, extractTextPluginOptions, publicUrl) {
           ]
         },
         RULE_SCSS(isDev, extractTextPluginOptions),
-        RULE_STYL(isDev),
         RULE_WEBFONTS(),
         RULE_IMAGES(isDev),
 
