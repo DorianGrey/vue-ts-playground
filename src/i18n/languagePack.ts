@@ -7,13 +7,6 @@ export interface LanguagePack {
   dateTimeFormat: VueI18n.DateTimeFormat;
   timeFormat: "ampm" | "24hr";
   firstDayOfWeek: number; // 0 = Sunday
-
-  /*flatPickr: {
-    locale: Locale;
-    useTimeFormat_24hrs: boolean;
-    dateFormat: string;
-    dateTimeFormat: string;
-  };*/
 }
 
 export function loadLanguagePack(lang: string): Promise<LanguagePack> {
