@@ -3,7 +3,7 @@ import InputTest from "./inputTest.vue";
 import VueI18n from "vue-i18n";
 import Vuetify from "vuetify";
 
-import { mount } from "vue-test-utils";
+import { mount } from "@vue/test-utils";
 
 describe("inputTest", () => {
   beforeAll(() => {
