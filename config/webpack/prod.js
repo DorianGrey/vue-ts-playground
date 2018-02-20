@@ -40,18 +40,6 @@ const extractTextPluginOptions = shouldUseRelativeAssetPaths
   : {};
 
 module.exports = function() {
-  // Transformer to remove revision info in case the output file already contains
-  // a hash (i.e. webpack output).
-  const hashRegExp = /\.\w{8}\./;
-  const removeRevisionTransform = manifestEntries => {
-    return manifestEntries.map(entry => {
-      if (hashRegExp.test(entry.url)) {
-        delete entry.revision;
-      }
-      return entry;
-    });
-  };
-
   return merge.smart(
     commonConfig(false, extractTextPluginOptions, paths.publicUrl),
     {
@@ -137,8 +125,7 @@ module.exports = function() {
           globPatterns: ["**/*.{html,js,css,jpg,eot,svg,woff2,woff,ttf,json}"],
           globIgnores: ["**/*.map"],
           swDest: path.join(paths.appBuild, "service-worker.js"),
-          swSrc: path.join(paths.appSrc, "service-worker.js"),
-          manifestTransforms: [removeRevisionTransform]
+          swSrc: path.join(paths.appSrc, "service-worker.js")
         }),
 
         new UglifyJsPlugin({

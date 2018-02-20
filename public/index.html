@@ -6,6 +6,14 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <meta name="theme-color" content="#F5F5F5">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="application-name" content="Demo App">
+  <meta name="apple-mobile-web-app-title" content="Demo App">
+  <meta name="msapplication-navbutton-color" content="#F5F5F5">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="msapplication-starturl" content="/">
+  <meta name="description" content="Just a PWA-using sample app powered by Vue.js" />
 
   <base href="<%= htmlWebpackPlugin.options.baseHref %>">
 
@@ -15,6 +23,7 @@
     homescreen on Android. See https://developers.google.com/web/fundamentals/engage-and-retain/web-app-manifest/
   -->
   <link rel="manifest" href="<%= htmlWebpackPlugin.options.publicUrl %>/manifest.webmanifest">
+
   <!--
     Notice the use of <%= htmlWebpackPlugin.options.publicUrl %> in the tags above.
     It will be replaced with the URL of the `public` folder during the build.
