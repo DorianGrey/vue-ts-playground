@@ -15,7 +15,6 @@ module.exports = {
       "tsConfigFile": "tsconfig.test.json"
     }
   },
-  "mapCoverage": true,
   "moduleFileExtensions": [
     "js",
     "ts",
