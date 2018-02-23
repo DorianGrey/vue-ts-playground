@@ -12,6 +12,7 @@ import Vuetify from "vuetify";
 
 // More "fancyness" stuff.
 import VueCarousel3d from "vue-carousel-3d";
+import colors from "vuetify/es5/util/colors";
 
 import NotFound from "./404/404.vue";
 import App from "./app/app.vue";
@@ -35,14 +36,19 @@ function main(languagePack: LanguagePack) {
   Vue.use(VueRouter);
   Vue.use(Vuex);
   Vue.use(VueI18n);
-  Vue.use(Vuetify);
+  Vue.use(Vuetify, {
+    theme: {
+      primary: colors.green.accent4,
+      secondary: colors.red.lighten2,
+      accent: colors.purple.base,
+      error: colors.red.base,
+      warning: colors.yellow.base,
+      info: colors.blue.base,
+      success: colors.green.base
+    }
+  });
   Vue.use(VeeValidate); // TODO: Attempt more strict typing.
   Vue.use(VueCarousel3d);
-  // TODO: Figure out if we can pick up particular elements, but still using the config.
-  // Also, some kind of tree-shaking would be likely ...
-  // Vue.use(Buefy, {
-  //   defaultIconPack: "fa"
-  // });
 
   // Router configuration.
   const routes: RouteConfig[] = [
