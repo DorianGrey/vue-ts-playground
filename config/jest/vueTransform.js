@@ -116,6 +116,11 @@ module.exports = {
       script
     );
 
+    transformedScript =
+      transformedScript && transformedScript.code
+        ? transformedScript.code
+        : transformedScript;
+
     let render;
     let staticRenderFns;
     if (template) {
