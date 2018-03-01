@@ -27,7 +27,7 @@ const assetsSizeWarnLimit = 250 * 1024; // <=> 250 KB.
 const potentiallyExtractedChunkSizeLimit = 512; // <=> 1 KB.
 
 const assetCategories = {
-  "Service worker": /(workbox|service-worker).*\.js$/,
+  "Service worker": /(workbox|service-worker|precache-manifest).*\.js$/,
   "Language packs": /lang-.+\.chunk\.js$/,
   Scripts: /\.js$/,
   Styles: /\.css$/,
@@ -176,7 +176,8 @@ function printFileSizesOnAssetCategory(
     const assetTooLarge = asset.originalFileSize > assetsSizeWarnLimit;
     const assetMayBeExtractedChunk =
       asset.originalFileSize < potentiallyExtractedChunkSizeLimit &&
-      /\.js$/.test(asset.name);
+      /\.js$/.test(asset.name) &&
+      !/service-worker/.test(asset.name);
     if (assetTooLarge) {
       exceptionalAssetCnt.tooLarge++;
     }

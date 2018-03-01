@@ -1,13 +1,10 @@
-importScripts("workbox-sw.prod.v2.1.2.js");
+workbox.precaching.precacheAndRoute(self.__precacheManifest);
 
-const workboxSW = new WorkboxSW();
-workboxSW.precache([]);
-
-workboxSW.router.registerRoute(
+workbox.routing.registerRoute(
   /^https:\/\/fonts.(?:googleapis|gstatic).com\/(.*)/,
-  workboxSW.strategies.cacheFirst()
+  workbox.strategies.cacheFirst()
 );
 
-workboxSW.router.registerNavigationRoute("index.html", {
+workbox.routing.registerNavigationRoute("index.html", {
   whitelist: [/^(?!\/__).*/]
 });
