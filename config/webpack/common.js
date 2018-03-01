@@ -3,11 +3,12 @@
 const { EnvironmentPlugin } = require("webpack");
 const chalk = require("chalk");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
-const ExtractTextPlugin = require("extract-text-webpack-plugin");
+const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const CaseSensitivePathsPlugin = require("case-sensitive-paths-webpack-plugin");
 const StyleLintPlugin = require("stylelint-webpack-plugin");
 const ProgressBarPlugin = require("progress-bar-webpack-plugin");
 const ForkTsCheckerWebpackPlugin = require("fork-ts-checker-webpack-plugin");
+const VueLoaderPlugin = require("vue-loader/lib/plugin");
 
 const paths = require("../paths");
 const formatUtil = require("./pluginUtils/formatUtil");
@@ -68,7 +69,7 @@ const POSTCSS_PLUGINS = () => [
   })
 ];
 
-const RULE_SCSS = function(isDev, extractTextPluginOptions) {
+const RULE_SCSS = function(isDev) {
   // Development mode docs:
   // "postcss" loader applies autoprefixer to our CSS.
   // "css" loader resolves paths in CSS and adds assets as dependencies.
@@ -82,7 +83,7 @@ const RULE_SCSS = function(isDev, extractTextPluginOptions) {
   // "css" loader resolves paths in CSS and adds assets as dependencies.
   // "style" loader normally turns CSS into JS modules injecting <style>,
   // but unlike in development configuration, we do something different.
-  // `ExtractTextPlugin` first applies the "postcss" and "css" loaders
+  // `MiniCssExtractPlugin` first applies the "postcss" and "css" loaders
   // (second argument), then grabs the result CSS and puts it into a
   // separate file in our build process. This way we actually ship
   // a single CSS file in production instead of JS code injecting <style>
@@ -95,56 +96,45 @@ const RULE_SCSS = function(isDev, extractTextPluginOptions) {
   // (see https://github.com/bholloway/resolve-url-loader/issues/60), and can safely
   // be ignored.
 
-  const scssLoaderChain = [
-    {
-      loader: require.resolve("css-loader"),
-      options: {
-        importLoaders: 1,
-        minimize: !isDev,
-        sourceMap: isDev
+  return {
+    test: /\.scss$/,
+    use: [
+      {
+        loader: isDev
+          ? require.resolve("vue-style-loader")
+          : MiniCssExtractPlugin.loader
+      },
+      {
+        loader: require.resolve("css-loader"),
+        options: {
+          importLoaders: 1,
+          minimize: !isDev,
+          sourceMap: isDev
+        }
+      },
+      {
+        loader: require.resolve("postcss-loader"),
+        options: {
+          sourceMap: isDev,
+          ident: "postcss", // https://webpack.js.org/guides/migrating/#complex-options
+          plugins: POSTCSS_PLUGINS
+        }
+      },
+      {
+        loader: require.resolve("resolve-url-loader"),
+        options: {
+          sourceMap: isDev
+        }
+      },
+      {
+        loader: require.resolve("sass-loader"),
+        options: {
+          sourceMap: true, // Has to be true always, since the resolve-url-loader requires it to properly map the resource paths.
+          outputStyle: isDev ? "nested" : "compressed"
+        }
       }
-    },
-    {
-      loader: require.resolve("postcss-loader"),
-      options: {
-        sourceMap: isDev,
-        ident: "postcss", // https://webpack.js.org/guides/migrating/#complex-options
-        plugins: POSTCSS_PLUGINS
-      }
-    },
-    {
-      loader: require.resolve("resolve-url-loader"),
-      options: {
-        sourceMap: isDev
-      }
-    },
-    {
-      loader: require.resolve("sass-loader"),
-      options: {
-        sourceMap: true, // Has to be true always, since the resolve-url-loader requires it to properly map the resource paths.
-        outputStyle: isDev ? "nested" : "compressed"
-      }
-    }
-  ];
-
-  const result = { test: /\.scss$/ };
-  const styleLoader = require.resolve("style-loader");
-
-  if (isDev) {
-    result.use = [styleLoader].concat(scssLoaderChain);
-  } else {
-    result.use = ExtractTextPlugin.extract(
-      Object.assign(
-        {
-          fallback: styleLoader,
-          use: scssLoaderChain
-        },
-        extractTextPluginOptions
-      )
-    );
-  }
-
-  return result;
+    ]
+  };
 };
 
 const RULE_WEBFONTS = function() {
@@ -185,7 +175,7 @@ const RULE_IMAGES = function(isDev) {
   };
 };
 
-module.exports = function(isDev, extractTextPluginOptions, publicUrl) {
+module.exports = function(isDev, publicUrl) {
   /*
   There is a curious glitch in the stylelint plugin:
   - In dev (watch) mode, if quiet is set to `false`, every output is generated twice.
@@ -211,17 +201,11 @@ module.exports = function(isDev, extractTextPluginOptions, publicUrl) {
       rules: [
         {
           test: /\.vue$/,
-          use: {
-            loader: require.resolve("vue-loader"),
-            options: {
-              loaders: {
-                js: require.resolve("ts-loader")
-              },
-              esModule: true,
-              extractCSS: !isDev,
-              postcss: POSTCSS_PLUGINS
+          use: [
+            {
+              loader: require.resolve("vue-loader")
             }
-          }
+          ]
         },
         {
           test: /\.ts$/,
@@ -236,7 +220,7 @@ module.exports = function(isDev, extractTextPluginOptions, publicUrl) {
             }
           ]
         },
-        RULE_SCSS(isDev, extractTextPluginOptions),
+        RULE_SCSS(isDev),
         RULE_WEBFONTS(),
         RULE_IMAGES(isDev),
 
@@ -262,6 +246,7 @@ module.exports = function(isDev, extractTextPluginOptions, publicUrl) {
 
     plugins: [
       PLUGIN_HTML(isDev, publicUrl),
+      new VueLoaderPlugin(),
       new CaseSensitivePathsPlugin(),
       new EnvironmentPlugin({
         NODE_ENV: isDev ? "development" : "production",

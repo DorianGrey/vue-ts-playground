@@ -69,37 +69,12 @@ renderLoadingAnimation()
       dereference: true,
       filter: file => file !== paths.appHtml
     });
-    const pa = require.resolve("workbox-sw"),
-      swTargetPath = path.join(paths.appBuild, path.basename(pa)),
-      paMap = pa + ".map",
-      swMapPath = path.join(paths.appBuild, path.basename(pa) + ".map");
-
-    fs.copySync(pa, swTargetPath, {
-      dereference: true
-    });
-    fs.copySync(paMap, swMapPath, {
-      dereference: true
-    });
-
-    // Update service-worker script to properly update its referenced Workbox.js version.
-    shelljs.sed(
-      "-i",
-      /workbox-sw\.prod\.v\d.\d.\d\.js/i,
-      path.basename(pa),
-      path.resolve(paths.appSrc, "service-worker.js")
-    );
 
     // Determine copied paths, and add the generated service worker stuff as well
     // used for properly generating an output.
     const staticAssets = glob
       .sync([paths.appPublic + "/**/*", `!${paths.appPublic}/index.html`])
       .map(p => path.relative(paths.appPublic, p));
-
-    staticAssets.push(
-      path.relative(paths.appBuild, swTargetPath),
-      path.relative(paths.appBuild, swMapPath),
-      "service-worker.js"
-    );
 
     out.info("Processing build...").endl();
 

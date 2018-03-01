@@ -40,6 +40,14 @@ function msToPeriod(ms) {
   return result.join(" ");
 }
 
+function hookToCompiler(compiler, event, callback) {
+  if (compiler.hooks[event]) {
+    compiler.hooks[event].tap("ErrorFormatterPlugin", callback);
+  } else {
+    compiler.on(event, callback);
+  }
+}
+
 class ErrorFormatterPlugin {
   constructor(options) {
     this.options = options || {};
@@ -64,7 +72,7 @@ class ErrorFormatterPlugin {
   }
 
   apply(compiler) {
-    compiler.plugin("done", stats => {
+    const onDone = stats => {
       this.options.clear.onDone && this.cls();
       const hasErrors = stats.hasErrors();
       const hasWarnings = stats.hasWarnings();
@@ -88,12 +96,15 @@ class ErrorFormatterPlugin {
         this.out.errorLabel(`Compilation failed after ${time}. `).endl();
         this.displayMalfunctions(hasErrors, hasWarnings, stats);
       }
-    });
+    };
 
-    compiler.plugin("invalid", () => {
+    const onInvalid = () => {
       this.options.clear.onInvalid && this.cls();
       this.out.info("Compiling...").endl();
-    });
+    };
+
+    hookToCompiler(compiler, "done", onDone);
+    hookToCompiler(compiler, "invalid", onInvalid);
   }
 
   displayMalfunctions(hasErrors, hasWarnings, stats) {

@@ -4,7 +4,6 @@ const path = require("path");
 const chalk = require("chalk");
 const { NoEmitOnErrorsPlugin } = require("webpack");
 const HotModuleReplacementPlugin = require("webpack/lib/HotModuleReplacementPlugin");
-const NamedModulesPlugin = require("webpack/lib/NamedModulesPlugin");
 const merge = require("webpack-merge");
 const AutoDllPlugin = require("autodll-webpack-plugin");
 const HardSourceWebpackPlugin = require("hard-source-webpack-plugin");
@@ -23,8 +22,9 @@ module.exports = function() {
   // that "FriendlyErrorsWebpackPlugin" is registered before the
   // logger that handles deferred messages.
   return merge.smartStrategy({ plugins: "prepend" })(
-    commonConfig(true, {}, publicUrl),
+    commonConfig(true, publicUrl),
     {
+      mode: "development",
       entry: [
         require.resolve("webpack-dev-server/client") + "?/",
         require.resolve("webpack/hot/dev-server"),
@@ -41,8 +41,11 @@ module.exports = function() {
           path.resolve(info.absoluteResourcePath)
       },
 
+      optimization: {
+        noEmitOnErrors: true
+      },
+
       plugins: [
-        new NamedModulesPlugin(),
         new HotModuleReplacementPlugin(),
         new NoEmitOnErrorsPlugin(),
         new ErrorFormatterPlugin({
@@ -54,7 +57,7 @@ module.exports = function() {
             `
           ]
         }),
-        new AutoDllPlugin(dllConfig),
+        // new AutoDllPlugin(dllConfig), // TODO: Need to re-enable this for webpack 4.
         // See https://github.com/mzgoddard/hard-source-webpack-plugin
         new HardSourceWebpackPlugin()
       ]
