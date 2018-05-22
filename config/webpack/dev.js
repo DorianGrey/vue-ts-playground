@@ -57,7 +57,8 @@ module.exports = function() {
             `
           ]
         }),
-        // new AutoDllPlugin(dllConfig), // TODO: Need to re-enable this for webpack 4.
+        // TODO: Currently causes problems with some style stuff, yet - dunno why. To be tested.
+        // new AutoDllPlugin(dllConfig),
         // See https://github.com/mzgoddard/hard-source-webpack-plugin
         new HardSourceWebpackPlugin()
       ]
