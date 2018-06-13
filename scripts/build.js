@@ -73,7 +73,10 @@ renderLoadingAnimation()
     // Determine copied paths, and add the generated service worker stuff as well
     // used for properly generating an output.
     const staticAssets = glob
-      .sync([paths.appPublic + "/**/*", `!${paths.appPublic}/index.html`])
+      .sync([
+        paths.appPublic + "/**/*",
+        `!${paths.appPublic}/index.template.html`
+      ])
       .map(p => path.relative(paths.appPublic, p));
 
     out.info("Processing build...").endl();
