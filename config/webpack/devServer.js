@@ -1,28 +1,33 @@
 "use strict";
 
+const history = require("connect-history-api-fallback");
+const convert = require("koa-connect");
+const compress = require("koa-compress");
 const paths = require("../paths");
 
-module.exports = function(publicHost, port, publicPath) {
+module.exports = function(host, port, publicPath) {
   return {
-    quiet: true, // Performed by FriendlyErrorsWebpackPlugin
-
-    historyApiFallback: true,
-    clientLogLevel: "none",
-    compress: true,
-    contentBase: paths.appPublic,
-    watchContentBase: true,
-    hot: true,
-    inline: true,
-    stats: "minimal",
-    host: "::",
-    publicPath,
-    watchOptions: {
-      ignored: /node_modules/
+    content: [paths.appPublic],
+    dev: {
+      publicPath,
+      logLevel: "silent",
+      stats: "errors-only"
     },
-    public: `${publicHost}:${port}`,
-    overlay: {
-      errors: true,
-      warnings: false
+    hot: {
+      logLevel: "silent",
+      host
+    },
+    port,
+    logLevel: "error",
+    logTime: false,
+    host,
+    add: (app, middleware, options) => {
+      const historyOptions = {
+        // ... see: https://github.com/bripkens/connect-history-api-fallback#options
+      };
+
+      app.use(convert(history(historyOptions)));
+      app.use(compress());
     }
   };
 };

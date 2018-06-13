@@ -2,8 +2,6 @@
 
 const path = require("path");
 const chalk = require("chalk");
-const { NoEmitOnErrorsPlugin } = require("webpack");
-const HotModuleReplacementPlugin = require("webpack/lib/HotModuleReplacementPlugin");
 const merge = require("webpack-merge");
 const AutoDllPlugin = require("autodll-webpack-plugin");
 const HardSourceWebpackPlugin = require("hard-source-webpack-plugin");
@@ -11,7 +9,12 @@ const HardSourceWebpackPlugin = require("hard-source-webpack-plugin");
 const ErrorFormatterPlugin = require("../webpack/plugins/ErrorFormatterPlugin");
 const paths = require("../paths");
 const commonConfig = require("./common");
-const { DEFAULT_PORT, HOST, PUBLIC_ADDRESS } = require("../hostInfo");
+const {
+  useLocalIp,
+  DEFAULT_PORT,
+  LOCAL_HOST_ADDRESS,
+  PUBLIC_ADDRESS
+} = require("../hostInfo");
 const dllConfig = require("./dll");
 
 const publicPath = "/";
@@ -26,8 +29,17 @@ module.exports = function() {
     {
       mode: "development",
       entry: [
-        require.resolve("webpack-dev-server/client") + "?/",
-        require.resolve("webpack/hot/dev-server"),
+        // Set of polyfills required to get this at least somewhat working in IE11... LOL
+        /*
+        "core-js/modules/es7.object.values", // Vuetify
+        "core-js/modules/es6.array.find",
+        "core-js/modules/es6.array.from",
+        "core-js/modules/es7.array.includes", // Vuetify
+        "core-js/modules/es6.array.find-index", // Vuetify
+        "core-js/modules/es6.string.repeat", // Vuetify
+        "core-js/modules/es6.math.cbrt", // Vuetify
+        "core-js/es6/promise",
+        */
         paths.appIndex
       ],
       output: {
@@ -46,15 +58,13 @@ module.exports = function() {
       },
 
       plugins: [
-        new HotModuleReplacementPlugin(),
-        new NoEmitOnErrorsPlugin(),
         new ErrorFormatterPlugin({
           successMessages: [
-            `Development server is available at:
-            
-                Local: ${chalk.cyan(`${HOST}:${DEFAULT_PORT}`)}
-                Public: ${chalk.cyan(`${PUBLIC_ADDRESS}:${DEFAULT_PORT}`)}
-            `
+            `Development server is available at: ${chalk.cyan(
+              `http://${
+                useLocalIp ? PUBLIC_ADDRESS : LOCAL_HOST_ADDRESS
+              }:${DEFAULT_PORT}`
+            )}`
           ]
         }),
         // TODO: Currently causes problems with some style stuff, yet - dunno why. To be tested.

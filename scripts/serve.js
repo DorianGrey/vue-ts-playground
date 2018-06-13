@@ -1,11 +1,15 @@
 "use strict";
 
 const chalk = require("chalk");
-const express = require("express");
-const compression = require("compression");
 const path = require("path");
-const httpProxy = require("http-proxy");
 const fs = require("fs-extra");
+
+const Koa = require("koa");
+const compress = require("koa-compress");
+const serveStatic = require("@shellscape/koa-static/legacy"); // Already used by webpack-serve, thus...
+const history = require("connect-history-api-fallback");
+const convert = require("koa-connect");
+
 const LabeledFormatter = require("../config/webpack/pluginUtils/LabeledFormatter");
 
 const paths = require("../config/paths");
@@ -25,27 +29,17 @@ fs.pathExists(paths.appBuild).then(exists => {
   } else {
     // Enter your proxy rules here.
     const serverPort = 4004;
-    const app = express();
-    const router = express.Router();
-    const proxy = httpProxy.createProxyServer();
-    // Configure proxy as you'd like here...
-
+    const app = new Koa();
     const serveDirs = process.argv.slice(2);
     if (serveDirs.length === 0) {
       serveDirs.push(paths.appBuild);
     }
 
-    app.use(router);
-    app.use(compression());
+    app
+      .use(convert(history({}))) // HTML5 fallback
+      .use(compress()); // Use compression.
 
-    serveDirs.forEach(dirName => {
-      app.use(express.static(path.resolve(process.cwd(), dirName)));
-    });
-
-    // Serve assets
-    app.get("*", (req, res) =>
-      res.sendFile(path.resolve(serveDirs[0] + "/index.html"))
-    );
+    serveDirs.forEach(serveDir => app.use(serveStatic(serveDir)));
 
     app.listen(serverPort, () => {
       out

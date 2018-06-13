@@ -186,7 +186,9 @@ function printFileSizesOnAssetCategory(
     }
     const colorer = assetTooLarge
       ? chalk.yellow
-      : assetMayBeExtractedChunk ? chalk.grey : chalk.cyan;
+      : assetMayBeExtractedChunk
+        ? chalk.grey
+        : chalk.cyan;
 
     const assetName = colorer(
       alignPad(asset.name, longestFileNameSize - (asset.folder.length + 1))
