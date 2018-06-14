@@ -13,6 +13,10 @@ module.exports = {
   "globals": {
     "ts-jest": {
       "tsConfigFile": "tsconfig.test.json"
+    },
+    "vue-jest": {
+      "tsConfigFile": "tsconfig.test.json",
+      "babelRcFile": ".babelrc"
     }
   },
   "moduleFileExtensions": [
@@ -34,8 +38,8 @@ module.exports = {
   "transform": {
     "^.+\\.(svg|gif|png|jpe?g)$": "<rootDir>/config/jest/fileTransform.js",
     "^.+\\.s?css$": "<rootDir>/config/jest/cssTransform.js",
-    "^.+\\.ts$": "<rootDir>/node_modules/ts-jest/preprocessor.js",
-    ".*\\.(vue)$": "<rootDir>/config/jest/vueTransform.js"
+    "^.+\\.ts$": "ts-jest",
+    ".*\\.(vue)$": "vue-jest"
   },
   "transformIgnorePatterns": [
     "[/\\\\]node_modules[/\\\\].+\\.(js|ts)$"
