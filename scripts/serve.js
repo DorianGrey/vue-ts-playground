@@ -3,22 +3,18 @@
 const chalk = require("chalk");
 const path = require("path");
 const fs = require("fs-extra");
-
 const Koa = require("koa");
 const compress = require("koa-compress");
 const serveStatic = require("@shellscape/koa-static/legacy"); // Already used by webpack-serve, thus...
 const history = require("connect-history-api-fallback");
 const convert = require("koa-connect");
 
-const LabeledFormatter = require("../config/webpack/pluginUtils/LabeledFormatter");
-
+const { log } = require("../config/logger");
 const paths = require("../config/paths");
-
-const out = new LabeledFormatter();
 
 fs.pathExists(paths.appBuild).then(exists => {
   if (!exists) {
-    console.error(
+    log.error(
       `The expected build directory ${chalk.cyan(
         paths.appBuild
       )} does not exist. Are you sure you've executed ${chalk.cyan(
@@ -42,17 +38,12 @@ fs.pathExists(paths.appBuild).then(exists => {
     serveDirs.forEach(serveDir => app.use(serveStatic(serveDir)));
 
     app.listen(serverPort, () => {
-      out
-        .info(
-          `Serving from directories ${chalk.cyan(serveDirs.join(", "))} ...`
-        )
-        .endl();
-
-      out
-        .info(
-          `Listening on ${chalk.cyan(`http://localhost:${serverPort}`)} ...`
-        )
-        .endl();
+      log.info(
+        `Serving from directories ${chalk.cyan(serveDirs.join(", "))} ...`
+      );
+      log.info(
+        `Listening on ${chalk.cyan(`http://localhost:${serverPort}`)} ...`
+      );
     });
   }
 });

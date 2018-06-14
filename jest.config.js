@@ -42,6 +42,6 @@ module.exports = {
     ".*\\.(vue)$": "vue-jest"
   },
   "transformIgnorePatterns": [
-    "[/\\\\]node_modules[/\\\\].+\\.(js|ts)$"
+    "[\\\/]node_modules[\\\/].+\\.(js|ts)$"
   ]
 };
