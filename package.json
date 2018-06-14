@@ -84,6 +84,7 @@
     "resolve-url-loader": "^2.3.0",
     "sass-loader": "^7.0.3",
     "shelljs": "^0.8.2",
+    "signale": "^1.2.0",
     "strip-ansi": "^4.0.0",
     "style-loader": "^0.21.0",
     "stylelint": "^9.2.1",

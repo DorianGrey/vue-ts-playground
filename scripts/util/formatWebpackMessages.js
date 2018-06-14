@@ -15,7 +15,7 @@
 // Some custom utilities to prettify Webpack output.
 // See https://github.com/webpack/webpack/issues/2878 for an issue regarding "structured error reporting".
 
-const formatUtil = require("../../config/webpack/pluginUtils/formatUtil");
+const formatUtil = require("../../config/formatUtil");
 
 const friendlySyntaxErrorLabel = "Syntax error:";
 

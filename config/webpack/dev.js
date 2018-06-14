@@ -53,19 +53,15 @@ module.exports = function() {
     },
 
     plugins: [
-      new ErrorFormatterPlugin({
-        successMessages: [
-          `Development server is available at: ${chalk.cyan(
-            `http://${
-              useLocalIp ? PUBLIC_ADDRESS : LOCAL_HOST_ADDRESS
-            }:${DEFAULT_PORT}`
-          )}`
-        ]
-      }),
+      new ErrorFormatterPlugin(),
       // Note: This plugin has to added AFTER the HtmlWebpackPlugin, otherwise, its "inject" option won't work.
       new AutoDllPlugin(dllConfig),
       // See https://github.com/mzgoddard/hard-source-webpack-plugin
-      new HardSourceWebpackPlugin()
+      new HardSourceWebpackPlugin({
+        info: {
+          level: "warn"
+        }
+      })
     ]
   });
 };

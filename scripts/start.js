@@ -2,18 +2,18 @@
 
 process.env.NODE_ENV = "development";
 
+const chalk = require("chalk");
 const renderLoadingAnimation = require("./util/renderLoading");
-const LabeledFormatter = require("../config/webpack/pluginUtils/LabeledFormatter");
+const { log, buildLog } = require("../config/logger");
+const formatUtil = require("../config/formatUtil");
 
-const out = new LabeledFormatter();
-
-out.softCls();
-out.info("Starting development environment...").endl();
-out.info("Rendering loading animation...").endl();
+formatUtil.softCls();
+log.info("Starting development environment...");
+buildLog.await("Rendering loading animation...");
 
 async function start() {
   await renderLoadingAnimation();
-  out.info("Loading animation rendered, starting server...").endl();
+  buildLog.await("Starting server...");
 
   const serve = require("webpack-serve");
 
@@ -36,7 +36,7 @@ async function start() {
   try {
     devServer = serve({ config, ...devServerConfig });
   } catch (e) {
-    console.error(e);
+    log.error(e);
     process.exit(1);
   }
 
@@ -49,7 +49,12 @@ async function start() {
     });
 
     server.on("listening", () => {
-      out.info("Dev server listening...");
+      const serverAddress = chalk.cyan(
+        `http://${
+          useLocalIp ? PUBLIC_ADDRESS : LOCAL_HOST_ADDRESS
+        }:${DEFAULT_PORT}`
+      );
+      buildLog.success(`Dev server available via ${serverAddress}...`);
     });
   });
 
@@ -57,6 +62,6 @@ async function start() {
 }
 
 start().catch(err => {
-  console.error(err);
+  log.error(err);
   process.exit(1);
 });

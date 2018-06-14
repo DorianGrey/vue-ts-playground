@@ -1,7 +1,8 @@
 const statsFormatter = require("../../../scripts/util/statsFormatter");
 const formatWebpackMessages = require("../../../scripts/util/formatWebpackMessages");
 
-const LabeledFormatter = require("../pluginUtils/LabeledFormatter");
+const { buildLog, log } = require("../../logger");
+const { softCls, hardCls } = require("../../formatUtil");
 
 function msToPeriod(ms) {
   "use strict";
@@ -63,12 +64,7 @@ class ErrorFormatterPlugin {
         ? this.options.clear.onDone
         : false;
 
-    this.out = new LabeledFormatter();
-
-    this.cls = (this.options.clear.mode === "soft"
-      ? this.out.softCls
-      : this.out.hardCls
-    ).bind(this.out);
+    this.cls = this.options.clear.mode === "soft" ? softCls : hardCls;
   }
 
   apply(compiler) {
@@ -80,27 +76,22 @@ class ErrorFormatterPlugin {
       const time = msToPeriod(compileTime);
 
       if (!hasErrors && !hasWarnings) {
-        this.out
-          .endl()
-          .success(`Compiled successfully in ${time}.`)
-          .endl();
+        buildLog.success(`Compiled successfully in ${time}.`);
 
         if (this.options.successMessages.length > 0) {
-          this.out.endl();
           this.options.successMessages.forEach(msg => {
-            this.out.note(msg).endl();
+            log.note(msg).endl();
           });
-          this.out.endl();
         }
       } else {
-        this.out.errorLabel(`Compilation failed after ${time}. `).endl();
+        buildLog.error(`Compilation failed after ${time}. `);
         this.displayMalfunctions(hasErrors, hasWarnings, stats);
       }
     };
 
     const onInvalid = () => {
       this.options.clear.onInvalid && this.cls();
-      this.out.info("Compiling...").endl();
+      buildLog.await("Compiling...");
     };
 
     hookToCompiler(compiler, "done", onDone);
@@ -112,13 +103,11 @@ class ErrorFormatterPlugin {
     const formattedStats = statsFormatter.formatStats(jsonified);
 
     if (hasWarnings) {
-      this.out.endl();
-      statsFormatter.printWarnings(formattedStats.warnings, this.out);
+      statsFormatter.printWarnings(formattedStats.warnings, log);
     }
 
     if (hasErrors) {
-      this.out.endl();
-      statsFormatter.printErrors(formattedStats.errors, this.out);
+      statsFormatter.printErrors(formattedStats.errors, log);
     }
   }
 }

@@ -1,6 +1,6 @@
 "use strict";
 
-const { EnvironmentPlugin } = require("webpack");
+const { EnvironmentPlugin, ProgressPlugin } = require("webpack");
 const chalk = require("chalk");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
@@ -11,7 +11,8 @@ const ForkTsCheckerWebpackPlugin = require("fork-ts-checker-webpack-plugin");
 const VueLoaderPlugin = require("vue-loader/lib/plugin");
 
 const paths = require("../paths");
-const formatUtil = require("./pluginUtils/formatUtil");
+const { asyncLog, buildLog, log } = require("../logger");
+const formatUtil = require("../formatUtil");
 const loadingAnimation = require("../../src/generated/loading.scss.json");
 
 const nodeOptions = {
@@ -193,6 +194,8 @@ module.exports = function(isDev, publicUrl) {
     styleLintConfig.quiet = false;
   }
 
+  const forkCheckerLog = isDev ? asyncLog : log;
+
   return {
     // resolve TypeScript and Vue file
     module: {
@@ -257,11 +260,34 @@ module.exports = function(isDev, publicUrl) {
         tsconfig: "./tsconfig.json",
         tslint: "./tslint.json",
         async: isDev,
-        formatter: "codeframe"
+        formatter: "codeframe",
+        logger: {
+          info: (...args) => {
+            // console.warn("Received args:", args);
+            // Filter messages that are not that interesting in our case.
+            if (
+              args.length > 0 &&
+              !/^(Starting|Version|Using|Watching)/.test(args[0])
+            ) {
+              forkCheckerLog.info(...args);
+            }
+          },
+          warn: (...args) => forkCheckerLog.warn(...args),
+          error: (...args) => forkCheckerLog.error(...args)
+        }
       }),
 
       new StyleLintPlugin(styleLintConfig),
 
+      new ProgressPlugin(percent => {
+        if (percent < 1) {
+          buildLog.await(`[${Math.round(percent * 100)}%] Compiling...`);
+        } else {
+          buildLog.complete("Compilation completed.");
+        }
+      })
+
+      /*
       new ProgressBarPlugin({
         clear: true,
         complete: ".",
@@ -271,6 +297,7 @@ module.exports = function(isDev, publicUrl) {
         summary: false,
         width: 50
       })
+      */
     ]
   };
 };

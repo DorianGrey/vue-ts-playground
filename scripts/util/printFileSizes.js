@@ -15,13 +15,11 @@ const stripAnsi = require("strip-ansi");
 const { gzipsize, gzipOpts } = require("./gzipSize");
 
 const paths = require("../../config/paths");
-const LabeledFormatter = require("../../config/webpack/pluginUtils/LabeledFormatter");
+const { log } = require("../../config/logger");
 const getRelativeChunkName = require("./getRelativeChunkName");
 const {
   relevantSizeComparisonRegex
 } = require("./determineFileSizesBeforeBuild");
-
-const out = new LabeledFormatter();
 
 const assetsSizeWarnLimit = 250 * 1024; // <=> 250 KB.
 const potentiallyExtractedChunkSizeLimit = 512; // <=> 1 KB.
@@ -99,7 +97,7 @@ function determineSizeDiff(
   }
 }
 
-function printFileSizesOnAssetCategory(
+function formatFileSizesOnAssetCategory(
   previousFileSizes,
   assetsStats,
   exceptionalAssetCnt
@@ -163,7 +161,7 @@ function printFileSizesOnAssetCategory(
     assets.map(a => stripAnsi(a.folder + path.sep + a.name).length)
   );
 
-  assets.forEach(asset => {
+  const formattedAssetsLabels = assets.map(asset => {
     const sizeLabelSrc = alignPad(
       asset.sizeLabel.src,
       longestSrcSizeLabelLength
@@ -194,18 +192,17 @@ function printFileSizesOnAssetCategory(
       alignPad(asset.name, longestFileNameSize - (asset.folder.length + 1))
     );
 
-    process.stdout.write(
+    return (
       chalk.dim(asset.folder + path.sep) +
-        assetName +
-        " @ " +
-        sizeLabelSrc +
-        " => " +
-        sizeLabelGzip +
-        "\n"
+      assetName +
+      " @ " +
+      sizeLabelSrc +
+      " => " +
+      sizeLabelGzip
     );
   });
 
-  return missingPreviousVersion;
+  return [formattedAssetsLabels, missingPreviousVersion];
 }
 
 function alignPad(originalLabel, to) {
@@ -233,14 +230,13 @@ function printFileSizes(previousFileSizes, webpackStats, staticAssets = []) {
       extracted: 0
     };
 
-    out
-      .endl()
-      .note(
-        `Emitted assets in ${chalk.cyan(
-          path.resolve(paths.appBuild)
-        )} (displayed gzip sizes refer to compression level=${gzipOpts.level}):`
-      )
-      .endl();
+    log._stream.write("\n");
+    log.note(
+      `Emitted assets in ${chalk.cyan(
+        path.resolve(paths.appBuild)
+      )} (displayed gzip sizes refer to compression level=${gzipOpts.level}):`
+    );
+    log._stream.write("\n");
 
     let remainingAssets = Object.getOwnPropertyNames(assetCategories).reduce(
       (relevantAssets, c) => {
@@ -248,14 +244,21 @@ function printFileSizes(previousFileSizes, webpackStats, staticAssets = []) {
           assetCategories[c].test(asset.name)
         );
         if (_relevantAssets.length > 0) {
-          out.indicated("> " + c).endl();
-          const missingPrevious = printFileSizesOnAssetCategory(
+          const [
+            formattedAssetsLabels,
+            missingPrevious
+          ] = formatFileSizesOnAssetCategory(
             previousFileSizes,
             _relevantAssets,
             exceptionalAssetCnt
           );
+          log.category(
+            [chalk.bgCyan.white.bold(c)]
+              .concat(formattedAssetsLabels)
+              .join("\n")
+          );
           missingPreviousVersion.push(...missingPrevious);
-          out.endl();
+          log._stream.write("\n");
         }
         return nextAssets;
       },
@@ -263,42 +266,44 @@ function printFileSizes(previousFileSizes, webpackStats, staticAssets = []) {
     );
 
     if (remainingAssets.length > 0) {
-      out.indicated("> Others").endl();
-      const missingPrevious = printFileSizesOnAssetCategory(
+      const [
+        formattedAssetsLabels,
+        missingPrevious
+      ] = formatFileSizesOnAssetCategory(
         previousFileSizes,
         remainingAssets,
         exceptionalAssetCnt
       );
+      log.category(
+        [chalk.bgCyan.white.bold("Others")]
+          .concat(formattedAssetsLabels)
+          .join("\n")
+      );
       missingPreviousVersion.push(...missingPrevious);
-      out.endl();
+      log._stream.write("\n");
     }
 
     if (exceptionalAssetCnt.tooLarge > 0) {
-      out
-        .warning(
-          `${exceptionalAssetCnt.tooLarge === 1 ? "There is" : "There are"} ${
-            exceptionalAssetCnt.tooLarge
-          } assets which exceed the configured size limit of ${filesize(
-            assetsSizeWarnLimit
-          )}. These are marked in ${chalk.yellow("yellow")}.`
-        )
-        .endl()
-        .endl();
+      log.warn(
+        `${exceptionalAssetCnt.tooLarge === 1 ? "There is" : "There are"} ${
+          exceptionalAssetCnt.tooLarge
+        } assets which exceed the configured size limit of ${filesize(
+          assetsSizeWarnLimit
+        )}. These are marked in ${chalk.yellow("yellow")}.`
+      );
     }
 
     if (exceptionalAssetCnt.extracted > 0) {
-      out
-        .note(
-          `${exceptionalAssetCnt.extracted === 1 ? "There is" : "There are"} ${
-            exceptionalAssetCnt.extracted
-          } assets which are smaller than the configured lower size limit of ${filesize(
-            potentiallyExtractedChunkSizeLimit
-          )}. These should be considered remains of extracted chunks and are marked in ${chalk.grey(
-            "grey"
-          )}.`
-        )
-        .endl()
-        .endl();
+      log.note(
+        `${exceptionalAssetCnt.extracted === 1 ? "There is" : "There are"} ${
+          exceptionalAssetCnt.extracted
+        } assets which are smaller than the configured lower size limit of ${filesize(
+          potentiallyExtractedChunkSizeLimit
+        )}. These should be considered remains of extracted chunks and are marked in ${chalk.grey(
+          "grey"
+        )}.`
+      );
+      log._stream.write("\n");
     }
 
     const relevantMissingPreviousVersion = missingPreviousVersion.filter(a =>
@@ -306,22 +311,20 @@ function printFileSizes(previousFileSizes, webpackStats, staticAssets = []) {
     );
 
     if (relevantMissingPreviousVersion.length > 0) {
-      out
-        .debug(
-          `Some assets did not have a previous version, though they should have: ${JSON.stringify(
-            missingPreviousVersion,
-            null,
-            4
-          )} in ${JSON.stringify(
-            Object.getOwnPropertyNames(previousFileSizes.sizes),
-            null,
-            4
-          )}`
-        )
-        .endl();
+      log.debug(
+        `Some assets did not have a previous version, though they should have: ${JSON.stringify(
+          missingPreviousVersion,
+          null,
+          4
+        )} in ${JSON.stringify(
+          Object.getOwnPropertyNames(previousFileSizes.sizes),
+          null,
+          4
+        )}`
+      );
     }
   } catch (e) {
-    console.error(e);
+    log.error(e);
     process.exit(1);
   }
 }
