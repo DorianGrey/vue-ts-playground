@@ -60,10 +60,9 @@ const POSTCSS_PLUGINS = () => [
   require("postcss-flexbugs-fixes"),
   require("autoprefixer")({
     browsers: [
-      ">1%",
-      "last 4 versions",
-      "Firefox ESR",
-      "not ie < 11" // supporting IE < 11 should not be required anymore, due to the lack of usage statistics.
+      ">0.25%",
+      "not op_mini all",
+      "ie 11" // supporting IE < 11 should not be required anymore, due to the lack of usage statistics.
     ],
     flexbox: "no-2009"
   })

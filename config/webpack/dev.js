@@ -21,16 +21,11 @@ const publicPath = "/";
 const publicUrl = "";
 
 module.exports = function() {
-  // Note: We're using the "prepend" strategy here to ensure
-  // that "FriendlyErrorsWebpackPlugin" is registered before the
-  // logger that handles deferred messages.
-  return merge.smartStrategy({ plugins: "prepend" })(
-    commonConfig(true, publicUrl),
-    {
-      mode: "development",
-      entry: [
-        // Set of polyfills required to get this at least somewhat working in IE11... LOL
-        /*
+  return merge.smart(commonConfig(true, publicUrl), {
+    mode: "development",
+    entry: [
+      // Set of polyfills required to get this at least somewhat working in IE11... LOL
+      /*
         "core-js/modules/es7.object.values", // Vuetify
         "core-js/modules/es6.array.find",
         "core-js/modules/es6.array.from",
@@ -40,38 +35,37 @@ module.exports = function() {
         "core-js/modules/es6.math.cbrt", // Vuetify
         "core-js/es6/promise",
         */
-        paths.appIndex
-      ],
-      output: {
-        path: paths.appBuild,
-        filename: "static/js/bundle.js",
-        chunkFilename: "static/js/[name].chunk.js",
-        publicPath: publicPath,
-        pathinfo: true,
-        // Point sourcemap entries to original disk location
-        devtoolModuleFilenameTemplate: info =>
-          path.resolve(info.absoluteResourcePath)
-      },
+      paths.appIndex
+    ],
+    output: {
+      path: paths.appBuild,
+      filename: "static/js/bundle.js",
+      chunkFilename: "static/js/[name].chunk.js",
+      publicPath: publicPath,
+      pathinfo: true,
+      // Point sourcemap entries to original disk location
+      devtoolModuleFilenameTemplate: info =>
+        path.resolve(info.absoluteResourcePath)
+    },
 
-      optimization: {
-        noEmitOnErrors: true
-      },
+    optimization: {
+      noEmitOnErrors: true
+    },
 
-      plugins: [
-        new ErrorFormatterPlugin({
-          successMessages: [
-            `Development server is available at: ${chalk.cyan(
-              `http://${
-                useLocalIp ? PUBLIC_ADDRESS : LOCAL_HOST_ADDRESS
-              }:${DEFAULT_PORT}`
-            )}`
-          ]
-        }),
-        // TODO: Currently causes problems with some style stuff, yet - dunno why. To be tested.
-        // new AutoDllPlugin(dllConfig),
-        // See https://github.com/mzgoddard/hard-source-webpack-plugin
-        new HardSourceWebpackPlugin()
-      ]
-    }
-  );
+    plugins: [
+      new ErrorFormatterPlugin({
+        successMessages: [
+          `Development server is available at: ${chalk.cyan(
+            `http://${
+              useLocalIp ? PUBLIC_ADDRESS : LOCAL_HOST_ADDRESS
+            }:${DEFAULT_PORT}`
+          )}`
+        ]
+      }),
+      // Note: This plugin has to added AFTER the HtmlWebpackPlugin, otherwise, its "inject" option won't work.
+      new AutoDllPlugin(dllConfig),
+      // See https://github.com/mzgoddard/hard-source-webpack-plugin
+      new HardSourceWebpackPlugin()
+    ]
+  });
 };
