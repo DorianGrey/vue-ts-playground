@@ -10,4 +10,12 @@
   </div>
 </template>
 
-<script lang="ts" src="./inputTest.ts"></script>
+<script lang="ts">
+  import { Component, Vue } from "av-ts";
+
+  @Component
+  export default class InputTest extends Vue {
+    inputText: string = "bass";
+  }
+
+</script>

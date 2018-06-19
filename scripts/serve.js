@@ -1,11 +1,10 @@
 "use strict";
 
 const chalk = require("chalk");
-const path = require("path");
 const fs = require("fs-extra");
 const Koa = require("koa");
 const compress = require("koa-compress");
-const serveStatic = require("@shellscape/koa-static/legacy"); // Already used by webpack-serve, thus...
+const serveStatic = require("koa-static");
 const history = require("connect-history-api-fallback");
 const convert = require("koa-connect");
 

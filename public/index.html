@@ -15,14 +15,14 @@
   <meta name="msapplication-starturl" content="/">
   <meta name="description" content="Just a PWA-using sample app powered by Vue.js" />
 
-  <base href="<%= htmlWebpackPlugin.options.baseHref %>">
+  <base href="/">
 
-  <link rel="shortcut icon" type="image/x-icon" href="<%= htmlWebpackPlugin.options.publicUrl %>/favicon.png">
+  <link rel="shortcut icon" type="image/x-icon" href="./favicon.png">
   <!--
     manifest.webmanifest provides metadata used when your web app is added to the
     homescreen on Android. See https://developers.google.com/web/fundamentals/engage-and-retain/web-app-manifest/
   -->
-  <link rel="manifest" href="<%= htmlWebpackPlugin.options.publicUrl %>/manifest.webmanifest">
+  <link rel="manifest" href="./manifest.webmanifest">
 
   <!--
     Notice the use of <%= htmlWebpackPlugin.options.publicUrl %> in the tags above.
@@ -35,10 +35,9 @@
   -->
   <title><%= htmlWebpackPlugin.options.title %></title>
   <!-- Inline style for the loading animation -->
-  <!-- TODO: Add again! -->
-  <style>
-    <%= htmlWebpackPlugin.options.loadingCss %>
-  </style>
+  <link rel="stylesheet" href="../src/styles/loading.scss">
+
+  <script src="../src/index.ts"></script>
 </head>
 <body>
 <noscript>

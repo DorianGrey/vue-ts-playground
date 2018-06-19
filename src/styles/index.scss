@@ -28,7 +28,7 @@ $font-family-sans-serif:
 $family-sans-serif: $font-family-sans-serif;
 
 @import "../../node_modules/sanitize.css/sanitize";
-@import "../../node_modules/vuetify/dist/vuetify.css";
+@import "../../node_modules/vuetify/dist/vuetify";
 @import "./colors";
 
 html {
