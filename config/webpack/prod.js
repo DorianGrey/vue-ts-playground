@@ -9,7 +9,7 @@ const BundleAnalyzerPlugin = require("webpack-bundle-analyzer")
   .BundleAnalyzerPlugin;
 const OptimizeCssAssetsPlugin = require("optimize-css-assets-webpack-plugin");
 const UglifyJsPlugin = require("uglifyjs-webpack-plugin");
-const PurifyCSSPlugin = require("purifycss-webpack");
+const PurgeCssPlugin = require("purgecss-webpack-plugin");
 const { InjectManifest } = require("workbox-webpack-plugin");
 const glob = require("globby");
 
@@ -84,21 +84,25 @@ module.exports = function() {
         chunkFilename: cssFilename
         // allChunks: true
       }),
-      new PurifyCSSPlugin({
+      new PurgeCssPlugin({
         paths: glob.sync([
           paths.resolveApp("public/index.html"),
           paths.resolveApp("src/**/*.vue"),
           paths.resolveApp("node_modules/vuetify/es5/**/*.js")
         ]),
         styleExtensions: [".sass", ".scss", ".css", ".styl"],
-        purifyOptions: {
-          whitelist: [
-            "*:not*", // See issue: https://github.com/purifycss/purifycss/issues/161
-            ".notices", // Hierarchy not detected correctly.
-            ".snackbar", // Same
-            ".carousel-3d-container"
-          ]
-        }
+        whitelist: [
+          "*:not*", // See issue: https://github.com/purifycss/purifycss/issues/161
+          ".notices", // Hierarchy not detected correctly.
+          ".snackbar", // Same
+          ".carousel-3d-container"
+        ],
+        whitelistPatterns: [
+          /v-input__(append|prepend)-outer/,
+          /picker(-reverse)?-transition/,
+          /tab(-reverse)?-transition/,
+          /--text$/
+        ]
       }),
       // Generate some information about the generated bundle size
       new BundleAnalyzerPlugin({
