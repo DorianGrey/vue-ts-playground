@@ -23,10 +23,7 @@ export default class App extends Vue {
   @Lifecycle
   mounted() {
     if (process.env.NODE_ENV === "production") {
-      registerServiceWorker(
-        this.showSnackbar.bind(this),
-        this.$t.bind(this.$t)
-      );
+      registerServiceWorker(this.showSnackbar.bind(this), this.$t.bind(this));
     }
   }
 
