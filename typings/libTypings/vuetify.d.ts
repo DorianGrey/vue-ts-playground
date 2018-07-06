@@ -1,8 +1,3 @@
-declare module "vuetify/es5/components/Vuetify" {
-  import { PluginFunction } from "vue";
-  const def: PluginFunction<never>;
-  export default def;
-}
 declare module "vuetify/es5/components/VApp" {
   import Vue, {ComponentOptions} from "vue";
   let __vue__: ComponentOptions<Vue>;
