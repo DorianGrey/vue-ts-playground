@@ -34,21 +34,19 @@ async function start() {
   );
   let devServer;
   try {
-    devServer = serve({ config, ...devServerConfig });
+    devServer = serve({}, { config, ...devServerConfig });
   } catch (e) {
     log.error(e);
     process.exit(1);
   }
 
-  const serverInstance = devServer.then(server => {
+  const serverInstance = devServer.then(result => {
     ["SIGINT", "SIGTERM"].forEach(sig => {
       process.on(sig, () => {
-        server.close();
+        result.app.stop();
         process.exit(0);
       });
-    });
 
-    server.on("listening", () => {
       const serverAddress = chalk.cyan(
         `http://${
           useLocalIp ? PUBLIC_ADDRESS : LOCAL_HOST_ADDRESS

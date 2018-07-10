@@ -108,7 +108,6 @@ const RULE_SCSS = function(isDev) {
         loader: require.resolve("css-loader"),
         options: {
           importLoaders: 1,
-          minimize: !isDev,
           sourceMap: isDev
         }
       },

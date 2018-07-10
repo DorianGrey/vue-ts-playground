@@ -8,12 +8,12 @@ const paths = require("../paths");
 module.exports = function(host, port, publicPath) {
   return {
     content: [paths.appPublic],
-    dev: {
+    devMiddleware: {
       publicPath,
       logLevel: "silent",
       stats: "errors-only"
     },
-    hot: {
+    hotClient: {
       logLevel: "silent",
       host
     },
