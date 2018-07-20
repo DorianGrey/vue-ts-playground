@@ -1,5 +1,7 @@
-import { Component, Lifecycle, Vue } from "av-ts";
+import Vue from "vue";
+import Component from "vue-class-component";
 import noop from "lodash-es/noop";
+
 import onceEventHelper from "../utility/onceEvent";
 import LanguageSelector from "../languageSelector/languageSelector.vue";
 import registerServiceWorker from "../registerServiceWorker";
@@ -20,7 +22,7 @@ export default class App extends Vue {
     onClick: noop as (() => void)
   };
 
-  @Lifecycle
+  // Lifecycle
   mounted() {
     if (process.env.NODE_ENV === "production") {
       registerServiceWorker(this.showSnackbar.bind(this), this.$t.bind(this));

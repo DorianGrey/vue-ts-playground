@@ -1,4 +1,5 @@
-import { Component, Vue } from "av-ts";
+import Vue from "vue";
+import Component from "vue-class-component";
 
 @Component
 export default class Gallery extends Vue {

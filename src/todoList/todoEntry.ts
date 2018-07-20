@@ -1,4 +1,6 @@
-import { Component, Lifecycle, p, Prop, Vue } from "av-ts";
+import Vue from "vue";
+import Component from "vue-class-component";
+import { Prop } from "vue-property-decorator";
 
 import { createNewTodo } from "./state/creators";
 import { TodoModel } from "./state/interfaces";
@@ -8,29 +10,26 @@ import { LanguagePack } from "../i18n/languagePack";
 
 @Component
 export default class TodoEntry extends Vue {
-  @Prop
-  todo = p({
-    type: Object,
-    required: false
-  }) as TodoModel;
+  @Prop({ type: Object, required: true })
+  todo: TodoModel;
 
-  @Prop
-  initialEditable = p({
+  @Prop({
     type: Boolean,
     required: false
-  }) as boolean;
+  })
+  initialEditable: boolean;
 
-  @Prop
-  afterSubmit = p({
+  @Prop({
     type: Function,
     required: false
-  });
+  })
+  afterSubmit: () => void;
 
-  @Prop
-  afterCancel = p({
+  @Prop({
     type: Function,
     required: false
-  });
+  })
+  afterCancel: () => void;
 
   isValid: boolean = false;
 
@@ -56,7 +55,7 @@ export default class TodoEntry extends Vue {
 
   readonly todayStart = new Date().setHours(0, 0, 0, 0);
 
-  @Lifecycle
+  // Lifecycle
   beforeMount(): void {
     if (this.editable) {
       this.pendingTodo = { ...this.targetTodo };

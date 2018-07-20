@@ -1,4 +1,6 @@
-import { Component, Lifecycle, Vue } from "av-ts";
+import Vue from "vue";
+import Component from "vue-class-component";
+
 import { LanguagePack, loadLanguagePack } from "../i18n/languagePack";
 import { I18N_MODULE_ACTIONS } from "../i18n/state/i18n.state";
 
@@ -16,7 +18,7 @@ export default class LanguageSelector extends Vue {
     }
   ];
 
-  @Lifecycle
+  // Lifecycle
   created(): void {
     this.currentLanguage = (this.$store.getters[
       I18N_MODULE_ACTIONS.GET

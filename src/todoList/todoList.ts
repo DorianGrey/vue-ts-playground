@@ -1,4 +1,6 @@
-import { Component, p, Prop, Vue } from "av-ts";
+import Vue from "vue";
+import Component from "vue-class-component";
+import { Prop } from "vue-property-decorator";
 
 import { TodoModel } from "./state/interfaces";
 import { TODO_MODULE_NAME } from "./state/todo.state";
@@ -12,11 +14,11 @@ type ActiveTab = "active" | "expired";
   } as any // work around typing problems with TS 2.6.1
 })
 export default class TodoList extends Vue {
-  @Prop
-  id = p({
+  @Prop({
     type: String,
     required: true
-  }) as string;
+  })
+  id: string;
 
   newTodoEditable = false;
 

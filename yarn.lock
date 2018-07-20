@@ -757,10 +757,6 @@ autoprefixer@^8.6.5:
     postcss "^6.0.23"
     postcss-value-parser "^3.2.3"
 
-av-ts@^0.10.0:
-  version "0.10.0"
-  resolved "https://registry.yarnpkg.com/av-ts/-/av-ts-0.10.0.tgz#09572f630d93ee2201775f1a2b8e675190691867"
-
 aws-sign2@~0.7.0:
   version "0.7.0"
   resolved "https://registry.yarnpkg.com/aws-sign2/-/aws-sign2-0.7.0.tgz#b46e890934a9591f2d2f6f86d7e6a9f1b3fe76a8"
@@ -10694,6 +10690,10 @@ vue-carousel-3d@^0.1.23:
   version "0.1.23"
   resolved "https://registry.yarnpkg.com/vue-carousel-3d/-/vue-carousel-3d-0.1.23.tgz#c62749fd8565cd6c86bd60156ba79784dc0494d3"
 
+vue-class-component@^6.2.0:
+  version "6.2.0"
+  resolved "https://registry.yarnpkg.com/vue-class-component/-/vue-class-component-6.2.0.tgz#7adb1daa9a868c75f30f97f33f4f1b94aee62089"
+
 vue-hot-reload-api@^2.3.0:
   version "2.3.0"
   resolved "https://registry.yarnpkg.com/vue-hot-reload-api/-/vue-hot-reload-api-2.3.0.tgz#97976142405d13d8efae154749e88c4e358cf926"
@@ -10732,6 +10732,12 @@ vue-parser@^1.1.5:
   resolved "https://registry.yarnpkg.com/vue-parser/-/vue-parser-1.1.6.tgz#3063c8431795664ebe429c23b5506899706e6355"
   dependencies:
     parse5 "^3.0.3"
+
+vue-property-decorator@^7.0.0:
+  version "7.0.0"
+  resolved "https://registry.yarnpkg.com/vue-property-decorator/-/vue-property-decorator-7.0.0.tgz#46f53dd741eb86c3af091bb0492400c450eebf19"
+  dependencies:
+    vue-class-component "^6.2.0"
 
 vue-router@^3.0.1:
   version "3.0.1"
