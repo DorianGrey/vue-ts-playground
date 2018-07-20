@@ -39,14 +39,13 @@
             :error-messages="errors.collect('title')">
           </v-text-field>
           <!-- Description -->
-          <v-text-field
-            multi-line
+          <v-textarea
             :label="$t('todo-entry.description')"
             v-model="pendingTodo.description"
             v-validate.initial="'required'"
             data-vv-name="description"
             :error-messages="errors.collect('description')">
-          </v-text-field>
+          </v-textarea>
 
           <!-- Deadline pickers -->
           <v-layout wrap>
