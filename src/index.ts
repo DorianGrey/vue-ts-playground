@@ -9,11 +9,11 @@ import router from "./router";
 import * as WebFontLoader from "webfontloader";
 
 // Vuetify stuff
-import Vuetify from "vuetify";
+import Vuetify from "vuetify/es5/components/Vuetify";
+import vuetifyConfig from "./vuetify";
 
 // More "fancyness" stuff.
 import VueCarousel3d from "vue-carousel-3d";
-import colors from "vuetify/es5/util/colors";
 
 import App from "./app/app.vue";
 
@@ -26,17 +26,7 @@ WebFontLoader.load({
   }
 });
 
-Vue.use(Vuetify, {
-  theme: {
-    primary: colors.green.accent4,
-    secondary: colors.red.lighten2,
-    accent: colors.purple.base,
-    error: colors.red.base,
-    warning: colors.yellow.base,
-    info: colors.blue.base,
-    success: colors.green.base
-  }
-});
+Vue.use(Vuetify, vuetifyConfig);
 Vue.use(VeeValidate);
 Vue.use(VueCarousel3d);
 

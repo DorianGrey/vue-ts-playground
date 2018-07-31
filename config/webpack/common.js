@@ -69,7 +69,7 @@ const POSTCSS_PLUGINS = () => [
   })
 ];
 
-const RULE_SCSS = function(isDev) {
+const styleRule = function(isDev, test, firstLoader) {
   // Development mode docs:
   // "postcss" loader applies autoprefixer to our CSS.
   // "css" loader resolves paths in CSS and adds assets as dependencies.
@@ -97,7 +97,7 @@ const RULE_SCSS = function(isDev) {
   // be ignored.
 
   return {
-    test: /\.scss$/,
+    test,
     use: [
       {
         loader: isDev
@@ -125,15 +125,28 @@ const RULE_SCSS = function(isDev) {
           sourceMap: isDev
         }
       },
-      {
-        loader: require.resolve("sass-loader"),
-        options: {
-          sourceMap: true, // Has to be true always, since the resolve-url-loader requires it to properly map the resource paths.
-          outputStyle: isDev ? "nested" : "compressed"
-        }
-      }
+      firstLoader
     ]
   };
+};
+
+const RULE_STYLUS = function(isDev) {
+  return styleRule(isDev, /\.styl/, {
+    loader: require.resolve("stylus-loader"),
+    options: {
+      sourceMap: true // Has to be true always, since the resolve-url-loader requires it to properly map the resource paths.
+    }
+  });
+};
+
+const RULE_SCSS = function(isDev) {
+  return styleRule(isDev, /\.scss$/, {
+    loader: require.resolve("sass-loader"),
+    options: {
+      sourceMap: true, // Has to be true always, since the resolve-url-loader requires it to properly map the resource paths.
+      outputStyle: isDev ? "nested" : "compressed"
+    }
+  });
 };
 
 const RULE_WEBFONTS = function() {
@@ -222,6 +235,7 @@ module.exports = function(isDev, publicUrl) {
           ]
         },
         RULE_SCSS(isDev),
+        RULE_STYLUS(isDev),
         RULE_WEBFONTS(),
         RULE_IMAGES(isDev),
 
