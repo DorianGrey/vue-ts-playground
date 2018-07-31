@@ -2,7 +2,7 @@ module.exports = {
   "collectCoverageFrom": [
     "src/**/*.{js,ts,vue}",
     "!src/**/*.spec.{js,ts}",
-    "!src/{index,bootloader}.ts",
+    "!src/{index,router}.ts",
     "!src/i18n/**/*.ts"
   ],
   "coverageReporters": [
