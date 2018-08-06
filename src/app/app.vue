@@ -81,20 +81,20 @@
 
 </template>
 
-<script lang="ts" src="./app.ts"></script>
+<script lang="ts" src="./app.ts">
+</script>
 
 <style lang="scss">
-  @import "../styles/colors";
-  @import "../styles/typography";
+@import "../styles/colors";
+@import "../styles/typography";
 
-  #app {
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
-    min-height: 100%;
+#app {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  min-height: 100%;
 
-    .footer {
-      justify-content: space-between;
-    }
+  .footer {
+    justify-content: space-between;
   }
-
+}
 </style>

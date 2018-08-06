@@ -1,47 +1,41 @@
 module.exports = {
-  "collectCoverageFrom": [
+  collectCoverageFrom: [
     "src/**/*.{js,ts,vue}",
     "!src/**/*.spec.{js,ts}",
     "!src/{index,router}.ts",
-    "!src/i18n/**/*.ts"
+    "!src/i18n/**/*.ts",
+    "!src/**/*.d.ts"
   ],
-  "coverageReporters": [
+  coverageReporters: [
     "lcov",
     "text"
   ],
-  "coverageDirectory": "<rootDir>/test-results/coverage",
-  "globals": {
-    "ts-jest": {
-      "tsConfigFile": "tsconfig.test.json"
-    },
-    "vue-jest": {
-      "tsConfigFile": "tsconfig.test.json",
-      "babelRcFile": ".babelrc"
-    }
-  },
-  "moduleFileExtensions": [
+  coverageDirectory: "<rootDir>/test-results/coverage",
+  moduleFileExtensions: [
     "js",
+    "jsx",
+    "json",
+    "vue",
     "ts",
-    "vue"
+    "tsx"
   ],
-  "moduleDirectories": [
-    "node_modules",
-    "src"
-  ],
-  "moduleNameMapper": {
-    "^vue$": "vue/dist/vue.common.js"
+  moduleNameMapper: {
+    "^@/(.*)$": "<rootDir>/src/$1"
   },
-  "testMatch": [
-    "<rootDir>/src/**/?(*.)spec.ts"
-  ],
   "setupTestFrameworkScriptFile": "<rootDir>/config/jest/testSetup.ts",
-  "transform": {
-    "^.+\\.(svg|gif|png|jpe?g)$": "<rootDir>/config/jest/fileTransform.js",
-    "^.+\\.s?css$": "<rootDir>/config/jest/cssTransform.js",
-    "^.+\\.ts$": "ts-jest",
-    ".*\\.(vue)$": "vue-jest"
+  snapshotSerializers: [
+    "jest-serializer-vue"
+  ],
+  testMatch: [
+    "**/tests/unit/**/*.spec.(js|jsx|ts|tsx)|**/__tests__/*.(js|jsx|ts|tsx)"
+  ],
+  testURL: "http://localhost/",
+  transform: {
+    "^.+\\.vue$": "vue-jest",
+    ".+\\.(css|styl|less|sass|scss|png|jpg|ttf|woff|woff2)$": "jest-transform-stub",
+    "^.+\\.tsx?$": "ts-jest"
   },
-  "transformIgnorePatterns": [
+  transformIgnorePatterns: [
     "[\\\/]node_modules[\\\/].+\\.(js|ts)$"
   ]
 };

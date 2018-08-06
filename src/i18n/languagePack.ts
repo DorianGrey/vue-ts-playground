@@ -12,11 +12,11 @@ export interface LanguagePack {
 export function loadLanguagePack(lang: string): Promise<LanguagePack> {
   switch (lang) {
     case "de":
-      return import(/* webpackChunkName: "lang-de" */ "./lang-packs/de").then(
+      return import(/* webpackChunkName: "lang-de" */ "./lang-packs/de/index").then(
         mod => mod.default as LanguagePack
       );
     default:
-      return import(/* webpackChunkName: "lang-en" */ "./lang-packs/en").then(
+      return import(/* webpackChunkName: "lang-en" */ "./lang-packs/en/index").then(
         mod => mod.default as LanguagePack
       );
   }

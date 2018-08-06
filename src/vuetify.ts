@@ -18,6 +18,7 @@ import VTextarea from "vuetify/es5/components/VTextarea";
 import VTextField from "vuetify/es5/components/VTextField";
 import VTimePicker from "vuetify/es5/components/VTimePicker";
 import VToolbar from "vuetify/es5/components/VToolbar";
+import VSnackbar from "vuetify/es5/components/VSnackbar";
 import colors from "vuetify/es5/util/colors";
 
 export default {
@@ -35,6 +36,7 @@ export default {
     VList,
     VMenu,
     VNavigationDrawer,
+    VSnackbar,
     VTabs,
     VTextarea,
     VTextField,

@@ -5,16 +5,37 @@
 Playground with vue.js and typescript.
 Intended to figure out goodies and pitfalls.
 
-## Setup
-Simply run `yarn` resp. `npm install` to install the required dependencies.
+## Project setup
+```
+yarn install
+```
 
-## Scripts:
+### Compiles and hot-reloads for development
+```
+yarn run serve
+```
 
-- `yarn start` will start a local dev server at `localhost:3000`.
+### Compiles and minifies for production
+```
+yarn run build
+```
 
-- `yarn build` will build your project into the `build` folder.
+### Lints and fixes files
+```
+yarn run lint
+```
 
-- `yarn serve` will start an exemplary production server that serves your most recent build.
+### Run your unit tests
+```
+yarn run test:unit
+```
 
+### Run your end-to-end tests
+```
+yarn run test:e2e
+```
 
-
+### Serve the production build
+```
+yarn run serve.prod
+```

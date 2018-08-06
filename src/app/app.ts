@@ -3,7 +3,7 @@ import Component from "vue-class-component";
 import noop from "lodash-es/noop";
 
 import onceEventHelper from "../utility/onceEvent";
-import LanguageSelector from "../languageSelector/languageSelector.vue";
+import LanguageSelector from "../components/languageSelector/languageSelector.vue";
 import registerServiceWorker from "../registerServiceWorker";
 
 @Component({

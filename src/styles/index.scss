@@ -1,6 +1,6 @@
-// Native font stack, see https://www.smashingmagazine.com/2015/11/using-system-ui-fonts-practical-guide/ .
-// Note: "Roboto" was put a little bit lower on that list to not conflict with Google Maps, which loads the Roboto font.
-// To avoid some crazy hacks to suppress this loading behavior, we'll put it somewhere lower so that it's only used on Android.
+// We're using a modified version of the native font stack (https://www.smashingmagazine.com/2015/11/using-system-ui-fonts-practical-guide/),
+// since the material style implemented by vuetify prefers Roboto as primary font.
+// The rest of the stack is used as always and provides a proper fallback.
 
 $font-family-sans-serif:
   "Roboto",
@@ -25,11 +25,8 @@ $font-family-sans-serif:
   // Basic web fallback
   "Helvetica Neue",
   Arial, sans-serif !default;
-$family-sans-serif: $font-family-sans-serif;
 
-@import "../../node_modules/sanitize.css/sanitize";
-@import "../../node_modules/vuetify/dist/vuetify.css";
-@import "./colors";
+@import "colors";
 
 html {
   font-family: sans-serif;
