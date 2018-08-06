@@ -1,9 +1,0 @@
-{
-  "extends": "./tsconfig",
-  "compilerOptions": {
-    "module": "commonjs",
-    // Avoid some problems with ts-jest not compiling /
-    // using the "Vue" module correctly.
-    "esModuleInterop": true
-  }
-}

@@ -14,9 +14,3 @@ declare module "*/messages.json" {
   let __json__: VueI18n.LocaleMessageObject;
   export default __json__;
 }
-
-declare module "*.vue" {
-  import Vue, {ComponentOptions} from "vue";
-  let __vue__: ComponentOptions<Vue>;
-  export default __vue__;
-}

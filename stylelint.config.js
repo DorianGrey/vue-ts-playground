@@ -1,7 +1,7 @@
 module.exports = {
   // Since .vue files are more-or-less plain HTML...
   "processors": [
-    "stylelint-processor-html"
+    "@mapbox/stylelint-processor-arbitrary-tags"
   ],
   "extends": [
     "stylelint-config-standard"

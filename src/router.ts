@@ -1,9 +1,9 @@
 import Vue from "vue";
 import VueRouter, { RouteConfig } from "vue-router";
 
-import NotFound from "./404/404.vue";
-import InputTest from "./inputTest/inputTest.vue";
-import TodoList from "./todoList/todoList.vue";
+import NotFound from "./views/404/404.vue";
+import InputTest from "./views/inputTest/inputTest.vue";
+import TodoList from "./components/todoList/todoList.vue";
 
 Vue.use(VueRouter);
 
@@ -28,7 +28,7 @@ const routes: RouteConfig[] = [
     // (see https://github.com/webpack/webpack/releases/tag/v2.4.0) using a special comment notation:
     // import(/* webpackChunkName: "my-chunk-name" */ "module")
     component: () =>
-      import(/* webpackChunkName: "gallery" */ "./gallery/gallery.vue")
+      import(/* webpackChunkName: "gallery" */ "./views/gallery/gallery.vue")
   } as RouteConfig,
   {
     path: "*",

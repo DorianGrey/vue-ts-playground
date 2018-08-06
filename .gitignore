@@ -1,17 +1,13 @@
-# Intellij stuff
-.idea
-
 # Build directory.
 build
 buildStats
-
-# Directory containing generated code
-src/generated
+/dist
 
 # Logs
 logs
 *.log
 npm-debug.log*
+yarn-debug.log*
 
 # Runtime data
 pids
@@ -23,6 +19,13 @@ lib-cov
 
 # Coverage directory used by tools like istanbul
 coverage
+
+# Test results - coverage / junit
+test-results
+
+# Local test output directories
+/tests/e2e/videos/
+/tests/e2e/screenshots/
 
 # nyc test coverage
 .nyc_output
@@ -46,8 +49,12 @@ jspm_packages
 # Optional REPL history
 .node_repl_history
 
-# /dist folder
-dist
+.DS_Store
 
-# Test results - coverage / junit
-test-results
+# Editor directories and files
+.idea
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw*
