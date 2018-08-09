@@ -3,7 +3,7 @@ import VueRouter, { RouteConfig } from "vue-router";
 
 import NotFound from "./views/404/404.vue";
 import InputTest from "./views/inputTest/inputTest.vue";
-import TodoList from "./components/todoList/todoList.vue";
+import TodoList from "./views/todoList/todoList.vue";
 
 Vue.use(VueRouter);
 

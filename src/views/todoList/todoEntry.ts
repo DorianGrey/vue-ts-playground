@@ -5,8 +5,8 @@ import { Prop } from "vue-property-decorator";
 import { createNewTodo } from "./state/creators";
 import { TodoModel } from "./state/interfaces";
 import { TODO_MODULE_ACTIONS } from "./state/todo.state";
-import { I18N_MODULE_ACTIONS } from "@/i18n/state/i18n.state";
-import { LanguagePack } from "@/i18n/languagePack";
+import { I18N_MODULE_ACTIONS } from "../../i18n/state/i18n.state";
+import { LanguagePack } from "../../i18n/languagePack";
 
 @Component
 export default class TodoEntry extends Vue {
