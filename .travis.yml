@@ -21,4 +21,5 @@ install: npm install yarn -g && yarn install
 script:
   - yarn build
   - yarn test:unit:ci
+  - yarn test:e2e:headless
 

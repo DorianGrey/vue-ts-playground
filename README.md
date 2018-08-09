@@ -42,6 +42,11 @@ yarn test:unit:ci
 yarn test:e2e
 ```
 
+### Run your end-to-end tests in headless mode (using cypress)
+```
+yarn test:e2e:headless
+```
+
 ### Serve the production build
 ```
 yarn serve:prod
