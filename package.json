@@ -60,6 +60,7 @@
     "stylus-loader": "^3.0.2",
     "ts-jest": "^23.0.0",
     "tslint-config-prettier": "^1.14.0",
+    "tslint-sonarts": "^1.7.0",
     "typescript": "^3.0.0",
     "vue-template-compiler": "^2.5.16"
   },

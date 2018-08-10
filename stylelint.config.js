@@ -17,7 +17,6 @@ module.exports = {
     "scss/at-rule-no-unknown": true,
 
     // Personal style decision about how hex-colors should be formatted.
-    "color-hex-case": "upper",
     "color-hex-length": "long",
 
     /*

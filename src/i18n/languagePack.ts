@@ -10,16 +10,19 @@ export interface LanguagePack {
 }
 
 export function loadLanguagePack(lang: string): Promise<LanguagePack> {
+  /* tslint:disable no-small-switch */
+  // Small switch is intended, since other languages might be added.
   switch (lang) {
     case "de":
       return import(/* webpackChunkName: "lang-de" */ "./lang-packs/de/index").then(
-        mod => mod.default as LanguagePack
+        mod => mod.default
       );
     default:
       return import(/* webpackChunkName: "lang-en" */ "./lang-packs/en/index").then(
-        mod => mod.default as LanguagePack
+        mod => mod.default
       );
   }
+  /* tslint:enable no-small-switch */
 }
 
 export function loadBrowserLanguagePack(): Promise<LanguagePack> {
