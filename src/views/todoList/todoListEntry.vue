@@ -130,7 +130,7 @@
   </v-flex>
 </template>
 
-<script lang="ts" src="./todoEntry.ts">
+<script lang="ts" src="./todoListEntry.ts">
 </script>
 
 <style lang="scss">

@@ -15,20 +15,20 @@
 
       <v-tab-item id="active">
         <v-layout column id="todo-list">
-          <todo-entry v-for="todo in todoList" :key="todo.id" :todo="todo" />
+          <todo-list-entry v-for="todo in todoList" :key="todo.id" :todo="todo" />
 
           <button class="button is-light new-todo" @click="showNewTodoBlock" v-if="!newTodoEditable">
             <v-icon>add_circle_outline</v-icon>
           </button>
 
-          <todo-entry :initialEditable="true" :afterSubmit="hideNewTodoBlock" :afterCancel="hideNewTodoBlock"
+          <todo-list-entry :initialEditable="true" :afterSubmit="hideNewTodoBlock" :afterCancel="hideNewTodoBlock"
                       v-if="newTodoEditable" />
         </v-layout>
 
       </v-tab-item>
 
       <v-tab-item id="expired">
-        <todo-entry v-for="todo in expiredTodos" :key="todo.id" :todo="todo" />
+        <todo-list-entry v-for="todo in expiredTodos" :key="todo.id" :todo="todo" />
       </v-tab-item>
     </v-tabs>
   </div>

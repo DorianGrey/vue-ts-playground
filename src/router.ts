@@ -3,7 +3,6 @@ import VueRouter, { RouteConfig } from "vue-router";
 
 import NotFound from "./views/404/404.vue";
 import InputTest from "./views/inputTest/inputTest.vue";
-import TodoList from "./views/todoList/todoList.vue";
 
 Vue.use(VueRouter);
 
@@ -16,10 +15,11 @@ const routes: RouteConfig[] = [
   {
     path: "/input-test",
     component: InputTest
-  } as RouteConfig,
+  },
   {
     path: "/todo-list/:id",
-    component: TodoList,
+    component: () =>
+      import(/* webpackChunkName: "todoList" */ "./views/todoList/todoList.vue"),
     props: true // The value of :id is set as a prop on the component itself.
   },
   {
@@ -29,7 +29,7 @@ const routes: RouteConfig[] = [
     // import(/* webpackChunkName: "my-chunk-name" */ "module")
     component: () =>
       import(/* webpackChunkName: "gallery" */ "./views/gallery/gallery.vue")
-  } as RouteConfig,
+  },
   {
     path: "*",
     component: NotFound

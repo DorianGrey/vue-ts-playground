@@ -9,7 +9,7 @@ import { I18N_MODULE_ACTIONS } from "../../i18n/state/i18n.state";
 import { LanguagePack } from "../../i18n/languagePack";
 
 @Component
-export default class TodoEntry extends Vue {
+export default class TodoListEntry extends Vue {
   @Prop({ type: Object, required: false })
   todo: TodoModel;
 

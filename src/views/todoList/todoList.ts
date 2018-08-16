@@ -4,13 +4,13 @@ import { Prop } from "vue-property-decorator";
 
 import { TodoModel } from "./state/interfaces";
 import { TODO_MODULE_NAME } from "./state/todo.state";
-import TodoEntry from "./todoEntry.vue";
+import TodoListEntry from "./todoListEntry.vue";
 
 type ActiveTab = "active" | "expired";
 
 @Component({
   components: {
-    todoEntry: TodoEntry
+    todoListEntry: TodoListEntry
   }
 })
 export default class TodoList extends Vue {
