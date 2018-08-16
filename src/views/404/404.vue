@@ -13,14 +13,14 @@
 </template>
 
 <style lang="scss">
-  #not-found-page {
-    h2 {
-      text-align: center;
-    }
-
-    .italic {
-      font-style: italic;
-      margin-top: 2rem;
-    }
+#not-found-page {
+  h2 {
+    text-align: center;
   }
+
+  .italic {
+    font-style: italic;
+    margin-top: 2rem;
+  }
+}
 </style>
