@@ -15,7 +15,7 @@ declare module "vuetify/es5/util/colors" {
     accent3: string;
     accent4: string;
   }
-  
+
   interface ExportedColors {
     red: ColorDefinitionEntry;
     pink: ColorDefinitionEntry;
@@ -42,4 +42,9 @@ declare module "vuetify/es5/util/colors" {
   const theExport: ExportedColors;
 
   export default theExport;
+}
+
+declare module "vuetify/src/locale/*.js" {
+  const messages: { [key: string]: string };
+  export default messages;
 }

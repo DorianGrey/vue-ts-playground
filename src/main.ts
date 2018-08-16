@@ -14,7 +14,7 @@ import * as WebFontLoader from "webfontloader";
 
 // Vuetify stuff
 import Vuetify from "vuetify/es5/components/Vuetify";
-import vuetifyConfig from "./vuetify";
+import createVuetifyConfig from "./vuetify";
 
 // More "fancyness" stuff.
 import VueCarousel3d from "vue-carousel-3d";
@@ -30,13 +30,14 @@ WebFontLoader.load({
   }
 });
 
-Vue.use(Vuetify, vuetifyConfig);
 Vue.use(VeeValidate);
 Vue.use(VueCarousel3d);
 
 function main(languagePack: LanguagePack) {
   const store = createStore(languagePack);
   const i18n = createI18nDefinition(languagePack);
+
+  Vue.use(Vuetify, createVuetifyConfig(i18n));
 
   return new Vue({
     el: "#app",

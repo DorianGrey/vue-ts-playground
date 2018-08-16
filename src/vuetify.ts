@@ -20,38 +20,44 @@ import VTimePicker from "vuetify/es5/components/VTimePicker";
 import VToolbar from "vuetify/es5/components/VToolbar";
 import VSnackbar from "vuetify/es5/components/VSnackbar";
 import colors from "vuetify/es5/util/colors";
+import VueI18n from "vue-i18n";
 
-export default {
-  components: {
-    VApp,
-    VBtn,
-    VCard,
-    VChip,
-    VDatePicker,
-    VDialog,
-    VFooter,
-    VForm,
-    VGrid,
-    VIcon,
-    VList,
-    VMenu,
-    VNavigationDrawer,
-    VSnackbar,
-    VTabs,
-    VTextarea,
-    VTextField,
-    VTimePicker,
-    VToolbar
-  },
-  directives,
-  transitions,
-  theme: {
-    primary: colors.green.accent4,
-    secondary: colors.red.lighten2,
-    accent: colors.purple.base,
-    error: colors.red.base,
-    warning: colors.yellow.base,
-    info: colors.blue.base,
-    success: colors.green.base
-  }
-};
+export default function createVuetifyConfig(i18n: VueI18n) {
+  return {
+    lang: {
+      t: (key: string, ...params: any[]) => i18n.t(key, params)
+    },
+    components: {
+      VApp,
+      VBtn,
+      VCard,
+      VChip,
+      VDatePicker,
+      VDialog,
+      VFooter,
+      VForm,
+      VGrid,
+      VIcon,
+      VList,
+      VMenu,
+      VNavigationDrawer,
+      VSnackbar,
+      VTabs,
+      VTextarea,
+      VTextField,
+      VTimePicker,
+      VToolbar
+    },
+    directives,
+    transitions,
+    theme: {
+      primary: colors.green.accent4,
+      secondary: colors.red.lighten2,
+      accent: colors.purple.base,
+      error: colors.red.base,
+      warning: colors.yellow.base,
+      info: colors.blue.base,
+      success: colors.green.base
+    }
+  };
+}
