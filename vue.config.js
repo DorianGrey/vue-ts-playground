@@ -11,7 +11,13 @@ module.exports = {
     themeColor: "#F5F5F5",
     mobileWebAppCapable: "yes",
     appleMobileWebAppCapable: "no",
-    appleMobileWebAppStatusBarStyle: "black-translucent"
+    appleMobileWebAppStatusBarStyle: "black-translucent",
+    workboxOptions: {
+      // We're forcing this - otherwise, request the user to reload the page
+      // would not behave as intended.
+      skipWaiting: true,
+      clientsClaim: true
+    }
   },
   chainWebpack: config => {
     config
