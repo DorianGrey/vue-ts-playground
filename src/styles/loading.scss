@@ -5,6 +5,10 @@ Currently, this file gets compiled and added to the index.template.html outside 
 since we want it to be loaded up-front, and not be part of the "regular" stuff.
  */
 
+body {
+  background-color: $color-bg-page;
+}
+
 #loader {
   position: absolute;
   top: 50%;
@@ -13,7 +17,7 @@ since we want it to be loaded up-front, and not be part of the "regular" stuff.
   margin-left: -2.7em;
   width: 5.4em;
   height: 5.4em;
-  background-color: $color-blacksmoke;
+  background-color: $color-whitesmoke;
 }
 
 #hill {
@@ -23,7 +27,7 @@ since we want it to be loaded up-front, and not be part of the "regular" stuff.
   top: 1.7em;
   left: 1.7em;
   background-color: transparent;
-  border-left: 0.25em solid $color-whitesmoke;
+  border-left: 0.25em solid $color-bg-page;
   transform: rotate(45deg);
 }
 
@@ -33,7 +37,7 @@ since we want it to be loaded up-front, and not be part of the "regular" stuff.
   width: 7.1em;
   height: 7.1em;
   left: 0;
-  background-color: $color-blacksmoke;
+  background-color: $color-whitesmoke;
 }
 
 #box {
@@ -43,7 +47,7 @@ since we want it to be loaded up-front, and not be part of the "regular" stuff.
   width: 1em;
   height: 1em;
   background-color: transparent;
-  border: 0.25em solid $color-whitesmoke;
+  border: 0.25em solid $color-bg-page;
   border-radius: 15%;
   transform: translate(0, -1em) rotate(-45deg);
   animation: push 2.5s cubic-bezier(0.79, 0, 0.47, 0.97) infinite;

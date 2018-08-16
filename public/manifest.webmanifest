@@ -3,33 +3,33 @@
   "name": "Vue Demo App Sample",
   "icons": [
     {
-      "src": "favicon48x48.png",
+      "src": "img/icons/favicon48x48.png",
       "sizes": "48x48",
       "type": "image/png"
     },
     {
-      "src": "favicon64x64.png",
+      "src": "img/icons/favicon64x64.png",
       "sizes": "64x64",
       "type": "image/png"
     },
     {
-      "src": "favicon96x96.png",
+      "src": "img/icons/favicon96x96.png",
       "sizes": "96x96",
       "type": "image/png"
     },
     {
-      "src": "favicon.png",
+      "src": "img/icons/favicon.png",
       "sizes": "192x192",
       "type": "image/png"
     },
     {
-      "src": "favicon.png",
+      "src": "img/icons/favicon.png",
       "sizes": "512x512",
       "type": "image/png"
     }
   ],
-  "start_url": "/index.html",
+  "start_url": "/",
   "display": "standalone",
-  "theme_color": "#F5F5F5",
-  "background_color": "#24292E"
+  "theme_color": "#303030",
+  "background_color": "#303030"
 }

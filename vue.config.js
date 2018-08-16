@@ -8,7 +8,7 @@ module.exports = {
   pwa: {
     manifestPath: "manifest.webmanifest",
     name: "Demo App",
-    themeColor: "#F5F5F5",
+    themeColor: "#303030",
     mobileWebAppCapable: "yes",
     appleMobileWebAppCapable: "no",
     appleMobileWebAppStatusBarStyle: "black-translucent",

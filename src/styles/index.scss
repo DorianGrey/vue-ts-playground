@@ -36,6 +36,10 @@ html {
   -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
 }
 
+body {
+  min-height: 100%;
+}
+
 body, .application {
   font-family: $font-family-sans-serif;
 }
