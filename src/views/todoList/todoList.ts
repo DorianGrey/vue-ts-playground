@@ -3,7 +3,7 @@ import Component from "vue-class-component";
 import { Prop } from "vue-property-decorator";
 
 import { TodoModel } from "./state/interfaces";
-import { TODO_MODULE_NAME } from "./state/todo.state";
+import { TODO_MODULE_GETTERS, TodoSpace } from "./state/todo.state";
 import TodoListEntry from "./todoListEntry.vue";
 
 type ActiveTab = "active" | "expired";
@@ -20,6 +20,12 @@ export default class TodoList extends Vue {
   })
   id: string;
 
+  @TodoSpace.Getter(TODO_MODULE_GETTERS.allTodos)
+  readonly todoList: TodoModel[];
+
+  @TodoSpace.Getter(TODO_MODULE_GETTERS.expiredTodos)
+  readonly expiredTodos: TodoModel[];
+
   newTodoEditable = false;
 
   activeTab: ActiveTab = "active";
@@ -34,13 +40,5 @@ export default class TodoList extends Vue {
 
   setActiveTab(activeTab: ActiveTab): void {
     this.activeTab = activeTab;
-  }
-
-  get todoList(): TodoModel[] {
-    return this.$store.getters[`${TODO_MODULE_NAME}/allTodos`];
-  }
-
-  get expiredTodos(): TodoModel[] {
-    return this.$store.getters[`${TODO_MODULE_NAME}/expiredTodos`];
   }
 }

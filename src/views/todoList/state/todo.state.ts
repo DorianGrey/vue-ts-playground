@@ -1,4 +1,5 @@
 import { Module, Plugin } from "vuex";
+import { namespace } from "vuex-class";
 
 import { TodoModel, TodoState } from "./interfaces";
 
@@ -24,12 +25,19 @@ export const initialTodoState: TodoModel[] = [
 ];
 
 export const TODO_MODULE_NAME = "todos";
-
-export const TODO_MODULE_ACTIONS = {
-  ADD: `${TODO_MODULE_NAME}/ADD`,
-  UPDATE: `${TODO_MODULE_NAME}/UPDATE`,
-  DELETE: `${TODO_MODULE_NAME}/DELETE`
+// TODO: See if we can simplify this via constructing it.
+export const TODO_MODULE_MUTATIONS = {
+  ADD: "ADD",
+  UPDATE: "UPDATE",
+  DELETE: "DELETE"
 };
+
+export const TODO_MODULE_GETTERS = {
+  allTodos: "allTodos",
+  expiredTodos: "expiredTodos"
+};
+
+export const TodoSpace = namespace(TODO_MODULE_NAME);
 
 export class TodoStateModule implements Module<TodoState, any> {
   namespaced: boolean = true;

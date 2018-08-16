@@ -5,6 +5,11 @@ export function GET(state: I18nState) {
   return state.languagePack;
 }
 
+export function LANG(state: I18nState) {
+  return state.languagePack.language;
+}
+
 export default {
-  GET
+  GET,
+  LANG
 } as GetterTree<I18nState, any>;

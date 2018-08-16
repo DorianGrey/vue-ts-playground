@@ -4,12 +4,24 @@ import { Prop } from "vue-property-decorator";
 
 import { createNewTodo } from "./state/creators";
 import { TodoModel } from "./state/interfaces";
-import { TODO_MODULE_ACTIONS } from "./state/todo.state";
-import { I18N_MODULE_ACTIONS } from "../../i18n/state/i18n.state";
-import { LanguagePack } from "../../i18n/languagePack";
+import { TODO_MODULE_MUTATIONS, TodoSpace } from "./state/todo.state";
+import { LanguagePack } from "@/i18n/languagePack";
+import { I18N_MODULE_GETTERS, I18nSpace } from "@/i18n/state/i18n.state";
 
 @Component
 export default class TodoListEntry extends Vue {
+  @I18nSpace.Getter(I18N_MODULE_GETTERS.GET)
+  readonly languagePack: LanguagePack;
+
+  @TodoSpace.Mutation(TODO_MODULE_MUTATIONS.ADD)
+  readonly addTodo: (target: TodoModel) => void;
+
+  @TodoSpace.Mutation(TODO_MODULE_MUTATIONS.UPDATE)
+  readonly updateTodo: (target: TodoModel) => void;
+
+  @TodoSpace.Mutation(TODO_MODULE_MUTATIONS.DELETE)
+  readonly deleteTodo: (target: number) => void;
+
   @Prop({ type: Object, required: false })
   todo: TodoModel;
 
@@ -63,10 +75,6 @@ export default class TodoListEntry extends Vue {
     }
   }
 
-  get languagePack(): LanguagePack {
-    return this.$store.getters[I18N_MODULE_ACTIONS.GET];
-  }
-
   setEditable(newValue: boolean): void {
     this.editable = newValue;
     // We need a copy of the current model to properly deal with edit/cancel steps.
@@ -85,10 +93,9 @@ export default class TodoListEntry extends Vue {
     // If `this.todo` already is a `todo` object,
     // we need to send an UPDATE instead of an ADD.
     if (this.targetTodo.id) {
-      this.$store.commit(TODO_MODULE_ACTIONS.UPDATE, this.targetTodo);
+      this.updateTodo(this.targetTodo);
     } else {
-      this.$store.commit(
-        TODO_MODULE_ACTIONS.ADD,
+      this.addTodo(
         createNewTodo(
           this.targetTodo.headline,
           this.targetTodo.description,
@@ -104,7 +111,7 @@ export default class TodoListEntry extends Vue {
 
   onDelete(): void {
     if (this.targetTodo.id) {
-      this.$store.commit(TODO_MODULE_ACTIONS.DELETE, this.targetTodo.id);
+      this.deleteTodo(this.targetTodo.id);
     }
   }
 
