@@ -32,10 +32,12 @@ module.exports = {
   testURL: "http://localhost/",
   transform: {
     "^.+\\.vue$": "vue-jest",
+    "^.+\\.js$": "babel-jest",
     ".+\\.(css|styl|less|sass|scss|png|jpg|ttf|woff|woff2)$": "jest-transform-stub",
     "^.+\\.tsx?$": "ts-jest"
   },
   transformIgnorePatterns: [
-    "[\\\/]node_modules[\\\/].+\\.(js|ts)$"
+    // "[\\\/]node_modules[\\\/](?!(vuetify|lodash-es))"
+    "[\\\/]node_modules[\\\/](?!(vuetify|lodash-es)).+\\.(js|ts)$"
   ]
 };
