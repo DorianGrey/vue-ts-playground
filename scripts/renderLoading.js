@@ -7,7 +7,7 @@ module.exports = function() {
   "use strict";
 
   return sass.renderSync({
-    file: path.resolve(paths.appSrc, "styles", "loading.scss"),
+    file: path.resolve(paths.appStyles, "loading.scss"),
     outputStyle: "compressed"
   });
 };

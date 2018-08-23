@@ -3,7 +3,7 @@ const glob           = require("globby");
 const paths          = require("./config/paths");
 
 module.exports = {
-  outputDir: "build",
+  outputDir: paths.appBuild,
   lintOnSave: false,
   pwa: {
     manifestPath: "manifest.webmanifest",
