@@ -6,5 +6,6 @@
   "editor.lineHeight": 18,
   "editor.fontFamily": "'Source Code Pro','Source Code Variable'",
   "editor.tabSize": 2,
-  "editor.formatOnSave": false
+  "editor.formatOnSave": false,
+  "jest.pathToConfig": "jest.config.js"
 }

@@ -2,6 +2,7 @@
   "recommendations": [
     "eg2.tslint",
     "shinnn.stylelint",
-    "octref.vetur"
+    "octref.vetur",
+    "orta.vscode-jest"
   ]
 }

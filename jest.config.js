@@ -39,5 +39,9 @@ module.exports = {
   transformIgnorePatterns: [
     // "[\\\/]node_modules[\\\/](?!(vuetify|lodash-es))"
     "[\\\/]node_modules[\\\/](?!(vuetify|lodash-es)).+\\.(js|ts)$"
+  ],
+  watchPlugins: [
+    "jest-watch-typeahead/filename",
+    "jest-watch-typeahead/testname"
   ]
 };
