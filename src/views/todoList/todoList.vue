@@ -15,20 +15,27 @@
 
       <v-tab-item id="active">
         <v-layout column id="todo-list">
-          <todo-list-entry v-for="todo in todoList" :key="todo.id" :todo="todo" />
+
+          <div v-for="todo in todoList" :key="todo.id">
+            <todo-list-entry-display v-if="!todo.editable" :todo="todo"/>
+            <todo-list-entry-editable v-if="todo.editable" :todo="todo"/>
+          </div>
 
           <button class="button is-light new-todo" @click="showNewTodoBlock" v-if="!newTodoEditable">
             <v-icon>add_circle_outline</v-icon>
           </button>
 
-          <todo-list-entry :initialEditable="true" :afterSubmit="hideNewTodoBlock" :afterCancel="hideNewTodoBlock"
+          <todo-list-entry-editable :afterSubmit="hideNewTodoBlock" :afterCancel="hideNewTodoBlock"
                       v-if="newTodoEditable" />
         </v-layout>
 
       </v-tab-item>
 
       <v-tab-item id="expired">
-        <todo-list-entry v-for="todo in expiredTodos" :key="todo.id" :todo="todo" />
+        <div v-for="todo in expiredTodos" :key="todo.id">
+          <todo-list-entry-display :todo="todo" />
+        </div>
+
       </v-tab-item>
     </v-tabs>
   </div>
@@ -37,7 +44,7 @@
 <script lang="ts" src="./todoList.ts">
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
 @import "../../../src/styles/typography";
 
 #todo-list {

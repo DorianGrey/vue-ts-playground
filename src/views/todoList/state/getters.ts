@@ -1,6 +1,6 @@
 import { GetterTree } from "vuex";
 
-import { TodoState } from "./interfaces";
+import { TodoState } from "./types";
 
 export function allTodos(state: TodoState) {
   return state.todoList;

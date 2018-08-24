@@ -2,15 +2,17 @@ import Vue from "vue";
 import Component from "vue-class-component";
 import { Prop } from "vue-property-decorator";
 
-import { TodoModel } from "./state/interfaces";
+import { TodoModel } from "./state/types";
 import { TODO_MODULE_GETTERS, TodoSpace } from "./state/todo.state";
-import TodoListEntry from "./todoListEntry.vue";
+import TodoListEntryDisplay from "./todoListEntryDisplay.vue";
+import TodoListEntryEditable from "./todoListEntryEditable.vue";
 
 type ActiveTab = "active" | "expired";
 
 @Component({
   components: {
-    todoListEntry: TodoListEntry
+    todoListEntryDisplay: TodoListEntryDisplay,
+    todoListEntryEditable: TodoListEntryEditable
   }
 })
 export default class TodoList extends Vue {

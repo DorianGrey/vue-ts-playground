@@ -1,27 +1,24 @@
 import { Module, Plugin } from "vuex";
 import { namespace } from "vuex-class";
 
-import { TodoModel, TodoState } from "./interfaces";
+import { TodoModel, TodoState } from "./types";
 
 import Getters from "./getters";
 import Mutations from "./mutations";
 
 export const initialTodoState: TodoModel[] = [
-  {
-    id: 1,
-    headline: "Test todo",
-    description: "A lot of stuff to be done!",
-    deadline: new Date(Date.now() + 60 * 60 * 1000),
-    created: new Date()
-  },
-  {
-    id: 2,
-    headline: "Test todo #2",
-    description:
-      "Picanha porchetta ribeye cow, spare ribs t-bone short loin. Leberkas pastrami meatloaf boudin, bresaola salami capicola swine filet mignon chicken pork loin shankle ball tip jowl. Bresaola kielbasa sausage ribeye salami. Turkey beef ribs corned beef andouille, pork belly boudin jowl kielbasa cupim short loin shank.",
-    deadline: new Date(Date.now() + 60 * 60 * 1000 * 2),
-    created: new Date()
-  }
+  new TodoModel(
+    "Test todo",
+    "A lot of stuff to be done!",
+    new Date(Date.now() + 60 * 60 * 1000),
+    new Date()
+  ),
+  new TodoModel(
+    "Test todo #2",
+    "Picanha porchetta ribeye cow, spare ribs t-bone short loin. Leberkas pastrami meatloaf boudin, bresaola salami capicola swine filet mignon chicken pork loin shankle ball tip jowl. Bresaola kielbasa sausage ribeye salami. Turkey beef ribs corned beef andouille, pork belly boudin jowl kielbasa cupim short loin shank.",
+    new Date(Date.now() + 60 * 60 * 1000 * 2),
+    new Date()
+  )
 ];
 
 export const TODO_MODULE_NAME = "todos";
@@ -29,7 +26,9 @@ export const TODO_MODULE_NAME = "todos";
 export const TODO_MODULE_MUTATIONS = {
   ADD: "ADD",
   UPDATE: "UPDATE",
-  DELETE: "DELETE"
+  DELETE: "DELETE",
+  SET_EDITABLE: "SET_EDITABLE",
+  SET_READONLY: "SET_READONLY"
 };
 
 export const TODO_MODULE_GETTERS = {

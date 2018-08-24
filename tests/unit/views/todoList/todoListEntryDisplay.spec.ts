@@ -8,9 +8,10 @@ import createI18nDefinition from "@/i18n";
 import languagePack from "@/i18n/lang-packs/en/index";
 import createVuetifyConfig from "@/vuetify";
 import createStore from "@/store";
-import TodoListEntry from "@/views/todoList/todoListEntry";
+import TodoListEntryDisplay from "@/views/todoList/todoListEntryDisplay.vue";
 
 import { mount } from "@vue/test-utils";
+import { TodoModel } from "@/views/todoList/state/types";
 
 describe("todoListEntry", () => {
   let i18n: VueI18n;
@@ -26,16 +27,11 @@ describe("todoListEntry", () => {
   it("should render correctly if a todo was provided", () => {
     const created = new Date();
     const deadline = new Date();
-    const wrapper = mount(TodoListEntry, {
+    const wrapper = mount(TodoListEntryDisplay, {
       i18n,
       store,
       propsData: {
-        todo: {
-          headline: "TODO",
-          description: "A todo text",
-          created,
-          deadline
-        }
+        todo: new TodoModel("TODO", "A todo text", deadline, created)
       }
     });
 

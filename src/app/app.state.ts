@@ -1,3 +1,3 @@
-import { TodoState } from "../views/todoList/state/interfaces";
+import { TodoState } from "../views/todoList/state/types";
 
 export type AppState = TodoState;
