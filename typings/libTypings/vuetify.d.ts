@@ -43,8 +43,3 @@ declare module "vuetify/es5/util/colors" {
 
   export default theExport;
 }
-
-declare module "vuetify/src/locale/*.js" {
-  const messages: { [key: string]: string };
-  export default messages;
-}

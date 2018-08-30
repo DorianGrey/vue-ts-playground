@@ -5,7 +5,7 @@
   </select>
   -->
 
-  <v-menu bottom left>
+  <v-menu bottom left dark>
     <v-btn color="secondary" icon slot="activator" dark>
       <v-icon>language</v-icon>
     </v-btn>

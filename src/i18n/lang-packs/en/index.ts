@@ -1,7 +1,7 @@
 import { LanguagePack } from "../../languagePack";
 import dateTimeFormat from "./dateTimeFormat";
 import messages from "./messages.json";
-import vuetifyMessages from "vuetify/src/locale/en.js";
+import vuetifyMessages from "vuetify/src/locale/en";
 
 export default {
   language: "en",
