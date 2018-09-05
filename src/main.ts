@@ -6,6 +6,7 @@ import "./styles/index.scss";
 
 import VeeValidate from "vee-validate";
 import Vue, { CreateElement } from "vue";
+import VueRx from "vue-rx";
 
 import createI18nDefinition from "./i18n";
 import createStore from "./store";
@@ -30,6 +31,7 @@ WebFontLoader.load({
   }
 });
 
+Vue.use(VueRx);
 Vue.use(VeeValidate);
 Vue.use(VueCarousel3d);
 

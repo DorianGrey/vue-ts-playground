@@ -2,11 +2,13 @@ import Vue from "vue";
 import InputTest from "@/views/inputTest/inputTest.vue";
 import VueI18n from "vue-i18n";
 import Vuetify from "vuetify";
+import VueRx from "vue-rx";
 
 import { mount } from "@vue/test-utils";
 
 describe("inputTest", () => {
   beforeAll(() => {
+    Vue.use(VueRx);
     Vue.use(VueI18n);
     Vue.use(Vuetify);
   });
@@ -33,7 +35,7 @@ describe("inputTest", () => {
     expect((wrapper.find("input").element as HTMLInputElement).value).toEqual(
       "bass"
     );
-    expect(wrapper.find("div.output").text()).toMatch(/bass$/);
+    expect(wrapper.find("div.output").text()).toMatch(/ssab$/);
     expect(wrapper.findAll("div.output")).toHaveLength(1);
   });
 });

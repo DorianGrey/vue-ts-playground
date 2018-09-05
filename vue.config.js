@@ -37,6 +37,15 @@ module.exports = {
           .optimization
           .runtimeChunk({ name: "runtime" });
 
+          // Configure path alias for rxjs.
+          const rxPaths = require("rxjs/_esm2015/path-mapping");
+          const rxResolvedPaths = rxPaths();
+          for (const p in rxResolvedPaths) {
+            if (rxResolvedPaths.hasOwnProperty(p)) {
+              config.resolve.alias.set(p, rxResolvedPaths[p]);
+            }
+          }
+
         // Configure style purging.
         const purgeOptions = {
           paths: glob.sync([
