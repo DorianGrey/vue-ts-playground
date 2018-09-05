@@ -5,7 +5,6 @@
       :label="$t('input-test.help')"
       v-model="inputText"
       dark
-      v-stream:keydown="plus$"
     />
     <div v-t="{path: 'input-test.label', args:{text: invertedInputText}}" class="output"></div>
   </div>

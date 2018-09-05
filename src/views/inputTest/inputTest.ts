@@ -1,28 +1,23 @@
 import { Component, Vue } from "vue-property-decorator";
 import { pluck } from "rxjs/operators";
-import { Subject } from "rxjs";
 
-@Component({
-  domStreams: ["plus$"]
-})
+@Component
 export default class InputTest extends Vue {
   inputText: string = "bass";
-  invertedInputText: string = this.invertText(this.inputText);
-  plus$ = new Subject<Event>();
+  invertedInputText: string = this.reverseText(this.inputText);
 
   mounted() {
-    const piped = this.plus$.pipe(
-      pluck<Event, string>("event", "msg", "target", "value")
-    );
-
+    const piped = this.$watchAsObservable("inputText", {
+      immediate: true
+    }).pipe(pluck<{ newValue: string }, string>("newValue"));
     // Helper function that allows automatic lifecycle handling regarding subscribe/unsubscribe.
     this.$subscribeTo(
       piped,
-      s => (this.invertedInputText = this.invertText(s))
+      s => (this.invertedInputText = this.reverseText(s))
     );
   }
 
-  private invertText(s: string): string {
+  private reverseText(s: string): string {
     return s
       .split("")
       .reverse()
