@@ -7,7 +7,9 @@ module.exports = {
     "!src/**/*.d.ts"
   ],
   coverageReporters: [
+    "json",
     "lcov",
+    "cobertura",
     "text"
   ],
   coverageDirectory: "<rootDir>/test-results/coverage",
@@ -22,7 +24,8 @@ module.exports = {
   moduleNameMapper: {
     "^@/(.*)$": "<rootDir>/src/$1"
   },
-  "setupTestFrameworkScriptFile": "<rootDir>/config/jest/testSetup.ts",
+  reporters: ["default", "jest-junit"],
+  setupTestFrameworkScriptFile: "<rootDir>/config/jest/testSetup.ts",
   snapshotSerializers: [
     "jest-serializer-vue"
   ],
