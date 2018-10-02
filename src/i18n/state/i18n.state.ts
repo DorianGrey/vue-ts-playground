@@ -5,6 +5,7 @@ import { LanguagePack } from "../languagePack";
 import { I18nState } from "./interfaces";
 import Getters from "./getters";
 import Mutations from "./mutations";
+import Actions from "./actions";
 
 export const I18N_MODULE_NAME = "i18n";
 // TODO: See if we can simplify this via constructing it.
@@ -18,6 +19,10 @@ export const I18N_MODULE_MUTATIONS = {
   SET: "SET"
 };
 
+export const I18N_MODULE_ACTIONS = {
+  LOAD: "LOAD"
+};
+
 export const I18nSpace = namespace(I18N_MODULE_NAME);
 
 export class I18nStateModule implements Module<I18nState, any> {
@@ -25,6 +30,7 @@ export class I18nStateModule implements Module<I18nState, any> {
 
   mutations = Mutations;
   getters = Getters;
+  actions = Actions;
 
   state: I18nState;
   plugins: Array<Plugin<I18nState>> = [];
