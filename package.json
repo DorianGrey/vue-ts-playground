@@ -65,7 +65,7 @@
     "stylelint-scss": "^3.3.1",
     "stylus": "^0.54.5",
     "stylus-loader": "^3.0.2",
-    "ts-jest": "^23.1.4",
+    "ts-jest": "^23.10.4",
     "tslint-config-prettier": "^1.15.0",
     "tslint-sonarts": "^1.8.0",
     "typescript": "^3.1.2",

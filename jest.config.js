@@ -40,8 +40,8 @@ module.exports = {
     "^.+\\.tsx?$": "ts-jest"
   },
   transformIgnorePatterns: [
-    // "[\\\/]node_modules[\\\/](?!(vuetify|lodash-es))"
-    "[\\\/]node_modules[\\\/](?!(vuetify|lodash-es)).+\\.(js|ts)$"
+    "[\\\/]node_modules[\\\/](?!(vuetify|lodash-es))"
+    // "[\\\/]node_modules[\\\/](?!(vuetify|lodash-es)).+\\.(js|ts)$"
   ],
   watchPlugins: [
     "jest-watch-typeahead/filename",
