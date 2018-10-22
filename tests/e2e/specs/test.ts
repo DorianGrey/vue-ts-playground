@@ -1,4 +1,7 @@
 // https://docs.cypress.io/api/introduction/api.html
+/// <reference types="cypress"/>
+
+/// <reference types="cypress"/>
 
 describe("My First Test", () => {
   it("Visits the app root url", () => {
