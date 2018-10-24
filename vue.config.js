@@ -84,32 +84,6 @@ module.exports = {
             return args;
           })
         ;
-
-        // Disable fork-ts-checker and switch ts-loader to also perform type checking.
-        // Some optimizations are not applied otherwise, thus...
-        // Unluckily, this means that we cannot use thread-loader for this ...
-        config
-          .plugins
-          .delete("fork-ts-checker");
-
-        config
-          .module
-          .rule("ts")
-          .uses
-          .delete("thread-loader");
-
-        config
-          .module
-          .rule("ts")
-          .use("ts-loader")
-          .options({
-            transpileOnly: false,
-            appendTsSuffixTo: [
-              "\\.vue$"
-            ],
-            happyPackMode: false,
-            allowTsInNodeModules: true
-          });
       });
   }
 };

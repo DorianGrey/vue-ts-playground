@@ -83,12 +83,12 @@
     }
   },
   "lint-staged": {
-    "*.ts": [
+    "src/**/*.ts": [
       "vue-cli-service lint --fix",
       "prettier --write",
       "git add"
     ],
-    "*.vue": [
+    "src/**/*.vue": [
       "vue-cli-service lint --fix",
       "stylelint",
       "prettier --write",
