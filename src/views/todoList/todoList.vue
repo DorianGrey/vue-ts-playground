@@ -1,48 +1,57 @@
 <template>
   <div id="todo-list">
-    <v-toolbar>
-      <v-toolbar-title v-t="'todo-list.headline'" />
-    </v-toolbar>
+    <v-toolbar> <v-toolbar-title v-t="'todo-list.headline'" /> </v-toolbar>
     <v-tabs v-model="activeTab" centered grow>
-      <v-tab @click="setActiveTab('active')" class="grey darken-1" href="#active">
+      <v-tab
+        @click="setActiveTab('active');"
+        class="grey darken-1"
+        href="#active"
+      >
         <span v-t="'todo-list.active'"></span>
       </v-tab>
-      <v-tab @click="setActiveTab('expired')" class="grey darken-1" href="#expired">
+      <v-tab
+        @click="setActiveTab('expired');"
+        class="grey darken-1"
+        href="#expired"
+      >
         <span v-t="'todo-list.expired'"></span>
       </v-tab>
 
       <v-tabs-slider color="cyan"></v-tabs-slider>
 
-      <v-tab-item id="active">
+      <v-tab-item value="active">
         <v-layout column id="todo-list">
-
           <div v-for="todo in todoList" :key="todo.id">
-            <todo-list-entry-display v-if="!todo.editable" :todo="todo"/>
-            <todo-list-entry-editable v-if="todo.editable" :todo="todo"/>
+            <todo-list-entry-display v-if="!todo.editable" :todo="todo" />
+            <todo-list-entry-editable v-if="todo.editable" :todo="todo" />
           </div>
 
-          <button class="button is-light new-todo" @click="showNewTodoBlock" v-if="!newTodoEditable">
+          <button
+            class="button is-light new-todo"
+            @click="showNewTodoBlock"
+            v-if="!newTodoEditable"
+          >
             <v-icon>add_circle_outline</v-icon>
           </button>
 
-          <todo-list-entry-editable :afterSubmit="hideNewTodoBlock" :afterCancel="hideNewTodoBlock"
-                      v-if="newTodoEditable" />
+          <todo-list-entry-editable
+            :afterSubmit="hideNewTodoBlock"
+            :afterCancel="hideNewTodoBlock"
+            v-if="newTodoEditable"
+          />
         </v-layout>
-
       </v-tab-item>
 
-      <v-tab-item id="expired">
+      <v-tab-item value="expired">
         <div v-for="todo in expiredTodos" :key="todo.id">
           <todo-list-entry-display :todo="todo" />
         </div>
-
       </v-tab-item>
     </v-tabs>
   </div>
 </template>
 
-<script lang="ts" src="./todoList.ts">
-</script>
+<script lang="ts" src="./todoList.ts"></script>
 
 <style lang="scss" scoped>
 @import "../../../src/styles/typography";
