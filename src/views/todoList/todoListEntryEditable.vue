@@ -9,7 +9,8 @@
             v-model="pendingTodo.headline"
             v-validate.initial="'required'"
             data-vv-name="title"
-            :error-messages="errors.collect('title')">
+            :error-messages="errors.collect('title')"
+          >
           </v-text-field>
           <!-- Description -->
           <v-textarea
@@ -17,7 +18,8 @@
             v-model="pendingTodo.description"
             v-validate.initial="'required'"
             data-vv-name="description"
-            :error-messages="errors.collect('description')">
+            :error-messages="errors.collect('description')"
+          >
           </v-textarea>
 
           <!-- Deadline pickers -->
@@ -49,10 +51,21 @@
                 actions
                 :allowed-dates="isUpcomingDate"
                 :first-day-of-week="languagePack.firstDayOfWeek"
-                :locale="languagePack.language">
-                <v-spacer/>
-                <v-btn flat color="primary" @click="modals.date = false" v-t="'cancel'"/>
-                <v-btn flat color="primary" @click="$refs.dateDialog.save(deadlineModel.date)" v-t="'save'"/>
+                :locale="languagePack.language"
+              >
+                <v-spacer />
+                <v-btn
+                  flat
+                  color="primary"
+                  @click="modals.date = false"
+                  v-t="'cancel'"
+                />
+                <v-btn
+                  flat
+                  color="primary"
+                  @click="$refs.dateDialog.save(deadlineModel.date)"
+                  v-t="'save'"
+                />
               </v-date-picker>
             </v-dialog>
 
@@ -80,31 +93,37 @@
                 v-model="deadlineModel.time"
                 actions
                 :autosave="!pendingTodo.id"
-                :format="languagePack.timeFormat">
-                <v-spacer/>
-                <v-btn flat color="primary" @click="modals.time = false" v-t="'cancel'"/>
-                <v-btn flat color="primary" @click="$refs.timeDialog.save(deadlineModel.time)" v-t="'save'"/>
+                :format="languagePack.timeFormat"
+              >
+                <v-spacer />
+                <v-btn
+                  flat
+                  color="primary"
+                  @click="modals.time = false"
+                  v-t="'cancel'"
+                />
+                <v-btn
+                  flat
+                  color="primary"
+                  @click="$refs.timeDialog.save(deadlineModel.time)"
+                  v-t="'save'"
+                />
               </v-time-picker>
             </v-dialog>
-
           </v-layout>
         </v-form>
       </v-card-title>
       <v-card-actions>
         <v-btn @click="onSubmit()" :disabled="errors.any()">
-          {{ $t('todo-entry.' + (pendingTodo.id ? 'update' : 'submit')) }}
+          {{ $t("todo-entry." + (pendingTodo.id ? "update" : "submit")) }}
         </v-btn>
-        <v-btn @click="onCancel()">
-          {{ $t('cancel') }}
-        </v-btn>
+        <v-btn @click="onCancel()"> {{ $t("cancel") }} </v-btn>
       </v-card-actions>
     </v-card>
-
   </v-flex>
 </template>
 
-<script lang="ts" src="./todoListEntryEditable.ts">
-</script>
+<script lang="ts" src="./todoListEntryEditable.ts"></script>
 
 <style scoped>
 form {

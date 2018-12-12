@@ -22,7 +22,7 @@ describe("404", () => {
       expect.stringContaining("It proves you exist, and so therefore")
     );
     expect(story).toEqual(
-      expect.stringContaining("and promptly disappears in a puff of logic")
+      expect.stringContaining("disappears in a puff of logic")
     );
   });
 

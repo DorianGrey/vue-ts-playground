@@ -10,16 +10,18 @@
       <v-icon>language</v-icon>
     </v-btn>
     <v-list>
-      <v-list-tile v-for="lang in languages" :key="lang.key" @click="langChanged(lang.key)">
+      <v-list-tile
+        v-for="lang in languages"
+        :key="lang.key"
+        @click="langChanged(lang.key)"
+      >
         <v-list-tile-title v-t="lang.value" />
       </v-list-tile>
     </v-list>
   </v-menu>
-
 </template>
 
-<script lang="ts" src="./languageSelector.ts">
-</script>
+<script lang="ts" src="./languageSelector.ts"></script>
 
 <style lang="scss">
 @import "../../styles/colors";

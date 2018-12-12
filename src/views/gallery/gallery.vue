@@ -1,27 +1,29 @@
 <template>
-    <carousel-3d :controls-visible="true" :clickable="true" :height="500" :width="900">
-      <slide v-for="(s, idx) in imgSlides" :index="idx" :key="s.src">
-        <figure>
-          <img :src="s.src">
-          <!--
+  <carousel-3d
+    :controls-visible="true"
+    :clickable="true"
+    :height="500"
+    :width="900"
+  >
+    <slide v-for="(s, idx) in imgSlides" :index="idx" :key="s.src">
+      <figure>
+        <img :src="s.src" />
+        <!--
             Note: Using v-t here does not work in a reactive way under these circumstances,
             thus we fall back to $t.
           -->
-          <figcaption>
-            {{$t(s.desc)}}
-          </figcaption>
-        </figure>
-      </slide>
-    </carousel-3d>
+        <figcaption>{{ $t(s.desc) }}</figcaption>
+      </figure>
+    </slide>
+  </carousel-3d>
 
-    <!--
+  <!--
     <div>I am an asynchronously loaded component!</div>
     <img src="../static/nethskie-2015-09-02-1521.jpg" />
     -->
 </template>
 
-<script lang="ts" src="./gallery.ts">
-</script>
+<script lang="ts" src="./gallery.ts"></script>
 <style lang="scss">
 @import "../../styles/colors";
 

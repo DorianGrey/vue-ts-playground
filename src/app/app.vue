@@ -1,11 +1,6 @@
 <template>
   <v-app id="app" dark>
-    <v-navigation-drawer
-      clipped
-      fixed
-      v-model="isMenuOpen"
-      app
-    >
+    <v-navigation-drawer clipped fixed v-model="isMenuOpen" app>
       <v-list dense>
         <v-list-tile>
           <v-list-tile-action>
@@ -21,9 +16,7 @@
         </v-list-tile>
 
         <v-list-tile>
-          <v-list-tile-action>
-            <v-icon>assignment</v-icon>
-          </v-list-tile-action>
+          <v-list-tile-action> <v-icon>assignment</v-icon> </v-list-tile-action>
           <v-list-tile-content>
             <v-list-tile-title>
               <router-link class="nav-item" to="/todo-list/42">
@@ -45,12 +38,11 @@
             </v-list-tile-title>
           </v-list-tile-content>
         </v-list-tile>
-
       </v-list>
     </v-navigation-drawer>
 
     <v-toolbar app fixed clipped-left>
-      <v-toolbar-side-icon @click.stop="isMenuOpen = !isMenuOpen"/>
+      <v-toolbar-side-icon @click.stop="isMenuOpen = !isMenuOpen" />
       <v-toolbar-title v-t="'header.demo-app'" />
       <v-spacer />
       <language-selector />
@@ -58,31 +50,21 @@
     <v-content>
       <v-container fluid fill-height>
         <!-- TODO: Maybe re-add "align-center" here.-->
-        <v-layout justify-center>
-
-          <router-view />
-
-        </v-layout>
+        <v-layout justify-center> <router-view /> </v-layout>
       </v-container>
     </v-content>
-    <v-footer app>
-      <span>&copy; 2018</span>
-    </v-footer>
+    <v-footer app> <span>&copy; 2018</span> </v-footer>
 
-    <v-snackbar
-      :bottom="true"
-      v-model="snackbarOptions.show"
-    >
+    <v-snackbar :bottom="true" v-model="snackbarOptions.show">
       {{ snackbarOptions.text }}
-      <v-btn flat color="pink" @click.native="hideSnackbar()">{{snackbarOptions.buttonText}}</v-btn>
+      <v-btn flat color="pink" @click.native="hideSnackbar()">{{
+        snackbarOptions.buttonText
+      }}</v-btn>
     </v-snackbar>
-
   </v-app>
-
 </template>
 
-<script lang="ts" src="./app.ts">
-</script>
+<script lang="ts" src="./app.ts"></script>
 
 <style lang="scss">
 @import "../styles/colors";

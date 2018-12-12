@@ -9,7 +9,7 @@ type SnackBarCb = (text: string, buttonText: string, callback?: Cb) => void;
 
 export default function registerServiceWorker(
   showSnackbar: SnackBarCb,
-  $t: typeof VueI18n.prototype.t
+  $t: (key: string) => VueI18n.TranslateResult
 ) {
   if (process.env.NODE_ENV === "production") {
     register(`${process.env.BASE_URL}service-worker.js`, {

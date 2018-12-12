@@ -3,14 +3,14 @@
     <v-toolbar> <v-toolbar-title v-t="'todo-list.headline'" /> </v-toolbar>
     <v-tabs v-model="activeTab" centered grow>
       <v-tab
-        @click="setActiveTab('active');"
+        @click="setActiveTab('active')"
         class="grey darken-1"
         href="#active"
       >
         <span v-t="'todo-list.active'"></span>
       </v-tab>
       <v-tab
-        @click="setActiveTab('expired');"
+        @click="setActiveTab('expired')"
         class="grey darken-1"
         href="#expired"
       >
