@@ -33,18 +33,20 @@ module.exports = {
       .when(process.env.NODE_ENV === "production", config => {
         // Use a runtime chunk to optimize cache busting.
         // Otherwise, the runtime information would be added to the entry point.
-        config
-          .optimization
-          .runtimeChunk({ name: "runtime" });
+        if (!process.env.CYPRESS_ENV) {
+          config
+            .optimization
+            .runtimeChunk({ name: "runtime" });
+        }
 
-          // Configure path alias for rxjs.
-          const rxPaths = require("rxjs/_esm2015/path-mapping");
-          const rxResolvedPaths = rxPaths();
-          for (const p in rxResolvedPaths) {
-            if (rxResolvedPaths.hasOwnProperty(p)) {
-              config.resolve.alias.set(p, rxResolvedPaths[p]);
-            }
+        // Configure path alias for rxjs.
+        const rxPaths = require("rxjs/_esm2015/path-mapping");
+        const rxResolvedPaths = rxPaths();
+        for (const p in rxResolvedPaths) {
+          if (rxResolvedPaths.hasOwnProperty(p)) {
+            config.resolve.alias.set(p, rxResolvedPaths[p]);
           }
+        }
 
         // Configure style purging.
         const purgeOptions = {
